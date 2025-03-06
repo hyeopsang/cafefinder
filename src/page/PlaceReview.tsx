@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import ReviewWrite from "./ReviewWrite";
 import { getReview } from "../api/review";
-
+import { Place } from "../types/Place";
 export default function PlaceReviewPage() {
   const [writeModal, setWriteModal] = useState(false);
   const [myReview, setMyReview] = useState([]);
   let { id } = useParams();
-  id = parseInt(id, 10);
-  const places = useSelector((state) => state.places);
+  id = id ? parseInt(id, 10) : 0;
+  const places = useSelector((state: { places: Place[] }) => state.places);
   const auth = useSelector((state) => state.auth);
   const userId = auth.user.id;
 

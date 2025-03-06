@@ -3,5 +3,20 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": ["vite/client"],
+    "noImplicitAny": false,
+    "noUnusedLocals": false
+  },
+  "include": ["src", "swiper.d.ts", "src/globals.d.ts"],
+  "exclude": ["node_modules"]
 }

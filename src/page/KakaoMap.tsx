@@ -14,18 +14,18 @@ import CafeSwiper from "../components/CafeSwiper";
 import Menu from "./Menu";
 import "../styles/KakaoMap.css";
 import { Review } from "../types/Review";
+import { RootState } from "../redux/store";
 const { kakao } = window;
 
 function KakaoMap() {
   const dispatch = useDispatch();
-  const places = useSelector((state) => state.places);
-  const imgs = useSelector((state) => state.imgs);
+  const places = useSelector((state: RootState) => state.places);
   const [menu, setMenu] = useState(false);
   const [searchTxt, setSearchTxt] = useState("");
   const [showReGps, setShowReGps] = useState(false);
   const { swiperRef } = useRefContext();
   const { map, ps } = useKakaoMap();
-  const { markers, clearMarkers, addMarker } = useMarkers(map, swiperRef);
+  const { markers, clearMarkers, addMarker } = useMarkers(map);
 
   useEffect(() => {
     if (map) {

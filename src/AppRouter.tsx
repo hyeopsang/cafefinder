@@ -46,7 +46,7 @@ const RouterInfo = [
         path: "/map/review-write",
         element: (
           <ProtectedRoute>
-            <ReviewWrite />
+            <ReviewWrite setWriteModal={() => {}} placeId="somePlaceId" placeName="somePlaceName" />
           </ProtectedRoute>
         ),
       },

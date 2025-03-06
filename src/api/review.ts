@@ -10,7 +10,9 @@ import {
   where,
 } from "firebase/firestore"; 
 import { db } from "../firebase-config";
-import { ReviewContent } from "../types/Review";
+import { ReviewContent, Review } from "../types/Review";
+
+// 리뷰 최신화
 export const useReviews = (placeId: string) => {
   return useQuery({
     queryKey: ["reviews", placeId],
@@ -18,14 +20,14 @@ export const useReviews = (placeId: string) => {
     enabled: !!placeId,
   });
 };
-
+// 리뷰 불러오기
 export const getReview = async (placeId: string) => {
   const querySnapshot = await getDocs(
     collection(db, "reviews", placeId, "userReviews"),
   );
   return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
-
+// 리뷰 추가
 export const addReview = async ({ placeId, content, userId }:{placeId: string, content: ReviewContent, userId: string}) => {
   await addDoc(collection(db, "reviews", placeId, "userReviews"), {
     content,
@@ -33,11 +35,11 @@ export const addReview = async ({ placeId, content, userId }:{placeId: string, c
     userId,
   });
 };
-
+// 리뷰 삭제
 export const deleteReview = async ({ placeId, id }:{ placeId: string, id: string }) => {
   await deleteDoc(doc(db, "reviews", placeId, "userReviews", id));
 };
-
+// 사용자 리뷰 불러오기
 export const getUserReviews = async (userId : string) => {
   try {
     if (!userId) {
@@ -64,6 +66,7 @@ export const getUserReviews = async (userId : string) => {
     throw error;
   }
 };
+// 유저 리뷰 최신화 GET
 export const useUserReviews = (userId: string) => {
   return useQuery({
     queryKey: ["userReviews", userId],
@@ -71,13 +74,14 @@ export const useUserReviews = (userId: string) => {
     enabled: !!userId,
   });
 };
+// 리뷰 최신화 POST
 export const useMutationAddReview = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ placeId, content, userId }:{placeId: string, content: ReviewContent, userId: string}) =>
       addReview({ placeId, content, userId }),
-    onSuccess: (data, variables) => {
+    onSuccess: (data, variables: Review) => {
       queryClient.invalidateQueries({
         queryKey: ["reviews", variables.placeId],
       });
@@ -90,13 +94,13 @@ export const useMutationAddReview = () => {
     },
   });
 };
-
+// 리뷰 최신화 DELETE
 export const useMutationDeleteReview = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ placeId, id, userId }: { placeId: string, id: string, userId: string }) => deleteReview({ placeId, id }),
-    onSuccess: (data, variables) => {
+    onSuccess: (data, variables: Review) => {
       queryClient.invalidateQueries({
         queryKey: ["reviews", variables.placeId],
       });

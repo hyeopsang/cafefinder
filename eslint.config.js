@@ -20,9 +20,10 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
-        'warn',
+        'false',
         { allowConstantExport: true },
       ],
+      '@typescript-eslint/no-explicit-any': 'off', // const { kakao } = window 타입 정의를 위한 any타입 허용
     },
   },
 )

@@ -1,11 +1,18 @@
-const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }) => {
-  const handleSearch = (e) => {
+interface SearchFormProps {
+  onSearch: (searchTxt: string) => void;
+  searchTxt: string;
+  setSearchTxt: (value: string) => void;
+  onMenu: (value: boolean) => void;
+}
+
+const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }: SearchFormProps) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTxt.trim() === "") return;
     onSearch(searchTxt);
   };
 
-  const onChangeTxt = (e) => {
+  const onChangeTxt = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTxt(e.target.value);
   };
 
@@ -21,7 +28,7 @@ const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }) => {
       <input
         type="text"
         id="keyword"
-        size="15"
+        size={15}
         className="w-[calc(100%-140px)] bg-white outline-none"
         value={searchTxt}
         onChange={onChangeTxt}

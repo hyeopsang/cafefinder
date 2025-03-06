@@ -16,8 +16,8 @@ export const getCurrentLocation = () => {
   });
 };
 
-export const getDistanceFromLatLonInKm = (lat1, lng1, lat2, lng2) => {
-  const deg2rad = (deg) => deg * (Math.PI / 180);
+export const getDistanceFromLatLonInKm = (lat1: number, lng1: number, lat2: number, lng2: number) => {
+  const deg2rad = (deg: number) => deg * (Math.PI / 180);
   const R = 6371;
   const dLat = deg2rad(lat2 - lat1);
   const dLon = deg2rad(lng2 - lng1);

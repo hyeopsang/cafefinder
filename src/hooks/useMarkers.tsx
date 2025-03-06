@@ -2,6 +2,8 @@ import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getReview } from "../api/review";
 import { useRefContext } from "../context/RefContext";
+import { Place } from "../types/Place";
+import { RootState } from "../redux/store";
 // 리뷰 상태에 따른 마커 이미지 설정
 const MARKER_CONFIG = {
   WITH_REVIEW: {
@@ -14,12 +16,12 @@ const MARKER_CONFIG = {
   },
 };
 
-export const useMarkers = (map) => {
-  const markersRef = useRef([]);
-  const places = useSelector((state) => state.places);
+export const useMarkers = (map: any) => {
+  const markersRef = useRef<any[]>([]);
+  const places = useSelector((state: RootState) => state.places);
   const { swiperRef } = useRefContext();
 
-  const createMarkerImage = useCallback((hasReview) => {
+  const createMarkerImage = useCallback((hasReview: boolean) => {
     const config = hasReview
       ? MARKER_CONFIG.WITH_REVIEW
       : MARKER_CONFIG.NO_REVIEW;
@@ -42,7 +44,7 @@ export const useMarkers = (map) => {
   }, []);
 
   const addMarker = useCallback(
-    async (position, place, placeIndex) => {
+    async (position: any, place: Place, placeIndex: number) => {
       if (!map) return null;
 
       try {

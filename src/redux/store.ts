@@ -1,22 +1,20 @@
-// src/redux/store.js
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import sessionStorage from "redux-persist/lib/storage/session"; // sessionStorage 사용
+
 import authReducer from "./authSlice";
 import placesReducer from "./placesSlice";
 import reviewsReducer from "./reviewsSlice";
-import { combineReducers } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
-import sessionStorage from "redux-persist/lib/storage/session"; // sessionStorage 사용
-import swiperReducer from "./swiperSlice";
+
 const persistConfig = {
   key: "root",
-  storage: sessionStorage, // sessionStorage에 상태 저장
+  storage: sessionStorage,
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   places: placesReducer,
   reviews: reviewsReducer,
-  swiper: swiperReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -28,5 +26,8 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export const persistor = persistStore(store);

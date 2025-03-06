@@ -3,11 +3,12 @@ import { useState } from "react";
 import { addReview } from "../api/review";
 import { useSelector } from "react-redux";
 import { ReviewContent } from "../types/Review";
+import { RootState } from "../redux/store";
 export default function ReviewWrite({ setWriteModal, placeId, placeName }:{ setWriteModal: (value: boolean) => void, placeId: string, placeName: string }) {
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [reviewText, setReviewText] = useState("");
-  const auth = useSelector((state) => state.auth);
-  const userId = auth.user.id;
+  const auth = useSelector((state: RootState) => state.auth);
+  const userId = auth.user?.id;
 
   const rating = {
     bad: 1,
@@ -25,11 +26,12 @@ export default function ReviewWrite({ setWriteModal, placeId, placeName }:{ setW
     text: "",
     placeName: placeName,
   });
-  const onChangeText = (e) => {
+
+
+  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReviewText(e.target.value);
-    handleRatingChange("text", e.target.value);
   };
-  const handleRatingChange = (category: string, value) => {
+  const handleRatingChange = (category: string, value: number) => {
     setReviews((prevReviews) => ({
       ...prevReviews,
       [category]: value,

@@ -1,14 +1,27 @@
-// CafeSwiper.js
 import "../styles/CafeSwiper.css";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
+import 'swiper/modules/navigation/navigation.min.css';
+import 'swiper/modules/pagination/pagination.min.css';
+
+import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { useRefContext } from "../context/RefContext";
+import { Place } from "../types/Place";
+
 const { kakao } = window;
 
-const CafeSwiper = ({ places, swiperRef, map, markers }) => {
-  const handleSlideChange = (swiper) => {
+interface CafeSwiperProps {
+  places: Place[];
+  map: any;
+  markers: any[];
+}
+
+const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
+  const { swiperRef } = useRefContext(); 
+
+  const handleSlideChange = (swiper: SwiperType) => {
     const activePlace = places[swiper.activeIndex];
 
     if (activePlace) {
@@ -21,6 +34,7 @@ const CafeSwiper = ({ places, swiperRef, map, markers }) => {
       }
     }
   };
+
   return (
     <div className="fixed bottom-[15px] z-10 min-w-[375px] max-w-[428px] text-[#212121]">
       <Swiper
@@ -29,22 +43,20 @@ const CafeSwiper = ({ places, swiperRef, map, markers }) => {
         centeredSlides={true}
         loop={false}
         onSwiper={(swiper) => {
-          swiperRef.current = swiper;
+          swiperRef.current = swiper; // ✅ Context에서 가져온 swiperRef 사용
         }}
         onSlideChange={handleSlideChange}
       >
         {places.map((place, id) => (
           <SwiperSlide key={id}>
-            <Link to={`detail/${id}`}>
+            <Link to={`/detail/${id}`}>
               <div
                 className="mx-auto w-[calc(100%-60px)] rounded-[15px] bg-white p-[15px] shadow-md"
                 style={{ cursor: "default" }}
               >
                 <div className="flex flex-col gap-[10px] text-[16px] font-medium">
                   <h5 className="text-[18px] font-bold">{place.place_name}</h5>
-                  <p className="distance">
-                    {Number(place.distance).toFixed(2)} m
-                  </p>
+                  <p className="distance">{Number(place.distance).toFixed(2)} m</p>
                   <p className="address">{place.address_name}</p>
                 </div>
               </div>
