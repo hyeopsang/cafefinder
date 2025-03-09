@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface User {
   [key: string]: any;
 }
-interface StateType {
+export interface StateType {
   isAuthenticated: boolean;
   user: User | null;
 }

@@ -21,11 +21,17 @@ export const useReviews = (placeId: string) => {
   });
 };
 // 리뷰 불러오기
-export const getReview = async (placeId: string) => {
+export const getReview = async (placeId: string): Promise<Review[]> => {
   const querySnapshot = await getDocs(
     collection(db, "reviews", placeId, "userReviews"),
   );
-  return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    placeId,
+    content: doc.data().content,
+    createdAt: doc.data().createdAt,
+    userId: doc.data().userId,
+  }));
 };
 // 리뷰 추가
 export const addReview = async ({ placeId, content, userId }:{placeId: string, content: ReviewContent, userId: string}) => {
@@ -36,7 +42,7 @@ export const addReview = async ({ placeId, content, userId }:{placeId: string, c
   });
 };
 // 리뷰 삭제
-export const deleteReview = async ({ placeId, id }:{ placeId: string, id: string }) => {
+export const deleteReview = async ({ placeId, id }:{ placeId: string, id:string }) => {
   await deleteDoc(doc(db, "reviews", placeId, "userReviews", id));
 };
 // 사용자 리뷰 불러오기

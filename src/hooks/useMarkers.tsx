@@ -7,18 +7,19 @@ import { RootState } from "../redux/store";
 // 리뷰 상태에 따른 마커 이미지 설정
 const MARKER_CONFIG = {
   WITH_REVIEW: {
-    imageSrc: `${process.env.PUBLIC_URL}/images/coffee.png`, // 리뷰 있는 카페 마커
+    imageSrc: `/images/coffee.png`, // Vite에서는 public 폴더 기준으로 경로 설정
     size: { width: 25, height: 25 },
   },
   NO_REVIEW: {
-    imageSrc: `${process.env.PUBLIC_URL}/images/coffeeb.png`, // 리뷰 없는 카페 마커
+    imageSrc: `/images/coffeeb.png`,
     size: { width: 25, height: 25 },
   },
 };
 
-export const useMarkers = (map: any) => {
-  const markersRef = useRef<any[]>([]);
-  const places = useSelector((state: RootState) => state.places);
+
+export const useMarkers = (map: kakao.maps.Map | any) => {
+  const markersRef = useRef<kakao.maps.Marker[]>([]);
+  const places = useSelector((state: RootState) => state.places) as Place[];
   const { swiperRef } = useRefContext();
 
   const createMarkerImage = useCallback((hasReview: boolean) => {
@@ -86,7 +87,7 @@ export const useMarkers = (map: any) => {
       clearMarkers();
 
       const markerPromises = places.map(async (place, index) => {
-        const position = new window.kakao.maps.LatLng(place.y, place.x);
+        const position = new window.kakao.maps.LatLng(Number(place.y), Number(place.x));
         return addMarker(position, place, index);
       });
 

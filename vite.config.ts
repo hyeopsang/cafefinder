@@ -14,4 +14,5 @@ export default defineConfig({
       'swiper/css': 'swiper/swiper.min.css',
     },
   },
+  envDir: '.'
 })

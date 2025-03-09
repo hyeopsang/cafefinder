@@ -27,10 +27,15 @@ export default function Auth() {
       const res = await axios.post(
         "https://kauth.kakao.com/oauth/token",
         payload,
+        {
+          headers: {
+            "Content-Type" : "application/x-www-form-urlencoded;charset=utf-8"
+          }
+        }
       );
 
-      window.Kakao.init(REST_API_KEY); // Kakao Javascript SDK 초기화
-      window.Kakao.Auth.setAccessToken(res.data.access_token); // access token 설정
+      window.Kakao.init("d884e8e42aa47c7c8ee303055281e7cc"); 
+      window.Kakao.Auth.setAccessToken(res.data.access_token); 
       const userInfo = await window.Kakao.API.request({
         url: "/v2/user/me",
       });

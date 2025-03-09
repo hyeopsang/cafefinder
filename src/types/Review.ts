@@ -9,7 +9,7 @@ export interface ReviewContent {
     placeName: string; 
 }
 export interface Review {
-    id: number
+    id: string
     placeId: string;
     content: ReviewContent;
     createdAt: Date;

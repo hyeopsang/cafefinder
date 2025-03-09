@@ -24,19 +24,21 @@ function KakaoMap() {
   const [searchTxt, setSearchTxt] = useState("");
   const [showReGps, setShowReGps] = useState(false);
   const { swiperRef } = useRefContext();
-  const { map, ps } = useKakaoMap();
+  const { map, ps, moveToCurrentLocation } = useKakaoMap();
   const { markers, clearMarkers, addMarker } = useMarkers(map);
 
   useEffect(() => {
     if (map) {
       kakao.maps.event.addListener(map, "center_changed", () => {
-        setShowReGps(true);
+        if (!showReGps) { // 조건 추가: showReGps가 true일 때만 업데이트
+          setShowReGps(true);
+        }
       });
       map.setLevel(5);
     }
   }, [map]);
 
-  const displayCafeMarkers = async (cafeData) => {
+  const displayCafeMarkers = async (cafeData: any[]) => {
     if (!map) return;
 
     const bounds = new kakao.maps.LatLngBounds();
@@ -144,23 +146,7 @@ const performSearch = useCallback(async () => {
     searchCafesInBounds();
   };
 
-  const moveToCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          const currentPos = new kakao.maps.LatLng(lat, lng);
-          map.panTo(currentPos);
-        },
-        () => {
-          alert("현재 위치를 가져오는 데 실패했습니다.");
-        },
-      );
-    } else {
-      alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
-    }
-  };
+  
 
   return (
     <div className="relative h-svh mx-auto min-w-[375px] max-w-[428px] overflow-hidden">

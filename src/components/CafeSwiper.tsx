@@ -1,8 +1,5 @@
 import "../styles/CafeSwiper.css";
-import 'swiper/swiper-bundle.min.css';
-import 'swiper/swiper.min.css';
-import 'swiper/modules/navigation/navigation.min.css';
-import 'swiper/modules/pagination/pagination.min.css';
+import 'swiper/swiper-bundle.css';
 
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -25,7 +22,7 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
     const activePlace = places[swiper.activeIndex];
 
     if (activePlace) {
-      const newCenter = new kakao.maps.LatLng(activePlace.y, activePlace.x);
+      const newCenter = new kakao.maps.LatLng(Number(activePlace.y), Number(activePlace.x));
       map.panTo(newCenter);
 
       const marker = markers[activePlace.placeIndex];

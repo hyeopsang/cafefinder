@@ -2,9 +2,18 @@ import "../styles/Menu.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/authSlice";
-
+interface User {
+  [key: string]: any;
+}
+interface StateType {
+  isAuthenticated: boolean;
+  user: User | null;
+  auth: {
+    user: User | null;
+  };
+}
 export default function Menu({ onMenu }) {
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state: StateType) => state.auth);
   const userInfo = auth.user?.properties || {};
   const dispatch = useDispatch();
   const handleLogout = () => {

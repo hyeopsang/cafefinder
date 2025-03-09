@@ -4,41 +4,49 @@ import { useState, useEffect } from "react";
 import ReviewWrite from "./ReviewWrite";
 import { getReview } from "../api/review";
 import { Place } from "../types/Place";
+import { Review, ReviewContent } from "../types/Review";
+interface User {
+  [key: string]: any;
+}
+export interface StateType {
+  isAuthenticated: boolean;
+  user: User | null;
+}
 export default function PlaceReviewPage() {
   const [writeModal, setWriteModal] = useState(false);
-  const [myReview, setMyReview] = useState([]);
+  const [myReview, setMyReview] = useState<Review[]>([]);
   let { id } = useParams();
-  id = id ? parseInt(id, 10) : 0;
+  const placeId = id ? parseInt(id, 10) : 0;
   const places = useSelector((state: { places: Place[] }) => state.places);
-  const auth = useSelector((state) => state.auth);
+  const auth = useSelector((state: { auth: User }) => state.auth);
   const userId = auth.user.id;
 
   useEffect(() => {
-    if (places[id]?.id) {
-      getReview(places[id].id).then((reviews) => {
+    if (places[placeId]?.id) {
+      getReview(places[placeId].id).then((reviews) => {
         setMyReview(reviews);
       });
     }
-  }, [id, places, writeModal]);
+  }, [placeId, places, writeModal]);
 
   if (!places || places.length === 0) {
     return <div>장소 데이터를 불러오는 중입니다...</div>;
   }
 
-  const userReviews = myReview.filter((review) => review.userId === userId);
-  const otherReviews = myReview.filter((review) => review.userId !== userId);
+  const userReviews = myReview.filter((review: Review) => review.userId === userId);
+  const otherReviews = myReview.filter((review: Review) => review.userId !== userId);
 
-  const place = places[id];
+  const place = places[placeId];
 
-  const averageReview = (category: string) => {
+  const averageReview = (category: keyof ReviewContent) => {
     const total = myReview.reduce(
-      (acc, review) => acc + review.content[category],
+      (acc, review) => acc + (typeof review.content[category] === 'number' ? review.content[category] : 0),
       0,
     );
     return myReview.length > 0 ? total / myReview.length : 0;
   };
 
-  const changeColor = (category: string) => {
+  const changeColor = (category: keyof ReviewContent) => {
     const avg = averageReview(category);
     if (avg > 1 && avg <= 1.66) {
       return "#fccbc7";

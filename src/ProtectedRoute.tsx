@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { RootState } from "../redux/store";
+import { RootState } from "./redux/store";
 import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
