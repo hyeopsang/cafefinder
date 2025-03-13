@@ -27,16 +27,21 @@ function KakaoMap() {
   const { map, ps, moveToCurrentLocation } = useKakaoMap();
   const { markers, clearMarkers, addMarker } = useMarkers(map);
 
+  const handleCenterChanged = useCallback(() => {
+    setShowReGps(true);
+  }, []);
+  
   useEffect(() => {
     if (map) {
-      kakao.maps.event.addListener(map, "center_changed", () => {
-        if (!showReGps) { // 조건 추가: showReGps가 true일 때만 업데이트
-          setShowReGps(true);
-        }
-      });
+      kakao.maps.event.addListener(map, "center_changed", handleCenterChanged);
       map.setLevel(5);
+      
+      return () => {
+        kakao.maps.event.removeListener(map, "center_changed", handleCenterChanged);
+      };
     }
-  }, [map]);
+  }, [map, handleCenterChanged]);
+   
 
   const displayCafeMarkers = async (cafeData: any[]) => {
     if (!map) return;
