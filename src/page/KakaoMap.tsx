@@ -15,17 +15,23 @@ import Menu from "./Menu";
 import "../styles/KakaoMap.css";
 import { Review } from "../types/Review";
 import { RootState } from "../redux/store";
+import { Place } from "../types/Place";
+
+type Position = {
+  La: number,
+  Ma: number
+}
+
 const { kakao } = window;
 
 function KakaoMap() {
   const dispatch = useDispatch();
-  const places = useSelector((state: RootState) => state.places);
+  const places = useSelector((state: RootState) => state.places) as Place[];
   const [menu, setMenu] = useState(false);
   const [searchTxt, setSearchTxt] = useState("");
   const [showReGps, setShowReGps] = useState(false);
-  const { swiperRef } = useRefContext();
   const { map, ps, moveToCurrentLocation } = useKakaoMap();
-  const { markers, clearMarkers, addMarker } = useMarkers(map);
+  const { markers, clearMarkers, addMarker } = useMarkers(map!);
 
   const handleCenterChanged = useCallback(() => {
     setShowReGps(true);
@@ -51,7 +57,8 @@ function KakaoMap() {
     cafeData.forEach((place, index) => {
       const position = new kakao.maps.LatLng(place.y, place.x);
       bounds.extend(position);
-      addMarker(position, place, index);
+      const positionObj: Position = { La: place.y, Ma: place.x };
+      addMarker(positionObj, place, index);
     });
 
     if (cafeData.length > 2) {
@@ -59,14 +66,13 @@ function KakaoMap() {
     }
   };
 
-  const [currentLocation, setCurrentLocation] = useState(null);
-
-useEffect(() => {
-  (async () => {
-    const location = await getCurrentLocation();
-    setCurrentLocation(location);
-  })();
-}, []);
+  const [currentLocation, setCurrentLocation] = useState<kakao.maps.LatLng | null>(null);
+  useEffect(() => {
+      async () => {
+        const location = await getCurrentLocation() as kakao.maps.LatLng;
+        setCurrentLocation(location);
+      };
+    }, []);
 
 const performSearch = useCallback(async () => {
   if (!ps || !map || !currentLocation) return;
@@ -80,7 +86,7 @@ const performSearch = useCallback(async () => {
       );
 
       const placesWithDistance = cafeData.map((place) => {
-        const targetLocation = new kakao.maps.LatLng(place.y, place.x);
+        const targetLocation = new kakao.maps.LatLng(Number(place.y), Number(place.x));
         const distance =
           getDistanceFromLatLonInKm(
             currentLocation.getLat(),
@@ -120,13 +126,13 @@ const performSearch = useCallback(async () => {
       async (data, status) => {
         if (status === kakao.maps.services.Status.OK) {
           const cafeData = data.filter((place) => {
-            const placePosition = new kakao.maps.LatLng(place.y, place.x);
+            const placePosition = new kakao.maps.LatLng(Number(place.y), Number(place.x));
             return bounds.contain(placePosition);
           });
 
           const placesWithDistance = await Promise.all(
             cafeData.map(async (place) => {
-              const targetLocation = new kakao.maps.LatLng(place.y, place.x);
+              const targetLocation = new kakao.maps.LatLng(Number(place.y), Number(place.x));
               const distance =
                 getDistanceFromLatLonInKm(
                   center.getLat(),
@@ -162,11 +168,9 @@ const performSearch = useCallback(async () => {
         searchTxt={searchTxt}
         setSearchTxt={setSearchTxt}
         onMenu={setMenu}
-        dispatch={dispatch}
       />
       <CafeSwiper
         places={places}
-        swiperRef={swiperRef}
         map={map}
         markers={markers}
       />

@@ -50,7 +50,7 @@ export const useMarkers = (map: kakao.maps.Map) => {
   }, []);
 
   const addMarker = useCallback(
-    async (position: Position, place: Place, placeIndex: number) => {
+    async (position: Position, place: any, placeIndex: number) => {
       if (!map) return null;
 
       try {

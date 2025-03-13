@@ -60,10 +60,12 @@ export const getUserReviews = async (userId : string) => {
 
     const querySnapshot = await getDocs(reviewsQuery);
 
-    const reviews = querySnapshot.docs.map((doc) => ({
+    const reviews: Review[] = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       placeId: doc.ref.parent?.parent?.id || '',
-      ...doc.data(),
+      content: doc.data().content,
+      createdAt: doc.data().createdAt,
+      userId: doc.data().userId,
     }));
 
     return reviews; 

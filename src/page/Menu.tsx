@@ -12,8 +12,16 @@ interface StateType {
     user: User | null;
   };
 }
-export default function Menu({ onMenu }) {
-  const auth = useSelector((state: StateType) => state.auth);
+interface MenuProps {
+  onMenu: (value: boolean) => void;
+}
+
+interface AuthState {
+  user: User | null;
+}
+
+export default function Menu({ onMenu }: MenuProps) {
+  const auth: AuthState = useSelector((state: StateType) => state.auth);
   const userInfo = auth.user?.properties || {};
   const dispatch = useDispatch();
   const handleLogout = () => {
