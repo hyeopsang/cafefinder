@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import KakaoMap from "../page/map";
+import KakaoMap from "../ui/map";
 import PlaceReviewPage from "../page/PlaceReview";
 import ReviewWrite from "../page/ReviewWrite";
 import Auth from "../page/login/Auth";

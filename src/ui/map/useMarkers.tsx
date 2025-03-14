@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getReview } from "../../entity/review";
+import { getReview } from "../../review";
 import { useRefContext } from "../../app/context/RefContext";
 import { Place } from "../../entity/place/model/Place";
 import { RootState } from "../../app/redux/store";

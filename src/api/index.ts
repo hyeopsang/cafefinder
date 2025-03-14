@@ -9,8 +9,8 @@ import {
   query,
   where,
 } from "firebase/firestore"; 
-import { db } from "../../firebase-config";
-import { ReviewContent, Review } from "./model/Review";
+import { db } from "../firebase-config";
+import { ReviewContent, Review } from "../types";
 
 // 리뷰 최신화
 export const useReviews = (placeId: string) => {

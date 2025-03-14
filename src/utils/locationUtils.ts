@@ -1,5 +1,3 @@
-// utils/locationUtils.js
-
 const { kakao } = window;
 
 export const getCurrentLocation = () => {

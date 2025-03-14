@@ -1,11 +1,11 @@
 import "../styles/CafeSwiper.css";
-import 'swiper/swiper-bundle.css';
+import "swiper/swiper.css";
 
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { useRefContext } from "../../app/context/RefContext";
-import { Place } from "../../entity/place/model/Place";
+import { Place } from "../../types";
 
 const { kakao } = window;
 

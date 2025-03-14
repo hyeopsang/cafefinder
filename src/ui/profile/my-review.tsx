@@ -1,8 +1,8 @@
 import "../styles/MyReview.css";
 import { Link } from "react-router";
-import { useUserReviews } from "../entity/review";
+import { useUserReviews } from "../../api";
 import { useSelector } from "react-redux";
-
+import { formatTime } from "../../utils/fomattedTime";
 interface User {
   [key: string]: any;
 }
@@ -24,11 +24,6 @@ export default function MyReview() {
   const { data: reviews, isLoading, error } = useUserReviews(userId); // userId에 해당하는 리뷰만 가져오기
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading reviews: {error.message}</div>;
-  const formatTimestamp = (timestamp: any) => {
-    if (!timestamp) return "";
-    const date = timestamp.toDate();
-    return date.toLocaleString(); 
-  };
   
 
   return (
@@ -41,7 +36,7 @@ export default function MyReview() {
         reviews.map((review) => (
           <div key={review.id}>
             <p className="placeName">{review.content.placeName}</p>
-            <p>{formatTimestamp(review.createdAt)}</p>
+            <p>{formatTime(review.createdAt)}</p>
             <p>{review.content.text || "No text"}</p>
           </div>
         ))
