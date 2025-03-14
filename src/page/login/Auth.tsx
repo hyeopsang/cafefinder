@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import { loginSuccess } from "../redux/authSlice";
+import { loginSuccess } from "../../app/redux/authSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import qs from "qs";
 
-import { REST_API_KEY, REDIRECT_URI, CLIENT_SECRET } from "../config";
+
+import { REST_API_KEY, REDIRECT_URI, CLIENT_SECRET } from "../../config";
 
 export default function Auth() {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ export default function Auth() {
         }
       );
 
-      window.Kakao.init("d884e8e42aa47c7c8ee303055281e7cc"); 
+      window.Kakao.init("d884e8e42aa47c7c8ee303055281e7cc")
       window.Kakao.Auth.setAccessToken(res.data.access_token); 
       const userInfo = await window.Kakao.API.request({
         url: "/v2/user/me",

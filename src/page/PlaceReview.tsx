@@ -2,9 +2,9 @@ import { useParams, Link } from "react-router";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import ReviewWrite from "./ReviewWrite";
-import { getReview } from "../api/review";
-import { Place } from "../types/Place";
-import { Review, ReviewContent } from "../types/Review";
+import { getReview } from "../entity/review";
+import { Place } from "../entity/place/model/Place";
+import { Review, ReviewContent } from "../entity/review/model/Review";
 interface User {
   [key: string]: any;
 }

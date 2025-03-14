@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Review } from "../types/Review";
+import { Review } from "../../entity/review/model/Review";
 const reviewsSlice = createSlice({
   name: "reviews",
   initialState: [],

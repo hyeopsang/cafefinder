@@ -1,18 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Place } from "../../entity/place/model/Place";
 
-interface Place {
-  distance: number;
-  id: string;
-  place_name: string;
-  category_name: string;
-  category_group_code?:  string | string[] | undefined;
-  phone: string;
-  address_name: string;
-  road_address_name: string;
-  x: string;
-  y: string;
-  place_url: string;
-}
 
 const placesSlice = createSlice({
   name: "places",

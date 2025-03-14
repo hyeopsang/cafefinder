@@ -4,8 +4,8 @@ import 'swiper/swiper-bundle.css';
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
-import { useRefContext } from "../context/RefContext";
-import { Place } from "../types/Place";
+import { useRefContext } from "../../app/context/RefContext";
+import { Place } from "../../entity/place/model/Place";
 
 const { kakao } = window;
 
@@ -15,7 +15,7 @@ interface CafeSwiperProps {
   markers: any[];
 }
 
-const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
+export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
   const { swiperRef } = useRefContext(); 
 
   const handleSlideChange = (swiper: SwiperType) => {
@@ -25,7 +25,7 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
       const newCenter = new kakao.maps.LatLng(Number(activePlace.y), Number(activePlace.x));
       map.panTo(newCenter);
 
-      const marker = markers[activePlace.placeIndex];
+      const marker = markers[activePlace.placeIndex!];
       if (marker) {
         kakao.maps.event.trigger(marker, "click");
       }
@@ -65,4 +65,3 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
   );
 };
 
-export default CafeSwiper;

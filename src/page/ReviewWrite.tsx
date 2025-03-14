@@ -1,9 +1,9 @@
 import "../styles/ReviewWrite.css";
 import { useState } from "react";
-import { addReview } from "../api/review";
+import { addReview } from "../entity/review/review";
 import { useSelector } from "react-redux";
-import { ReviewContent } from "../types/Review";
-import { RootState } from "../redux/store";
+import { ReviewContent } from "../entity/review/model/Review";
+import { RootState } from "../app/redux/store";
 export default function ReviewWrite({ setWriteModal, placeId, placeName }:{ setWriteModal: (value: boolean) => void, placeId: string, placeName: string }) {
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [reviewText, setReviewText] = useState("");

@@ -1,6 +1,6 @@
 import "../styles/MyReview.css";
 import { Link } from "react-router";
-import { useUserReviews } from "../api/review";
+import { useUserReviews } from "../entity/review";
 import { useSelector } from "react-redux";
 
 interface User {

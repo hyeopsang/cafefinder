@@ -1,7 +1,7 @@
 import "../styles/Menu.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../redux/authSlice";
+import { logout } from "../../app/redux/authSlice";
 interface User {
   [key: string]: any;
 }
@@ -36,7 +36,7 @@ export default function Menu({ onMenu }: MenuProps) {
       <div className="flex h-[50px] w-full items-center justify-end px-[15px]">
         <img
           className="w-[20px]"
-          src={"./images/close.png"}
+          src={"./close.png"}
           alt="닫기"
           onClick={() => onMenu(false)}
         />

@@ -1,9 +1,9 @@
 import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getReview } from "../api/review";
-import { useRefContext } from "../context/RefContext";
-import { Place } from "../types/Place";
-import { RootState } from "../redux/store";
+import { getReview } from "../../entity/review";
+import { useRefContext } from "../../app/context/RefContext";
+import { Place } from "../../entity/place/model/Place";
+import { RootState } from "../../app/redux/store";
 
 type Position = {
   La: number;

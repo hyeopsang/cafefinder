@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRefContext } from "../context/RefContext";
+import { useRefContext } from "../../app/context/RefContext";
 import { useCallback } from "react";
-import { useKakaoMap } from "../hooks/useKakaoMap";
-import { useMarkers } from "../hooks/useMarkers";
+import { useKakaoMap } from "./useKakaoMap";
+import { useMarkers } from "./useMarkers";
 import {
   getCurrentLocation,
   getDistanceFromLatLonInKm,
-} from "../utils/locationUtils";
-import { setPlaces } from "../redux/placesSlice";
-import SearchForm from "../components/SearchForm";
-import CafeSwiper from "../components/CafeSwiper";
-import Menu from "./Menu";
+} from "../../shared/utils/locationUtils";
+import { setPlaces } from "../../app/redux/placesSlice";
+import SearchForm from "../../feature/search-bar/ui";
+import { CafeSwiper } from "../../widget/cafe-swiper";
+import Menu from "../../widget/side-bar/Menu";
 import "../styles/KakaoMap.css";
-import { Review } from "../types/Review";
-import { RootState } from "../redux/store";
-import { Place } from "../types/Place";
+import { RootState } from "../../app/redux/store";
+import { Place } from "../../entity/place/model/Place";
 
 type Position = {
   La: number,
