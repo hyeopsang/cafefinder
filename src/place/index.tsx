@@ -2,11 +2,11 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import ReviewForm from "./review-form";
-import { getReview } from "../../api";
+import { getReview } from "../api";
 import OtherReview from "./other-review";
 import MyReview from "./my-review";
-import useReviewColor from "../../utils/useReviewColor";
-import { Review, Place } from "../../types";
+import useReviewColor from "../utils/useReviewColor";
+import { Review, Place } from "../types";
 import PlaceInfo from "./place-info";
 
 interface User {

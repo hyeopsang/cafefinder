@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRefContext } from "../../app/context/RefContext";
+import { useRefContext } from "../app/context/RefContext";
 import { useCallback } from "react";
 import { useKakaoMap } from "./useKakaoMap";
 import { useMarkers } from "./useMarkers";
@@ -8,12 +8,12 @@ import {
   getCurrentLocation,
   getDistanceFromLatLonInKm,
 } from "../../shared/utils/locationUtils";
-import { setPlaces } from "../../app/redux/placesSlice";
+import { setPlaces } from "../app/redux/placesSlice";
 import SearchForm from "../../feature/search-bar/ui";
-import { CafeSwiper } from "../../widget/cafe-swiper";
-import Menu from "../../widget/side-bar/Menu";
+import { CafeSwiper } from "../widget/cafe-swiper";
+import Menu from "../widget/side-bar/Menu";
 import "../styles/KakaoMap.css";
-import { RootState } from "../../app/redux/store";
+import { RootState } from "../app/redux/store";
 import { Place } from "../../entity/place/model/Place";
 
 type Position = {

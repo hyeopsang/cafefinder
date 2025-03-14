@@ -1,8 +1,9 @@
 import "../styles/MyReview.css";
 import { Link } from "react-router";
-import { useUserReviews } from "../../api";
+import { useUserReviews } from "../api";
 import { useSelector } from "react-redux";
-import { formatTime } from "../../utils/fomattedTime";
+import { back } from "./assets";
+import { formatTime } from "../utils/fomattedTime";
 interface User {
   [key: string]: any;
 }
@@ -29,7 +30,7 @@ export default function MyReview() {
   return (
     <div className="min-w-[375px] max-w-[428px] h-svh">
       <Link to={"/map"}>
-        <img src={"./images/back.png"} />
+        <img src={back} />
       </Link>
       <h2>내가 쓴 리뷰</h2>
       {reviews && reviews.length > 0 ? (

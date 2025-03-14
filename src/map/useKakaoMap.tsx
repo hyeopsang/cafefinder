@@ -30,7 +30,7 @@ export const useKakaoMap = () => {
               });
 
               const markerImage = new kakao.maps.MarkerImage(
-                "/images/gomgom.png", 
+                "/assets/gomgom.png", 
                 new kakao.maps.Size(35, 35),
                 { offset: new kakao.maps.Point(20, 40) },
               );
@@ -73,7 +73,7 @@ export const useKakaoMap = () => {
 
           // 이동 후 마커 추가
           const markerImage = new kakao.maps.MarkerImage(
-            "/images/gomgom.png",
+            "/assets/gomgom.png",
             new kakao.maps.Size(35, 35),
             { offset: new kakao.maps.Point(20, 40) },
           );

@@ -1,9 +1,9 @@
 import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getReview } from "../../review";
-import { useRefContext } from "../../app/context/RefContext";
+import { useRefContext } from "../app/context/RefContext";
 import { Place } from "../../entity/place/model/Place";
-import { RootState } from "../../app/redux/store";
+import { RootState } from "../app/redux/store";
 
 type Position = {
   La: number;
@@ -12,11 +12,11 @@ type Position = {
 // 리뷰 상태에 따른 마커 이미지 설정
 const MARKER_CONFIG = {
   WITH_REVIEW: {
-    imageSrc: `/images/coffee.png`, // Vite에서는 public 폴더 기준으로 경로 설정
+    imageSrc: `/assets/coffee.png`, 
     size: { width: 25, height: 25 },
   },
   NO_REVIEW: {
-    imageSrc: `/images/coffeeb.png`,
+    imageSrc: `/assets/coffeeb.png`,
     size: { width: 25, height: 25 },
   },
 };

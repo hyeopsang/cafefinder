@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
-import { loginSuccess } from "../../app/redux/authSlice";
+import { loginSuccess } from "../app/redux/authSlice";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import qs from "qs";
 
 
-import { REST_API_KEY, REDIRECT_URI, CLIENT_SECRET } from "../../config";
+import { REST_API_KEY, REDIRECT_URI, CLIENT_SECRET } from "../config";
 
-export default function Auth() {
+export default function Logging() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ export default function Auth() {
           fill="currentFill"
         />
       </svg>
-      <span className="text-center text-[24px] text-white">로그인 중...</span>
+      <span className="text-center text-[24px] text-white">카카오 아이디로 로그인 중...</span>
     </div>
   );
 }

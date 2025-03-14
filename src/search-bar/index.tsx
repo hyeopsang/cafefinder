@@ -1,3 +1,5 @@
+import { cancel, search, menu } from "./assets";
+
 interface SearchFormProps {
   onSearch: (searchTxt: string) => void;
   searchTxt: string;
