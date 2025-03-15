@@ -1,4 +1,3 @@
-import "../styles/Menu.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../app/redux/authSlice";

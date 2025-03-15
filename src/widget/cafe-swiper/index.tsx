@@ -1,6 +1,5 @@
-import "../styles/CafeSwiper.css";
-import "swiper/swiper.css";
-
+import "swiper/css";
+import "../../styles/CafeSwiper.css";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
@@ -64,4 +63,3 @@ export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) 
     </div>
   );
 };
-

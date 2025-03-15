@@ -25,7 +25,7 @@ const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }: SearchFormPro
       onSubmit={handleSearch}
     >
       <button className="h-[55px] p-[15px]" onClick={() => onMenu(true)}>
-        <img className="w-[25px]" src={"./menu.png"} alt="Menu" />
+        <img className="w-[25px]" src={"./images/menu.png"} alt="Menu" />
       </button>
       <input
         type="text"
@@ -45,7 +45,7 @@ const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }: SearchFormPro
         />
       </div>
       <button className="h-[55px] p-[15px]">
-        <img className="w-[25px]" src={"./search.png"} alt="Search" />
+        <img className="w-[25px]" src={"./images/search.png"} alt="Search" />
       </button>
     </form>
   );

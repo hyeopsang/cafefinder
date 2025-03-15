@@ -30,7 +30,7 @@ export const useKakaoMap = () => {
               });
 
               const markerImage = new kakao.maps.MarkerImage(
-                "/assets/gomgom.png", 
+                "/images/gomgom.png", 
                 new kakao.maps.Size(35, 35),
                 { offset: new kakao.maps.Point(20, 40) },
               );

@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import KakaoMap from "../map";
-import PlaceReviewPage from "../page/PlaceReview";
-import ReviewWrite from "../page/ReviewWrite";
-import Auth from "../page/login/Auth";
-import Login from "../page/login/Login";
-import MyReview from "../page/MyReview";
+import PlaceReviewPage from "../place";
+import ReviewWrite from "../place/review-form";
+import Auth from "../kakao-login/logging";
+import Login from "../kakao-login/login";
+import MyReview from "../profile/my-review";
 const RouterInfo = [
   {
     path: "/",

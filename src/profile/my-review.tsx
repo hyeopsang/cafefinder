@@ -30,7 +30,7 @@ export default function MyReview() {
   return (
     <div className="min-w-[375px] max-w-[428px] h-svh">
       <Link to={"/map"}>
-        <img src={back} />
+        <img src={"./images/back"} />
       </Link>
       <h2>내가 쓴 리뷰</h2>
       {reviews && reviews.length > 0 ? (

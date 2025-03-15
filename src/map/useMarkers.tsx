@@ -1,8 +1,8 @@
 import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getReview } from "../../review";
+import { getReview } from "../api";
 import { useRefContext } from "../app/context/RefContext";
-import { Place } from "../../entity/place/model/Place";
+import { Place } from "../types";
 import { RootState } from "../app/redux/store";
 
 type Position = {
@@ -12,11 +12,11 @@ type Position = {
 // 리뷰 상태에 따른 마커 이미지 설정
 const MARKER_CONFIG = {
   WITH_REVIEW: {
-    imageSrc: `/assets/coffee.png`, 
+    imageSrc: `/images/coffee.png`, 
     size: { width: 25, height: 25 },
   },
   NO_REVIEW: {
-    imageSrc: `/assets/coffeeb.png`,
+    imageSrc: `/images/coffeeb.png`,
     size: { width: 25, height: 25 },
   },
 };
@@ -110,10 +110,28 @@ export const useMarkers = (map: kakao.maps.Map) => {
     }
   }, [places, updateMarkers, clearMarkers]);
 
+   const displayCafeMarkers = async (cafeData: any[]) => {
+      if (!map) return;
+  
+      const bounds = new kakao.maps.LatLngBounds();
+  
+      cafeData.forEach((place, index) => {
+        const position = new kakao.maps.LatLng(place.y, place.x);
+        bounds.extend(position);
+        const positionObj: Position = { La: place.y, Ma: place.x };
+        addMarker(positionObj, place, index);
+      });
+  
+      if (cafeData.length > 2) {
+        map.setBounds(bounds);
+      }
+    };
+  
+
   return {
     markers: markersRef.current,
     clearMarkers,
-    addMarker,
+    displayCafeMarkers,
     updateMarkers,
   };
 };
