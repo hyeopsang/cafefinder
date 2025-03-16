@@ -1,4 +1,4 @@
-import { useKakaoMap } from "./useKakaoMap"
+import { useKakaoMap } from "../utils/useKakaoMap"
 
 export default function LocationButton () {
     const { moveToCurrentLocation } = useKakaoMap();
