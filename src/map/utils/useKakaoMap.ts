@@ -47,6 +47,7 @@ export const useKakaoMap = () => {
               const newPs = new kakao.maps.services.Places();
               setMap(newMap); // 맵 객체 상태로 설정
               setPs(newPs);   // Places 객체 상태로 설정
+
             },
             (error) => {
               console.error("현재 위치를 가져오는 데 실패했습니다:", error);
@@ -59,7 +60,7 @@ export const useKakaoMap = () => {
     };
 
     initializeMap(); // 맵 초기화 함수 실행
-  }, [map]); // `map` 상태가 `null`일 때만 초기화하도록 설정
+  }, []);
 
   // 현재 위치로 이동하는 함수
   const moveToCurrentLocation = () => {

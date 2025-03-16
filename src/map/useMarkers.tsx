@@ -127,7 +127,6 @@ export const useMarkers = (map: kakao.maps.Map) => {
       }
     };
   
-
   return {
     markers: markersRef.current,
     clearMarkers,

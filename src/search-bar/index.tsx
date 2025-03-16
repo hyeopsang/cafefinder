@@ -1,17 +1,18 @@
 import { cancel, search, menu } from "./assets";
-
+import { useSearch } from "../map/useSearch";
 interface SearchFormProps {
-  onSearch: (searchTxt: string) => void;
   searchTxt: string;
   setSearchTxt: (value: string) => void;
   onMenu: (value: boolean) => void;
+  currentLocation: kakao.maps.LatLng;
 }
 
-const SearchForm = ({ onSearch, searchTxt, setSearchTxt, onMenu }: SearchFormProps) => {
+const SearchForm = ({ currentLocation, searchTxt, setSearchTxt, onMenu }: SearchFormProps) => {
+  const { performSearch } = useSearch( currentLocation );
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTxt.trim() === "") return;
-    onSearch(searchTxt);
+    performSearch();
   };
 
   const onChangeTxt = (e: React.ChangeEvent<HTMLInputElement>) => {
