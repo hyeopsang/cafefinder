@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { useRefContext } from "../../app/context/RefContext";
 import { Place } from "../../types";
-
+import { useSelector } from "react-redux";
 const { kakao } = window;
 
 interface CafeSwiperProps {
@@ -14,8 +14,9 @@ interface CafeSwiperProps {
   markers: any[];
 }
 
-export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, map, markers }) => {
+export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
   const { swiperRef } = useRefContext(); 
+  const map = useSelector((state: kakao.maps.Map) => state);
 
   const handleSlideChange = (swiper: SwiperType) => {
     const activePlace = places[swiper.activeIndex];

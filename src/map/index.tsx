@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useKakaoMap } from "./utils/useKakaoMap";
 import { useMarkers } from "./useMarkers";
 import { getCurrentLocation } from "../utils/locationUtils";
 import SearchForm from "../search-bar";
@@ -19,11 +18,11 @@ type Position = {
 
 function KakaoMap() {
   const places = useSelector((state: RootState) => state.places) as Place[];
+  const map = useSelector((state: kakao.maps.Map) => state);
   const [menu, setMenu] = useState(false);
   const [searchTxt, setSearchTxt] = useState("");
-  const [showReGps, setShowReGps] = useState(false);
-  const { map } = useKakaoMap();
-  const { markers } = useMarkers(map!);
+  const [showReGps, setShowReGps] = useState(true);
+  const { markers } = useMarkers();
    
   const [currentLocation, setCurrentLocation] = useState<kakao.maps.LatLng | null>(null);
   useEffect(() => {
@@ -49,9 +48,7 @@ function KakaoMap() {
         markers={markers}
       />
       <LocationButton />
-      {showReGps && (
         <BoundSearch setSearchTxt={setSearchTxt} setShowReGps={setShowReGps} showReGps={showReGps}/>
-      )}
     </div>
   );
 }

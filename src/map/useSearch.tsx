@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { useKakaoMap } from "./utils/useKakaoMap";
 import { getCurrentLocation, getDistanceFromLatLonInKm } from "../utils/locationUtils";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setPlaces } from "../app/redux/placesSlice";
 import { useMarkers } from "./useMarkers";
 
 export function useSearch(currentLocation : kakao.maps.LatLng){
     const [searchTxt, setSearchTxt] = useState("");
-    const { ps, map } = useKakaoMap();
+    const map = useSelector((state: kakao.maps.Map) => state);
+
+    const { ps } = useKakaoMap();
     const dispatch = useDispatch();
-    const { displayCafeMarkers } = useMarkers(map!);
+    const { displayCafeMarkers } = useMarkers();
 
     const performSearch = useCallback(async () => {
         if (!ps || !map || !currentLocation) return;

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useCallback } from "react";
-import { useKakaoMap } from "./useKakaoMap";
+import { useSelector } from "react-redux";
 
 export function useMapCenterChanged(setShowReGps: React.Dispatch<React.SetStateAction<boolean>>) {
-    const { map } = useKakaoMap();
+    const map = useSelector((state: kakao.maps.Map) => state);
     const isListenerAttached = useRef(false); // 이벤트 중복 등록 방지
 
     const handleCenterChanged = useCallback(() => {
+        console.log('useMapCenterChanged', map?.getCenter());
         setShowReGps(true);
     }, [setShowReGps]);
 

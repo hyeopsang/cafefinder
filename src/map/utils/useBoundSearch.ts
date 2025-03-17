@@ -4,20 +4,21 @@ import { useMarkers } from "../useMarkers";
 import { getDistanceFromLatLonInKm } from "../../utils/locationUtils";
 import { useDispatch } from "react-redux";
 import { setPlaces } from "../../app/redux/placesSlice";
-
+import { useSelector } from "react-redux";
 export function useBoundSearch(
   setSearchTxt: React.Dispatch<React.SetStateAction<string>>,
   setShowReGps: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const dispatch = useDispatch();
-  const { map, ps } = useKakaoMap();
-  const { clearMarkers, displayCafeMarkers } = useMarkers(map!);
+  const map = useSelector((state: kakao.maps.Map) => state);
+  const { ps } = useKakaoMap();
+  const { clearMarkers, displayCafeMarkers } = useMarkers();
 
   useEffect(() => {
     if (!map) return;
 
-    setShowReGps(true);
     const handleMapMove = () => {
+      console.log('useBoundSearch',map.getCenter());
       setShowReGps(true); // 지도 이동 시 버튼 다시 활성화
     };
 

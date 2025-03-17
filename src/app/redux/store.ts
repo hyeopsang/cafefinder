@@ -5,6 +5,7 @@ import sessionStorage from "redux-persist/lib/storage/session"; // sessionStorag
 import authReducer from "./authSlice";
 import placesReducer from "./placesSlice";
 import reviewsReducer from "./reviewsSlice";
+import mapReducer from "./mapSlice";
 
 const persistConfig = {
   key: "root",
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   places: placesReducer,
   reviews: reviewsReducer,
+  map: mapReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

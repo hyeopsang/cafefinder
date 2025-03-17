@@ -17,10 +17,10 @@
     "noImplicitAny": false,
     "noUnusedLocals": false,
     "baseUrl": "./", // 프로젝트 루트 경로
-    "noUncheckedSideEffectImports": false,
+    // "noUncheckedSideEffectImports": false,
     "paths": {
       "@/*": ["./src/*"], 
-      "swiper/css": ["node_modules/swiper/swiper.css"] // Swiper CSS 별칭 매핑
+      // "swiper/css": ["node_modules/swiper/swiper.css"] // Swiper CSS 별칭 매핑
     }
   },
   "include": ["src", "swiper.d.ts", "src/globals.d.ts"],

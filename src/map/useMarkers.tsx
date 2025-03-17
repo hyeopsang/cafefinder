@@ -22,8 +22,9 @@ const MARKER_CONFIG = {
 };
 
 
-export const useMarkers = (map: kakao.maps.Map) => {
+export const useMarkers = () => {
   const markersRef = useRef<kakao.maps.Marker[]>([]);
+  const map = useSelector((state: kakao.maps.Map) => state);
   const places = useSelector((state: RootState) => state.places) as Place[];
   const { swiperRef } = useRefContext();
 
@@ -64,7 +65,6 @@ export const useMarkers = (map: kakao.maps.Map) => {
           image: markerImage,
           clickable: true,
         };
-        console.log(markerOptions)
         const marker = new window.kakao.maps.Marker(markerOptions);
         marker.setMap(map);
         marker.placeIndex = placeIndex;

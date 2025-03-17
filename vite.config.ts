@@ -1,19 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
-import Swiper from 'swiper';
+// import Swiper from 'swiper';
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    include: ['swiper']
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      swiper: 'swiper'
-    },
-  },
+  // optimizeDeps: {
+  //   include: ['swiper']
+  // },
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, 'src'),
+  //     swiper: 'swiper'
+  //   },
+  // },
   envDir: '.'
 })

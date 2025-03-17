@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-
+import { setMap } from "../../app/redux/mapSlice";
+import { useSelector } from "react-redux";
 const { kakao } = window;
 
 export const useKakaoMap = () => {
-  const [map, setMap] = useState<kakao.maps.Map | null>(null);
   const [ps, setPs] = useState<kakao.maps.services.Places | null>(null);
-
+  const map = useSelector((state: kakao.maps.Map) => state);
   useEffect(() => {
     const initializeMap = () => {
       const mapContainer = document.getElementById("map");
