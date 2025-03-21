@@ -1,5 +1,5 @@
 import { cancel, search, menu } from "./assets";
-import { useSearch } from "../map/utils/useSearch";
+import { useSearch } from "../utils/useSearch";
 
 interface SearchFormProps {
   onMenu: (value: boolean) => void;
@@ -29,7 +29,7 @@ const SearchForm = ({ currentLocation, onMenu }: SearchFormProps) => {
 
   return (
     <form
-      className="fixed left-1/2 top-5 z-10 flex h-fit min-w-[365px] max-w-[418px] -translate-x-1/2 justify-between gap-0 rounded-[15px] bg-white shadow-md"
+      className="absolute left-1/2 top-5 z-10 flex h-fit min-w-[365px] max-w-[418px] -translate-x-1/2 justify-between gap-0 rounded-[15px] bg-white shadow-md"
       id="search_form"
       onSubmit={handleSearch}
     >

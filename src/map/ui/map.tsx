@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useMapContext } from "../../app/context/MapContext";
+import initializeMap from "../utils/useMap";
 
 export default function Map() {
-    const { map } = useMapContext();
-    
-    useEffect(() => {
-        if (map) {
-            map.setLevel(5);
-        }
-    }, [map]);
+  const { map } = useMapContext();
+  const mapContainerRef = initializeMap();  
 
-    return <div id="map" style={{ width: "100%", height: "100vh" }} />;
+  useEffect(() => {
+    if (map) {
+      map.setLevel(5); // 맵이 설정되면 레벨 설정
+    }
+  }, [map]);
+
+  return <div id="map" ref={mapContainerRef} style={{ width: "100%", height: "100vh" }} />;
 }

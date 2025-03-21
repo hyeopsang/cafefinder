@@ -14,7 +14,7 @@ interface CafeSwiperProps {
   markers: any[];
 }
 
-export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
+const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
   const { swiperRef } = useRefContext(); 
   const { map, setMap } = useMapContext();
 
@@ -33,7 +33,6 @@ export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
   };
 
   return (
-    <div className="absolute bottom-5 z-10 min-w-[375px] max-w-[428px] text-[#212121]">
       <Swiper
         spaceBetween={0}
         slidesPerView={1}
@@ -44,9 +43,9 @@ export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
         }}
         onSlideChange={handleSlideChange}
       >
-        {places.map((place, id) => (
-          <SwiperSlide key={id}>
-            <Link to={`/detail/${id}`}>
+        {places.map((place) => (
+          <SwiperSlide key={place.id}>
+            <Link to={`/place/${place.id}`}>
               <div
                 className="mx-auto w-[calc(100%-60px)] rounded-3xl bg-white p-5 shadow-md"
                 style={{ cursor: "default" }}
@@ -61,6 +60,6 @@ export const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
   );
 };
+export default CafeSwiper;

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getCurrentLocation, getDistanceFromLatLonInKm } from "../../utils/locationUtils";
+import { getDistanceFromLatLonInKm } from "../../utils/getDistanceFromLatLonInKm";
 import { useDispatch } from "react-redux";
 import { setPlaces } from "../../app/redux/placesSlice";
 import { useMarkers } from "./useMarkers";

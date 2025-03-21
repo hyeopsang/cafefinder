@@ -5,8 +5,8 @@ import { Place } from "../types/place-type";
 import { useMarkers } from "./utils/useMarkers";
 import { useInitializeMap } from "./utils/useInitializeMap";
 import { useCurrentLocation } from "./utils/useCurrentLocation"
-import SearchForm from "../search-bar";
-import { CafeSwiper } from "../widget/cafe-swiper";
+import SearchBar from "./ui/search-bar";
+import CafeSwiper from "./ui/cafe-swiper";
 import Menu from "../widget/side-bar/Menu";
 import "../styles/KakaoMap.css";
 import LocationButton from "./ui/location-button";
@@ -25,14 +25,17 @@ function KakaoMap() {
     <div className="relative h-svh mx-auto min-w-[375px] max-w-[428px] overflow-hidden">
       {menu && <Menu onMenu={setMenu} />}
       <Map />
-      <SearchForm
+      <SearchBar
         onMenu={setMenu}
         currentLocation={currentLocation!}
       />
-      <CafeSwiper
-        places={places}
-        markers={markers}
-      />
+      <div className="absolute bottom-5 w-full h-fit bg-white">
+        <CafeSwiper
+          places={places}
+          markers={markers}
+        />
+      </div>
+      
       <LocationButton />
       <BoundSearch setShowReGps={setShowReGps} showReGps={showReGps} />
     </div>

@@ -2,8 +2,8 @@ import "../styles/MyReview.css";
 import { Link } from "react-router";
 import { useUserReviews } from "../api";
 import { useSelector } from "react-redux";
-import { back } from "./assets";
-import { formatTime } from "../utils/fomattedTime";
+import { back } from "../images";
+import { formattedTime } from "../utils/fomattedTime";
 interface User {
   [key: string]: any;
 }
@@ -18,7 +18,7 @@ interface AuthState {
   user: User | null;
 }
 
-export default function MyReview() {
+export default function ReviewList() {
   const auth: AuthState = useSelector((state: StateType) => state.auth);
   const userId = auth.user?.id;
 
@@ -37,7 +37,7 @@ export default function MyReview() {
         reviews.map((review) => (
           <div key={review.id}>
             <p className="placeName">{review.content.placeName}</p>
-            <p>{formatTime(review.createdAt)}</p>
+            <p>{formattedTime(review.createdAt)}</p>
             <p>{review.content.text || "No text"}</p>
           </div>
         ))

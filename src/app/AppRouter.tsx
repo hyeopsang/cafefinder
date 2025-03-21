@@ -5,7 +5,7 @@ import PlaceReviewPage from "../place";
 import ReviewWrite from "../place/review-form";
 import Auth from "../kakao-login/logging";
 import Login from "../kakao-login/login";
-import MyReview from "../profile/my-review";
+import ReviewList from "../profile/review-list";
 const RouterInfo = [
   {
     path: "/",
@@ -26,7 +26,7 @@ const RouterInfo = [
         path: "/myreview",
         element: (
           <ProtectedRoute>
-            <MyReview />
+            <ReviewList />
           </ProtectedRoute>
         ),
       },
@@ -35,7 +35,7 @@ const RouterInfo = [
         element: <Auth />,
       },
       {
-        path: "/map/detail/:id",
+        path: "/place/:id",
         element: (
           <ProtectedRoute>
             <PlaceReviewPage />

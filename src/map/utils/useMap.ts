@@ -1,13 +1,14 @@
-import { useCallback } from "react";
+import { useEffect, useRef } from "react";
 import { useMapContext } from "../../app/context/MapContext";
 import { usePlaceContext } from "../../app/context/PlaceContext";
 
-export default function initializeMap () {
-    const { map, setMap } = useMapContext();
-    const { setPlace } = usePlaceContext();
-    const mapContainer = document.getElementById("map");
+export default function initializeMap() {
+  const { map, setMap } = useMapContext();
+  const { setPlace } = usePlaceContext();
+  const mapContainerRef = useRef(null);  // DOM 요소를 관리하는 ref
 
-    if (!mapContainer) {
+  useEffect(() => {
+    if (!mapContainerRef.current) {
       console.error("Map container not found");
       return;
     }
@@ -20,7 +21,7 @@ export default function initializeMap () {
           const currentPos = new kakao.maps.LatLng(lat, lng);
 
           // 새로운 맵 객체 생성
-          const newMap = new kakao.maps.Map(mapContainer, {
+          const newMap = new kakao.maps.Map(mapContainerRef.current, {
             center: currentPos, // 현재 위치로 맵 초기화
             level: 6,
           });
@@ -28,7 +29,7 @@ export default function initializeMap () {
           const markerImage = new kakao.maps.MarkerImage(
             "/images/gomgom.png",
             new kakao.maps.Size(35, 35),
-            { offset: new kakao.maps.Point(20, 40) },
+            { offset: new kakao.maps.Point(20, 40) }
           );
 
           // 마커 추가
@@ -43,7 +44,6 @@ export default function initializeMap () {
           const newPs = new kakao.maps.services.Places();
           setMap(newMap); // 맵 객체 상태로 설정
           setPlace(newPs);   // Places 객체 상태로 설정
-
         },
         (error) => {
           console.error("현재 위치를 가져오는 데 실패했습니다:", error);
@@ -52,4 +52,7 @@ export default function initializeMap () {
     } else {
       console.error("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
     }
-  };
+  }, [setMap, setPlace]);
+
+  return mapContainerRef; // mapContainerRef를 반환
+}

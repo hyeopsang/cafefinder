@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getCurrentLocation } from "../../utils/locationUtils";
+import { getCurrentLocation } from "./getCurrentLocation";
 
 export const useCurrentLocation = () => {
   const [currentLocation, setCurrentLocation] = useState<kakao.maps.LatLng | null>(null);
