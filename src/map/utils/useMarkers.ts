@@ -1,10 +1,10 @@
 import { useRef, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getReview } from "../api";
-import { useRefContext } from "../app/context/RefContext";
+import { getReview } from "../../api";
 import { Place } from "../types";
-import { RootState } from "../app/redux/store";
-
+import { RootState } from "../../app/redux/store";
+import { useMapContext } from "../../app/context/MapContext";
+import { useRefContext } from "../../app/context/RefContext";
 type Position = {
   La: number;
   Ma: number;
@@ -24,8 +24,8 @@ const MARKER_CONFIG = {
 
 export const useMarkers = () => {
   const markersRef = useRef<kakao.maps.Marker[]>([]);
-  const map = useSelector((state: kakao.maps.Map) => state);
   const places = useSelector((state: RootState) => state.places) as Place[];
+  const { map } = useMapContext();
   const { swiperRef } = useRefContext();
 
   const createMarkerImage = useCallback((hasReview: boolean) => {

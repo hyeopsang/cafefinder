@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useMapCenterChanged } from "../utils/useMapCenterChanged";
+import { useMapContext } from "../../app/context/MapContext";
 
-export default function Map({ setShowReGps }: { setShowReGps: React.Dispatch<React.SetStateAction<boolean>> }) {
-    const { map } = useMapCenterChanged(setShowReGps);
-
+export default function Map() {
+    const { map } = useMapContext();
+    
     useEffect(() => {
         if (map) {
             map.setLevel(5);

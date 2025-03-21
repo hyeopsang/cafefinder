@@ -1,47 +1,44 @@
 import { useEffect } from "react";
-import { useKakaoMap } from "./useKakaoMap";
-import { useMarkers } from "../useMarkers";
+import { useMarkers } from "./useMarkers";
 import { getDistanceFromLatLonInKm } from "../../utils/locationUtils";
 import { useDispatch } from "react-redux";
 import { setPlaces } from "../../app/redux/placesSlice";
 import { useSelector } from "react-redux";
+import { useMapContext } from "../../app/context/MapContext";
+import { usePlaceContext } from "../../app/context/PlaceContext";
 export function useBoundSearch(
-  setSearchTxt: React.Dispatch<React.SetStateAction<string>>,
   setShowReGps: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const dispatch = useDispatch();
-  const map = useSelector((state: kakao.maps.Map) => state);
-  const { ps } = useKakaoMap();
+  const { map, setMap } = useMapContext();
+  const { place, setPlace } = usePlaceContext();
   const { clearMarkers, displayCafeMarkers } = useMarkers();
-
+  const handleMapMove = () => {
+    setShowReGps(true);
+  };
   useEffect(() => {
     if (!map) return;
-
-    const handleMapMove = () => {
-      console.log('useBoundSearch',map.getCenter());
-      setShowReGps(true); // 지도 이동 시 버튼 다시 활성화
-    };
 
     kakao.maps.event.addListener(map, "center_changed", handleMapMove);
 
     return () => {
       kakao.maps.event.removeListener(map, "center_changed", handleMapMove);
     };
-  }, [map, setShowReGps]);
+  }, [map]);
 
   const searchCafesInBounds = () => {
     
-    setSearchTxt("");
-    if (!map || !ps) return;
-    clearMarkers();
-    setShowReGps(false); 
+    setShowReGps(false)
 
+    if (!map || !place) return;
+    clearMarkers();
+    setShowReGps(false)
     const bounds = map.getBounds();
     const swLatLng = bounds.getSouthWest();
     const neLatLng = bounds.getNorthEast();
     const center = map.getCenter();
 
-    ps.categorySearch(
+    place.categorySearch(
       "CE7",
       async (data, status) => {
         if (status === kakao.maps.services.Status.OK) {

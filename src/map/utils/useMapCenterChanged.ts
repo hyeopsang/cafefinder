@@ -1,8 +1,8 @@
 import { useEffect, useRef, useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useMapContext } from "../../app/context/MapContext";
 
 export function useMapCenterChanged(setShowReGps: React.Dispatch<React.SetStateAction<boolean>>) {
-    const map = useSelector((state: kakao.maps.Map) => state);
+    const { map, setMap } = useMapContext();
     const isListenerAttached = useRef(false); // 이벤트 중복 등록 방지
 
     const handleCenterChanged = useCallback(() => {
@@ -14,11 +14,11 @@ export function useMapCenterChanged(setShowReGps: React.Dispatch<React.SetStateA
         if (!map || isListenerAttached.current) return; // ✅ map이 없거나 이미 등록된 경우 실행 X
 
         kakao.maps.event.addListener(map, "center_changed", handleCenterChanged);
-        isListenerAttached.current = true; // ✅ 리스너 등록 플래그 설정
+        isListenerAttached.current = true;
 
         return () => {
             kakao.maps.event.removeListener(map, "center_changed", handleCenterChanged);
-            isListenerAttached.current = false; // ✅ 언마운트 시 리스너 플래그 초기화
+            isListenerAttached.current = false;
         };
     }, [map, handleCenterChanged]);
 
