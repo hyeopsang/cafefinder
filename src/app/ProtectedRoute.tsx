@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   if (!isAuthenticated) {
     alert("로그인이 필요한 서비스입니다.");
-    return <Navigate to="/auth" replace state={{ from: location }} />;
+    return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
   return children;

@@ -5,11 +5,11 @@ export default function LocationButton() {
 
   return (
     <div
-      className="absolute right-[30px] top-30 z-30 aspect-square w-[40px] rounded-3xl bg-white shadow-md"
+      className="absolute right-[30px] top-30 z-30 aspect-square w-[40px]"
       id="centerOnMyLocation"
       onClick={moveToLocation} // 이벤트 핸들러에 함수 전달
     >
-      <img src={"/images/gps.png"} alt="Center on my location" />
+      <img src={"/images/gps.svg"} alt="Center on my location" className="drop-shadow-lg"/>
     </div>
   );
 }

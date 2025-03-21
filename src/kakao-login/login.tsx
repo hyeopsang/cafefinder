@@ -1,4 +1,3 @@
-import "../styles/Login.css";
 import { KAKAO_AUTH_URL } from "../config";
 import { kakaologin, logingomgom } from "./assets";  
 

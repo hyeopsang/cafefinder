@@ -15,7 +15,7 @@ export const useMoveToCurrentLocation = () => {
 
           // 마커 이미지 설정
           const markerImage = new kakao.maps.MarkerImage(
-            "/assets/gomgom.png",
+            "/images/user.png",
             new kakao.maps.Size(35, 35),
             { offset: new kakao.maps.Point(20, 40) }
           );

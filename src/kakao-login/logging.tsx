@@ -42,7 +42,7 @@ export default function Logging() {
       });
       dispatch(loginSuccess({ id: userInfo.id, ...userInfo }));
       // 유저 정보 확인 후 페이지 이동
-      navigate("/map");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }

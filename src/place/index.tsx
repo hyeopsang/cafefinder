@@ -53,7 +53,9 @@ export default function PlaceReviewPage() {
     <div className="h-svh mx-auto grid min-w-[375px] max-w-[428px] grid-cols-1 gap-[30px] bg-white pb-[60px] text-[#212121]">
       <PlaceInfo reviewColor={reviewColor} place={place} />
       <div className="flex w-full flex-col gap-[30px] px-[50px]">
-        <MyReview reviews={userReviews} modal={writeModal} setModal={setWriteModal} />
+        {userId && (
+          <MyReview reviews={userReviews} modal={writeModal} setModal={setWriteModal} />
+        )}
         <OtherReview reviews={otherReviews} />
       </div>
       {writeModal && (

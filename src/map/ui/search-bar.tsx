@@ -1,12 +1,11 @@
-import { cancel, search, menu } from "./assets";
 import { useSearch } from "../utils/useSearch";
 
 interface SearchFormProps {
-  onMenu: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
   currentLocation: kakao.maps.LatLng;
 }
 
-const SearchForm = ({ currentLocation, onMenu }: SearchFormProps) => {
+const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
   const { performSearch, setSearchTxt, searchTxt } = useSearch(currentLocation);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,8 +32,8 @@ const SearchForm = ({ currentLocation, onMenu }: SearchFormProps) => {
       id="search_form"
       onSubmit={handleSearch}
     >
-      <button className="h-[55px] p-[15px]" onClick={() => onMenu(true)}>
-        <img className="w-[25px]" src={"/images/menu.png"} alt="Menu" />
+      <button className="p-[15px]" onClick={() => setIsOpen(true)}>
+        <img className="w-[25px] drop-shadow-lg" src={"/images/menu.svg"} alt="Menu" />
       </button>
       <input
         type="text"
@@ -54,8 +53,8 @@ const SearchForm = ({ currentLocation, onMenu }: SearchFormProps) => {
           />
         </div>
       )}
-      <button className="h-[55px] p-[15px]" type="submit">
-        <img className="w-[25px]" src={"/images/search.png"} alt="Search" />
+      <button className="p-[15px]" type="submit">
+        <img className="w-[25px] drop-shadow-lg" src={"/images/search.svg"} alt="Search" />
       </button>
     </form>
   );

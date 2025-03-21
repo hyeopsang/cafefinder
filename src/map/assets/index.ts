@@ -1,6 +1,6 @@
 import coffee from "./coffee.png";
 import coffeeb from "./coffeeb.png";
 import gps from "./gps.png";
-import gomgom from "./gomgom.png";
+import user from "./user.png";
 
-export { coffee, coffeeb, gps, gomgom };
+export { coffee, coffeeb, gps, user };

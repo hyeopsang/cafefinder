@@ -11,7 +11,7 @@ export function useMapCenterChanged(setShowReGps: React.Dispatch<React.SetStateA
     }, [setShowReGps]);
 
     useEffect(() => {
-        if (!map || isListenerAttached.current) return; // ✅ map이 없거나 이미 등록된 경우 실행 X
+        if (!map || isListenerAttached.current) return; 
 
         kakao.maps.event.addListener(map, "center_changed", handleCenterChanged);
         isListenerAttached.current = true;

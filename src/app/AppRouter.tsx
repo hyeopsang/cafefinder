@@ -11,16 +11,15 @@ const RouterInfo = [
     path: "/",
     children: [
       {
+        path: "/",
         index: true,
-        element: <Login />,
+        element: (
+            <KakaoMap />
+        ),
       },
       {
-        path: "/map",
-        element: (
-          <ProtectedRoute>
-            <KakaoMap />
-          </ProtectedRoute>
-        ),
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/myreview",
@@ -37,9 +36,7 @@ const RouterInfo = [
       {
         path: "/place/:id",
         element: (
-          <ProtectedRoute>
-            <PlaceReviewPage />
-          </ProtectedRoute>
+          <PlaceReviewPage />
         ),
       },
       {

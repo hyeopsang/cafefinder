@@ -1,4 +1,3 @@
-import "../styles/ReviewWrite.css";
 import { useState } from "react";
 import { addReview } from "../api";
 import { useSelector } from "react-redux";

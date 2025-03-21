@@ -20,7 +20,7 @@ interface PlaceInfoProps {
 export default function PlaceInfo({ reviewColor, place } : PlaceInfoProps) {
     return (
         <>
-        <Link to={"/map"}>
+        <Link to={"/"}>
             <img className="w-full object-cover" src={"/images/back.png"} alt="Back" />
         </Link>
         <h1 className="text-center text-[22px] font-bold">{place.place_name}</h1>

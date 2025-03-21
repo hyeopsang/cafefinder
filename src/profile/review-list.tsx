@@ -1,8 +1,6 @@
-import "../styles/MyReview.css";
 import { Link } from "react-router";
 import { useUserReviews } from "../api";
 import { useSelector } from "react-redux";
-import { back } from "../images";
 import { formattedTime } from "../utils/fomattedTime";
 interface User {
   [key: string]: any;
@@ -29,11 +27,12 @@ export default function ReviewList() {
 
   return (
     <div className="min-w-[375px] max-w-[428px] h-svh">
-      <Link to={"/map"}>
+      <Link to={"/"}>
         <img src={"./images/back"} />
       </Link>
       <h2>내가 쓴 리뷰</h2>
       {reviews && reviews.length > 0 ? (
+        console.log(reviews),
         reviews.map((review) => (
           <div key={review.id}>
             <p className="placeName">{review.content.placeName}</p>
