@@ -16,7 +16,7 @@
     "types": ["vite/client", "kakao.maps.d.ts"],
     "noImplicitAny": false,
     "noUnusedLocals": false,
-    "baseUrl": "./", // 프로젝트 루트 경로
+    "baseUrl": ".", // 프로젝트 루트 경로
     // "noUncheckedSideEffectImports": false,
     "paths": {
       "@/*": ["./src/*"], 

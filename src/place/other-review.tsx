@@ -1,4 +1,5 @@
 import { Review } from "../types";
+import ReviewItem from "../ui/review-item";
 
 interface OtherReviewProps {
     reviews: Review[];
@@ -7,17 +8,16 @@ interface OtherReviewProps {
 export default function OtherReview ({ reviews }: OtherReviewProps) {
     return (
         <>
-        <div className="w-full flex-col gap-[15px] rounded-[15px] bg-[#fdf4d5] p-[15px] text-center text-[16px] font-medium text-[#212121]">
           {reviews.length > 0 ? (
-            reviews.map((review, index) => (
-              <div key={index}>
-                <p>"{review.content.text}"</p>
-              </div>
+            reviews.map((review, id) => (
+              <ReviewItem key={id} review={review}/>
             ))
           ) : (
-            <p>등록된 리뷰가 없어요 ㅠ</p>
+            <div className="w-full flex-col gap-10 rounded-2xl bg-neutral-100 py-4 text-center text-[16px] font-normal shadow-sm text-[#212121]">
+              <p className="text-md text-neutral-900">작성된 리뷰가 없어요ㅠ</p>
+            </div>
+
           )}
-        </div>
         </>
     )
 }

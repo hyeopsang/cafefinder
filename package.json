@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.2",
     "@reduxjs/toolkit": "^2.6.0",
-    "@tanstack/react-query": "^5.67.1",
+    "@tanstack/react-query": "^5.69.0",
     "axios": "^1.8.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "firebase": "^11.4.0",
     "framer-motion": "^12.5.0",
+    "lucide-react": "^0.483.0",
     "qs": "^6.14.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -23,11 +27,14 @@
     "react-router-dom": "^7.2.0",
     "react-scan": "^0.2.14",
     "redux-persist": "^6.0.0",
-    "swiper": "^11.2.5"
+    "swiper": "^11.2.5",
+    "tailwind-merge": "^3.0.2",
+    "tw-animate-css": "^1.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@tailwindcss/vite": "^4.0.14",
+    "@types/node": "^22.13.11",
     "@types/qs": "^6.9.18",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",

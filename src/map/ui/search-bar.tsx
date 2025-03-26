@@ -1,5 +1,5 @@
 import { useSearch } from "../utils/useSearch";
-
+import { Search, AlignJustify } from "lucide-react";
 interface SearchFormProps {
   setIsOpen: (value: boolean) => void;
   currentLocation: kakao.maps.LatLng;
@@ -28,35 +28,38 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
 
   return (
     <form
-      className="absolute left-1/2 top-5 z-10 flex h-fit min-w-[365px] max-w-[418px] -translate-x-1/2 justify-between gap-0 rounded-[15px] bg-white shadow-md"
-      id="search_form"
-      onSubmit={handleSearch}
-    >
-      <button className="p-[15px]" onClick={() => setIsOpen(true)}>
-        <img className="w-[25px] drop-shadow-lg" src={"/images/menu.svg"} alt="Menu" />
-      </button>
-      <input
-        type="text"
-        id="keyword"
-        size={15}
-        className="w-[calc(100%-140px)] bg-white outline-none"
-        value={searchTxt}
-        onChange={onChangeTxt}
-        placeholder="검색"
-      />
-      {searchTxt && (
-        <div className="z-20 flex w-[30px] items-center px-[5px]">
-          <img
-            src={"/images/cancel.png"}
-            onClick={handleCancel}
-            alt="Cancel"
-          />
-        </div>
-      )}
-      <button className="p-[15px]" type="submit">
-        <img className="w-[25px] drop-shadow-lg" src={"/images/search.svg"} alt="Search" />
-      </button>
-    </form>
+  className="absolute left-1/2 top-5 z-10 flex min-w-[365px] max-w-[418px] -translate-x-1/2 items-center justify-between rounded-[15px] bg-white shadow-md"
+  id="search_form"
+  onSubmit={handleSearch}
+>
+  {/* 메뉴 버튼 */}
+  <button type="button" className="p-4" onClick={() => setIsOpen(true)}>
+    <AlignJustify className="w-6" /> 
+  </button>
+
+  {/* 검색 입력창 */}
+  <input
+    type="text"
+    id="keyword"
+    className="flex-1 text-lg bg-white outline-none px-2"
+    value={searchTxt}
+    onChange={onChangeTxt}
+    placeholder="검색"
+  />
+
+  {/* 입력값이 있을 때만 X 버튼 표시 */}
+  {searchTxt && (
+    <button type="button" className="p-2" onClick={handleCancel}>
+      <img className="w-5" src="/images/cancel.png" alt="Cancel" />
+    </button>
+  )}
+
+  {/* 검색 버튼 */}
+  <button type="submit" className="p-4">
+    <Search className="w-6" />
+  </button>
+</form>
+
   );
 };
 

@@ -2,10 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import KakaoMap from "../map";
 import PlaceReviewPage from "../place";
-import ReviewWrite from "../place/review-form";
 import Auth from "../kakao-login/logging";
 import Login from "../kakao-login/login";
-import ReviewList from "../profile/review-list";
+import ReviewList from "../profile/ui/review-list";
+import BookMark from "../bookmark/book-mark";
 const RouterInfo = [
   {
     path: "/",
@@ -22,7 +22,7 @@ const RouterInfo = [
         element: <Login />,
       },
       {
-        path: "/myreview",
+        path: "/my-review",
         element: (
           <ProtectedRoute>
             <ReviewList />
@@ -40,13 +40,11 @@ const RouterInfo = [
         ),
       },
       {
-        path: "/map/review-write",
+        path: "/book-mark",
         element: (
-          <ProtectedRoute>
-            <ReviewWrite setWriteModal={() => {}} placeId="somePlaceId" placeName="somePlaceName" />
-          </ProtectedRoute>
+          <BookMark />
         ),
-      },
+      }
     ],
   },
 ];

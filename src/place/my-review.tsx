@@ -1,33 +1,33 @@
 import { Review } from "../types";
-
+import { Button } from "../components/ui/button";
+import ReviewItem from "../ui/review-item";
 interface MyReviewProps {
     reviews: Review[];
-    modal: boolean;
-    setModal: React.Dispatch<React.SetStateAction<boolean>>
+    onClickModal: (boolean) => void;
   }
 
-export default function MyReview ({reviews, modal, setModal} : MyReviewProps) {
+export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
+
     return (
         <>
         {reviews.length > 0 ? (
-          <div className="flex w-full flex-col gap-[15px] text-center">
-            <h2 className="w-full text-[18px] font-bold">내가 쓴 리뷰</h2>
+          <div className="flex w-full flex-col gap-2 text-center">
+            <h2 className="w-full text-md font-bold">내가 쓴 리뷰</h2>
             {reviews.map((review, id) => (
-              <div
-                className="w-full rounded-[15px] bg-[#fdf4d5] p-[15px] text-[16px] text-[#212121]"
-                key={id}
-              >
-                <p>"{review.content.text}"</p>
-              </div>
+              <ReviewItem key={id} review={review} onClickModal={() => onClickModal(review)}/>
             ))}
           </div>
         ) : (
-          <div
-            className="mx-auto cursor-pointer rounded-[15px] bg-[#212121] px-[15px] py-[10px] text-[16px] text-white"
-            onClick={() => setModal(!modal)}
-          >
-            <p>리뷰 작성</p>
+          <div className="py-4 border border-neutral-200 shadow-sm rounded-xl flex items-center text-sm text-neutral-900">
+            <Button
+            variant="default"
+            className="w-fit mx-auto bg-buttonRed text-white shadow-none drop-shadow-none"
+            onClick={() => onClickModal(true)}
+            >
+              리뷰 작성
+            </Button>
           </div>
+          
         )}
         </>
     )

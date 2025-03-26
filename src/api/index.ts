@@ -8,10 +8,20 @@ import {
   collectionGroup,
   query,
   where,
+  updateDoc,
+  orderBy,
+  startAfter,
+  limit,
 } from "firebase/firestore"; 
 import { db } from "../firebase-config";
-import { ReviewContent, Review } from "../types";
+import { ReviewContent, Review, Place } from "../types";
 
+interface SavePlace {
+  placeUrl: string;
+  placeName: string;
+  placeAddress: string;
+  placePhone: string;
+}
 // 리뷰 최신화
 export const useReviews = (placeId: string) => {
   return useQuery({
@@ -23,57 +33,149 @@ export const useReviews = (placeId: string) => {
 // 리뷰 불러오기
 export const getReview = async (placeId: string): Promise<Review[]> => {
   const querySnapshot = await getDocs(
-    collection(db, "reviews", placeId, "userReviews"),
+    collection(db, "reviews", placeId, "userReviews")
   );
   return querySnapshot.docs.map((doc) => ({
     id: doc.id,
     placeId,
     content: doc.data().content,
-    createdAt: doc.data().createdAt,
+    createdAt: doc.data().createdAt.toDate(), // Firestore Timestamp → JS Date 변환
     userId: doc.data().userId,
+    updatedAt: doc.data().updatedAt ? doc.data().updatedAt.toDate() : undefined,
   }));
 };
+
 // 리뷰 추가
-export const addReview = async ({ placeId, content, userId }:{placeId: string, content: ReviewContent, userId: string}) => {
+export const addReview = async ({
+  placeId,
+  content,
+  userId,
+}: {
+  placeId: string;
+  content: ReviewContent;
+  userId: string;
+}) => {
   await addDoc(collection(db, "reviews", placeId, "userReviews"), {
     content,
     createdAt: new Date(),
     userId,
   });
 };
-// 리뷰 삭제
-export const deleteReview = async ({ placeId, id }:{ placeId: string, id:string }) => {
-  await deleteDoc(doc(db, "reviews", placeId, "userReviews", id));
-};
-// 사용자 리뷰 불러오기
-export const getUserReviews = async (userId : string) => {
+// 카페 저장 불러오기
+export const getSavedPlaces = async (userId: number) => {
   try {
     if (!userId) {
-      console.error("No userId provided");
+      console.error("🚨 No userId provided");
       return [];
     }
 
-    const reviewsQuery = query(
+    const querySnapshot = await getDocs(
+      collection(db, "users", userId.toString(), "savedPlaces")
+    );
+
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      placeId: doc.data().placeId,
+      content: doc.data().content,
+      createdAt: doc.data().createdAt.toDate(),
+    }));
+  }
+  catch (error) {
+    console.error("🚨 Error fetching saved places: ", error);
+    return [];
+  }
+};
+// 카페 저장
+export const savePlace = async ({
+  placeId,
+  userId,
+  content,
+}: {
+  placeId: string;
+  userId: number;
+  content: Place; 
+}) => {
+  await addDoc(collection(db, "users", userId.toString(), "savedPlaces"), {
+    placeId,
+    content,
+    createdAt: new Date(),
+  });
+};
+// 카페 저장 삭제
+export const deleteSavedPlace = async ({
+  placeId,
+  userId,
+}: {
+  placeId: number;
+  userId: string;
+}) => {
+  await deleteDoc(doc(db, "users", userId, "savedPlaces", placeId.toString()));
+}
+
+// 리뷰 삭제
+export const deleteReview = async ({
+  placeId,
+  id,
+}: {
+  placeId: string;
+  id: string;
+}) => {
+  await deleteDoc(doc(db, "reviews", placeId, "userReviews", id));
+};
+
+// 리뷰 수정 (repostReview → updateReview)
+export const updateReview = async ({
+  placeId,
+  id,
+  content,
+}: {
+  placeId: string;
+  id: string;
+  content: ReviewContent;
+}) => {
+  await updateDoc(doc(db, "reviews", placeId, "userReviews", id), {
+    content,
+    updatedAt: new Date(),
+  });
+};
+// 사용자 리뷰 불러오기
+export const getUserReviews = async (userId: string, lastVisibleDoc?: any) => {
+  try {
+    if (!userId) {
+      console.error("🚨 No userId provided");
+      return { reviews: [], nextQuery: null };
+    }
+
+    let reviewsQuery = query(
       collectionGroup(db, "userReviews"),
       where("userId", "==", userId),
+      orderBy("createdAt", "desc"),
+      limit(10)
     );
+
+    if (lastVisibleDoc) {
+      reviewsQuery = query(reviewsQuery, startAfter(lastVisibleDoc));
+    }
 
     const querySnapshot = await getDocs(reviewsQuery);
 
-    const reviews: Review[] = querySnapshot.docs.map((doc) => ({
+    const reviews = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-      placeId: doc.ref.parent?.parent?.id || '',
+      placeId: doc.ref.parent?.parent?.id,
       content: doc.data().content,
       createdAt: doc.data().createdAt,
       userId: doc.data().userId,
     }));
 
-    return reviews; 
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return { reviews, nextQuery: lastVisible || null };
   } catch (error) {
-    console.error("Error fetching user reviews: ", error);
-    throw error;
+    console.error("🚨 Error fetching user reviews: ", error);
+    return { reviews: [], nextQuery: null };
   }
 };
+
 // 유저 리뷰 최신화 GET
 export const useUserReviews = (userId: string) => {
   return useQuery({
