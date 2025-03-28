@@ -57,14 +57,14 @@ export default function PlaceReviewPage() {
   };
 
   return (
-    <div className="h-svh mx-auto flex flex-col min-w-[375px] max-w-[428px] gap-0 bg-white py-4 text-[#212121]">
+    <div className="h-svh mx-auto flex flex-col min-w-[375px] max-w-[428px] bg-white py-4 text-[#212121]">
       <Link to="/">
       <div className="w-fit flex justify-center p-2 rounded-full bg-buttonRed">
         <ChevronLeft className="text-white" />
       </div>
       </Link>
       <PlaceInfo place={place} />
-      <div className="grid grid-cols-3 py-8 px-16 gap-6 text-sm font-bold text-[#212121]">
+      <div className="w-[320px] mx-auto grid grid-cols-3 py-8 gap-6 text-sm font-bold text-[#212121]">
         {reviewCategories.map((item, index) => (
           <div key={index} className="flex items-center justify-between">
             <p>{item.label}</p>

@@ -28,9 +28,9 @@ const useReviewColor = (reviews: Review[]) => {
       const avg = getAverage(category);
       let color = "#ccc9c2"; // 기본 색상
 
-      if (avg >= 2 && avg < 2.66) color = "#fccbc7"; // "별로에요" 색상
-      else if (avg >= 2.66 && avg < 3.33) color = "#deefc6"; // "보통이에요" 색상
-      else if (avg >= 3.33 && avg <= 4) color = "#bdf3f3"; // "좋아요" 색상
+      if (avg >= 2 && avg < 2.66) color = "#FFD6D6"; // "별로에요" 색상
+      else if (avg >= 2.66 && avg < 3.33) color = "#D9F7BE"; // "보통이에요" 색상
+      else if (avg >= 3.33 && avg <= 4) color = "#D0E8FF"; // "좋아요" 색상
 
       return { ...acc, [category]: color };
     }, {} as Record<keyof ReviewContent, string>);

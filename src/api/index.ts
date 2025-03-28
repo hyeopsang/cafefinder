@@ -12,6 +12,8 @@ import {
   orderBy,
   startAfter,
   limit,
+  getDoc,
+  setDoc
 } from "firebase/firestore"; 
 import { db } from "../firebase-config";
 import { ReviewContent, Review, Place } from "../types";
@@ -62,29 +64,50 @@ export const addReview = async ({
   });
 };
 // 카페 저장 불러오기
-export const getSavedPlaces = async (userId: number) => {
+export const getSavedPlaces = async (userId: string, lastVisibleDoc?: any) => {
   try {
     if (!userId) {
       console.error("🚨 No userId provided");
-      return [];
+      return { savedPlaces: [], nextQuery: null };
     }
 
-    const querySnapshot = await getDocs(
-      collection(db, "users", userId.toString(), "savedPlaces")
+    let savedQuery = query(
+      collection(db, `users/${userId}/savedPlaces`),
+      orderBy("createdAt", "desc"),
+      limit(10)
     );
 
-    return querySnapshot.docs.map((doc) => ({
+    if (lastVisibleDoc) {
+      savedQuery = query(savedQuery, startAfter(lastVisibleDoc));
+    }
+
+    const querySnapshot = await getDocs(savedQuery);
+    
+    const savedPlaces = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       placeId: doc.data().placeId,
       content: doc.data().content,
-      createdAt: doc.data().createdAt.toDate(),
+      createdAt: doc.data().createdAt?.toDate() || new Date(),
     }));
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return { savedPlaces, nextQuery: lastVisible || null };
   }
   catch (error) {
     console.error("🚨 Error fetching saved places: ", error);
-    return [];
+    return { savedPlaces: [], nextQuery: null };
   }
 };
+
+export const useUserSavedPlace = (userId: string | undefined) => {
+  return useQuery({
+    queryKey: ["savedPlaces", userId], 
+    queryFn: () => userId ? getSavedPlaces(userId) : Promise.resolve({ savedPlaces: [], nextQuery: null }),
+    enabled: !!userId, 
+  });
+};
+
 // 카페 저장
 export const savePlace = async ({
   placeId,
@@ -93,9 +116,9 @@ export const savePlace = async ({
 }: {
   placeId: string;
   userId: number;
-  content: Place; 
+  content: Place;
 }) => {
-  await addDoc(collection(db, "users", userId.toString(), "savedPlaces"), {
+  await setDoc(doc(db, "users", userId.toString(), "savedPlaces", placeId), {
     placeId,
     content,
     createdAt: new Date(),
@@ -106,11 +129,26 @@ export const deleteSavedPlace = async ({
   placeId,
   userId,
 }: {
-  placeId: number;
-  userId: string;
+  placeId: string;
+  userId: number;
 }) => {
-  await deleteDoc(doc(db, "users", userId, "savedPlaces", placeId.toString()));
-}
+  try {
+    const docRef = doc(db, "users", userId.toString(), "savedPlaces", placeId);
+
+    // 🔍 문서 존재 여부 확인
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      return alert("북마크에 해당 카페가 저장되어 있지 않습니다ㅜㅜ");
+    }
+
+    // ✅ Firestore에서 문서 삭제
+    await deleteDoc(docRef);
+  } catch (error) {
+    console.error("Firestore에서 장소 삭제 중 오류 발생:", error);
+    alert("북마크 취소를 실패 했어요ㅜㅜ")
+  }
+};
+
 
 // 리뷰 삭제
 export const deleteReview = async ({

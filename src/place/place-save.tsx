@@ -1,8 +1,8 @@
-import { Star } from 'lucide-react';
-import { getSavedPlaces, savePlace } from '../api';
-import { Place } from '../types';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { Star } from "lucide-react";
+import { getSavedPlaces, savePlace, deleteSavedPlace } from "../api"; // 삭제 기능 추가
+import { Place } from "../types";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 interface PlaceInfoProps {
   place: Place;
@@ -24,47 +24,58 @@ interface AuthState {
   user: User | null;
 }
 
-interface SavedPlace {
-  placeId: string;
-  userId: string;
-  content: Place;
-}
-
 export default function PlaceSave({ place }: PlaceInfoProps) {
-  const [isSaved, setIsSaved] = useState<boolean>(false); // 상태값으로 저장 여부를 관리
+  const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); // 중복 클릭 방지
+
   const auth: AuthState = useSelector((state: StateType) => state.auth);
-  const userInfo = auth.user
+  const userInfo = auth.user;
   const dispatch = useDispatch();
-    console.log(userInfo)
-  // 저장된 장소 여부 확인
-  const checkSavedPlace = () => {
-    if (userInfo) {
-      const savedPlaces = getSavedPlaces(userInfo.id);
-    }
-  };
-  console.log(place)
-  // 저장/삭제 처리
-  const onClickSave = async () => {
-    if (userInfo) {
-      if (isSaved) {
-        // 저장된 장소가 이미 있다면 삭제
-        // 삭제 API를 호출하는 로직을 여기에 추가해야 합니다
-        // 예: await deleteSavedPlace({ placeId: place.id, userId: userInfo.id });
-        setIsSaved(false); // 삭제 후 상태 업데이트
-      } else {
-        await savePlace({ placeId: place.id, userId: userInfo.id, content: place });
-        setIsSaved(true); // 저장 후 상태 업데이트
-      }
-    }
-  };
 
   useEffect(() => {
-      checkSavedPlace(); // 사용자 정보가 있을 때 저장된 장소 확인
-  }, []);
+    const fetchSavedStatus = async () => {
+      if (!userInfo) return;
+
+      try {
+        const savedPlaces = await getSavedPlaces(userInfo.id);
+        const alreadySaved = savedPlaces.savedPlaces.some(
+          (saved) => saved.placeId === place.id
+        );
+
+        setIsSaved(alreadySaved);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchSavedStatus();
+  }, [userInfo, place.id]); // 의존성 추가
+
+  const onClickSave = async () => {
+    if (!userInfo || loading) return; // 사용자가 없거나 로딩 중이면 실행 X
+
+    setLoading(true); // API 요청 중 중복 실행 방지
+
+    try {
+      if (isSaved) {
+        await deleteSavedPlace({ placeId: place.id, userId: userInfo.id });
+        setIsSaved(false);
+      } else {
+        await savePlace({ placeId: place.id, userId: userInfo.id, content: place });
+        setIsSaved(true);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Star
-      className={`w-6 h-6 mx-auto ${isSaved ? 'text-yellow-500 fill-yellow-500' : 'text-neutral-900'}`}
+      className={`w-6 h-6 mx-auto cursor-pointer ${
+        isSaved ? "text-yellow-500 fill-yellow-500" : "text-neutral-900"
+      }`}
       onClick={onClickSave}
     />
   );
