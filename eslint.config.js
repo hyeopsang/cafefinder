@@ -24,7 +24,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       '@typescript-eslint/no-explicit-any': 'off', // const { kakao } = window 타입 정의를 위한 any타입 허용
-      "@typescript-eslint/no-unused-vars": "warn"
+      "@typescript-eslint/no-unused-vars": 'off'
     },
   },
 )
