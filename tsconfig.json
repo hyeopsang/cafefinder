@@ -20,7 +20,7 @@
     "baseUrl": ".", // 프로젝트 루트 경로
     // "noUncheckedSideEffectImports": false,
     "paths": {
-      "@/*": ["./src/*"], 
+      "@/*": ["src/*"], 
       // "swiper/css": ["node_modules/swiper/swiper.css"] // Swiper CSS 별칭 매핑
     }
   },
