@@ -1,4 +1,4 @@
-export const VITE_REDIRECT_URI="http://localhost:5173/auth/kakao/callback"
+export const VITE_REDIRECT_URI="https://cafefinder.vercel.app/auth/kakao/callback"
 export const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
 export const CLIENT_SECRET = import.meta.env.VITE_KAKAO_SECRET_KEY;
 export const REDIRECT_URI = VITE_REDIRECT_URI;
