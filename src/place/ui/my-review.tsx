@@ -1,6 +1,6 @@
-import { Review } from "../types";
-import { Button } from "../components/ui/button";
-import ReviewItem from "../ui/review-item";
+import { Review } from "../../types";
+import { Button } from "../../components/ui/button";
+import ReviewItem from "../../ui/review-item";
 interface MyReviewProps {
     reviews: Review[];
     onClickModal: (boolean) => void;

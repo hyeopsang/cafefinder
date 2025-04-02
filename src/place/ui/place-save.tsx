@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
-import { getSavedPlaces, savePlace, deleteSavedPlace } from "../api"; // 삭제 기능 추가
-import { Place } from "../types";
+import { getSavedPlaces, savePlace, deleteSavedPlace } from "../../api"; // 삭제 기능 추가
+import { Place } from "../../types";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 

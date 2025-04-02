@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { Place } from "../types"
+import { Place } from "../../types"
 import MyReview from "./my-review"
 import OtherReview from "./other-review"
 

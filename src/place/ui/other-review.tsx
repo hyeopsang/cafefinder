@@ -1,5 +1,5 @@
-import { Review } from "../types";
-import ReviewItem from "../ui/review-item";
+import { Review } from "../../types";
+import ReviewItem from "../../ui/review-item";
 
 interface OtherReviewProps {
     reviews: Review[];

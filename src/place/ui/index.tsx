@@ -2,14 +2,14 @@ import { useParams, Link } from "react-router";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import ReviewModal from "../ui/review-modal";
-import { useReviews } from "../api"; 
+import ReviewModal from "../../ui/review-modal";
+import { useReviews } from "../../api"; 
 import OtherReview from "./other-review";
 import MyReview from "./my-review";
-import useReviewColor from "../utils/useReviewColor";
-import { Review, Place } from "../types";
+import useReviewColor from "../../utils/useReviewColor";
+import { Review, Place } from "../../types";
 import PlaceInfo from "./place-info";
-import { Button } from "../components/ui/button";
+import { Button } from "../../components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
 interface User {
