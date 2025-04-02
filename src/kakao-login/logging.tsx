@@ -5,9 +5,6 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import qs from "qs";
 
-
-import { REST_API_KEY, REDIRECT_URI, CLIENT_SECRET } from "../config";
-
 export default function Logging() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,10 +15,10 @@ export default function Logging() {
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
-      client_id: REST_API_KEY,
-      redirect_uri: REDIRECT_URI,
+      client_id: import.meta.env.VITE_REST_API_KEY,
+      redirect_uri: import.meta.env.VITE_REDIRECT_URI,
       code: code,
-      client_secret: CLIENT_SECRET,
+      client_secret: import.meta.env.VITE_KAKAO_SECRET_KEY,
     });
 
     try {
