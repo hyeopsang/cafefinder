@@ -1,8 +1,9 @@
 import { useEffect, useRef, useCallback } from "react";
-import { useMapContext } from "../../app/context/MapContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/redux/store";
 
 export function useMapCenterChanged(setShowReGps: React.Dispatch<React.SetStateAction<boolean>>) {
-    const { map, setMap } = useMapContext();
+    const map = useSelector((state: RootState) => state.map.map);
     const isListenerAttached = useRef(false); // 이벤트 중복 등록 방지
 
     const handleCenterChanged = useCallback(() => {

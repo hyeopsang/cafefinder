@@ -1,17 +1,15 @@
-// src/components/ProtectedRoute.js
-import React from "react";
-import { useLocation } from "react-router";
+// src/components/ProtectedRoute.tsx
+import React, { ReactNode } from "react";
+import { useLocation, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
 import { RootState } from "./redux/store";
-import { ReactNode } from "react";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const isAuthenticated = useSelector((state: RootState) => state.auth);
   const location = useLocation();
 
   if (!isAuthenticated) {
@@ -19,7 +17,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

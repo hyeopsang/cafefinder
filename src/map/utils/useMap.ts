@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
-import { useMapContext } from "../../app/context/MapContext";
-import { usePlaceContext } from "../../app/context/PlaceContext";
-
+import { useDispatch } from "react-redux";
+import { setMap } from "../../app/redux/mapSlice";
+import { setSearch } from "../../app/redux/searchSlice";
 export default function initializeMap() {
-  const { map, setMap } = useMapContext();
-  const { setPlace } = usePlaceContext();
-  const mapContainerRef = useRef(null);  // DOM 요소를 관리하는 ref
+  const dispatch = useDispatch();
+  const mapContainerRef = useRef(null);
 
   useEffect(() => {
     if (!mapContainerRef.current) {
@@ -20,9 +19,9 @@ export default function initializeMap() {
           const lng = position.coords.longitude;
           const currentPos = new kakao.maps.LatLng(lat, lng);
 
-          // 새로운 맵 객체 생성
+          // 새로운 카카오맵 객체 생성
           const newMap = new kakao.maps.Map(mapContainerRef.current, {
-            center: currentPos, // 현재 위치로 맵 초기화
+            center: currentPos,
             level: 6,
           });
 
@@ -32,18 +31,18 @@ export default function initializeMap() {
             { offset: new kakao.maps.Point(20, 40) }
           );
 
-          // 마커 추가
+          // 현재 위치 마커 추가
           new kakao.maps.Marker({
-            map: newMap, // 맵 객체
-            position: currentPos, // 위치
+            map: newMap,
+            position: currentPos,
             title: "현재 위치",
-            image: markerImage, // 마커 이미지
-            zIndex: 999, // 다른 마커 위로 올라오게 설정
+            image: markerImage,
+            zIndex: 999,
           });
 
           const newPs = new kakao.maps.services.Places();
-          setMap(newMap); // 맵 객체 상태로 설정
-          setPlace(newPs);   // Places 객체 상태로 설정
+          dispatch(setMap(newMap)); // Redux로 map 상태 설정
+          dispatch(setSearch(newPs)); // PlaceContext 유지
         },
         (error) => {
           console.error("현재 위치를 가져오는 데 실패했습니다:", error);
@@ -52,7 +51,7 @@ export default function initializeMap() {
     } else {
       console.error("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
     }
-  }, [setMap, setPlace]);
+  }, [dispatch, setSearch]);
 
-  return mapContainerRef; // mapContainerRef를 반환
+  return mapContainerRef;
 }

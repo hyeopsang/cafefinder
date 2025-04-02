@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { getReview } from "../../api";
 import { Place } from "../types";
 import { RootState } from "../../app/redux/store";
-import { useMapContext } from "../../app/context/MapContext";
 import { useRefContext } from "../../app/context/RefContext";
 type Position = {
   La: number;
@@ -25,7 +24,7 @@ const MARKER_CONFIG = {
 export const useMarkers = () => {
   const markersRef = useRef<kakao.maps.Marker[]>([]);
   const places = useSelector((state: RootState) => state.places) as Place[];
-  const { map } = useMapContext();
+const map = useSelector((state: RootState) => state.map.map);
   const { swiperRef } = useRefContext();
 
   const createMarkerImage = useCallback((hasReview: boolean) => {
@@ -103,12 +102,14 @@ export const useMarkers = () => {
   }, [clearMarkers, addMarker, places]);
 
   useEffect(() => {
+    if (!map) return;  // ✅ map이 없으면 실행하지 않음
     if (places.length > 0) {
-      updateMarkers();
+        updateMarkers();
     } else {
-      clearMarkers();
+        clearMarkers();
     }
-  }, [places, updateMarkers, clearMarkers]);
+}, [map, places, updateMarkers, clearMarkers]);
+
 
    const displayCafeMarkers = async (cafeData: any[]) => {
       if (!map) return;

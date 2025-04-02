@@ -13,6 +13,7 @@ import Map from "./ui/map";
 
 function KakaoMap() {
   const places = useSelector((state: RootState) => state.places) as Place[];
+  console.log("places", places)
   const [isOpen, setIsOpen] = useState(false);
   const [showReGps, setShowReGps] = useState(false);
   const { markers } = useMarkers();

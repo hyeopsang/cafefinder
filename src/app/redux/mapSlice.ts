@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface MapState { // ✅ export 추가
+  map: kakao.maps.Map | null;
+}
+
+const initialState: MapState = {
+  map: null,
+};
 
 const mapSlice = createSlice({
   name: "map",
-  initialState: null as kakao.maps.Map | null,
+  initialState,
   reducers: {
     setMap: (state, action: PayloadAction<kakao.maps.Map>) => {
-      return action.payload;
+      state.map = action.payload;
     },
   },
 });

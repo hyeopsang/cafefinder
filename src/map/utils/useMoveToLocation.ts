@@ -1,7 +1,7 @@
-import { useMapContext } from "../../app/context/MapContext";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/redux/store";
 export const useMoveToCurrentLocation = () => {
-  const { map } = useMapContext();
+  const map = useSelector((state: RootState) => state.map.map);
 
   // 현재 위치로 이동하는 함수 정의
   const moveToLocation = () => {

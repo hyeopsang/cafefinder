@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useMapContext } from "../../app/context/MapContext";
 import initializeMap from "../utils/useMap";
+import { RootState } from "../../app/redux/store";
+import { useSelector } from "react-redux";
 
 export default function Map() {
-  const { map } = useMapContext();
+  const map = useSelector((state: RootState) => state.map.map);
   const mapContainerRef = initializeMap();  
 
   useEffect(() => {

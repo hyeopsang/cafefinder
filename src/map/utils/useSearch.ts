@@ -3,23 +3,22 @@ import { getDistanceFromLatLonInKm } from "../../utils/getDistanceFromLatLonInKm
 import { useDispatch } from "react-redux";
 import { setPlaces } from "../../app/redux/placesSlice";
 import { useMarkers } from "./useMarkers";
-import { useMapContext } from "../../app/context/MapContext";
-import { usePlaceContext } from "../../app/context/PlaceContext";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/redux/store";
 export function useSearch(currentLocation: kakao.maps.LatLng) {
   const [searchTxt, setSearchTxt] = useState("");
-  const { map, setMap } = useMapContext();
-  const { place, setPlace } = usePlaceContext();
+  const map = useSelector((state: RootState) => state.map.map);
+  const search = useSelector((state: RootState) => state.place.search); // 리덕스에서 place 가져오기
   const dispatch = useDispatch();
   const { displayCafeMarkers } = useMarkers();
 
   const performSearch = useCallback(async () => {
-    if (!place || !map || !currentLocation) return;
+    if (!search || !map || !currentLocation) return;
   
     const keyword = searchTxt.trim();
     console.log("Searching with keyword: ", keyword); // 검색 키워드가 제대로 전달되는지 확인
   
-    place.keywordSearch(keyword, (data, status) => {
+    search.keywordSearch(keyword, (data, status) => {
       console.log("API Response:", data, status); // API 응답을 확인
       if (status === kakao.maps.services.Status.OK) {
         const cafeData = data.filter(
@@ -36,7 +35,13 @@ export function useSearch(currentLocation: kakao.maps.LatLng) {
               targetLocation.getLat(),
               targetLocation.getLng()
             ) * 1000;
-          return { ...place, distance };
+          return { 
+            ...place, 
+            distance, 
+            category_group_code: Array.isArray(place.category_group_code) 
+              ? place.category_group_code.join(",") 
+              : place.category_group_code 
+          };
         });
   
         dispatch(setPlaces(placesWithDistance));
@@ -48,7 +53,7 @@ export function useSearch(currentLocation: kakao.maps.LatLng) {
       location: map.getCenter(),
       sort: kakao.maps.services.SortBy.DISTANCE,
     });
-  }, [dispatch, place, map, displayCafeMarkers, currentLocation, searchTxt]);
+  }, [dispatch, search, map, displayCafeMarkers, currentLocation, searchTxt]);
   
   console.log("performSearch: ", performSearch);  // performSearch가 제대로 반환되는지 확인
 

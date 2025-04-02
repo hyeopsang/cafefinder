@@ -4,15 +4,15 @@ import { getDistanceFromLatLonInKm } from "../../utils/getDistanceFromLatLonInKm
 import { useDispatch } from "react-redux";
 import { setPlaces } from "../../app/redux/placesSlice";
 import { useSelector } from "react-redux";
-import { useMapContext } from "../../app/context/MapContext";
-import { usePlaceContext } from "../../app/context/PlaceContext";
+import { RootState } from "../../app/redux/store";
 export function useBoundSearch(
   setShowReGps: React.Dispatch<React.SetStateAction<boolean>>
 ) {
   const dispatch = useDispatch();
-  const { map, setMap } = useMapContext();
-  const { place, setPlace } = usePlaceContext();
-  const { clearMarkers, displayCafeMarkers } = useMarkers();
+    const map = useSelector((state: RootState) => state.map.map);
+    const search = useSelector((state: RootState) => state.place.search); // 리덕스에서 place 가져오기
+    console.log("place", search)
+    const { clearMarkers, displayCafeMarkers } = useMarkers();
   const handleMapMove = () => {
     setShowReGps(true);
   };
@@ -30,7 +30,7 @@ export function useBoundSearch(
     
     setShowReGps(false)
 
-    if (!map || !place) return;
+    if (!map || !search) return;
     clearMarkers();
     setShowReGps(false)
     const bounds = map.getBounds();
@@ -38,7 +38,7 @@ export function useBoundSearch(
     const neLatLng = bounds.getNorthEast();
     const center = map.getCenter();
 
-    place.categorySearch(
+    search.categorySearch(
       "CE7",
       async (data, status) => {
         if (status === kakao.maps.services.Status.OK) {
@@ -57,7 +57,7 @@ export function useBoundSearch(
                   targetLocation.getLat(),
                   targetLocation.getLng()
                 ) * 1000;
-              return { ...place, distance };
+              return { ...place, distance, category_group_code: Array.isArray(place.category_group_code) ? place.category_group_code.join(",") : place.category_group_code };
             })
           );
 

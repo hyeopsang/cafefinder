@@ -5,8 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
 import { useRefContext } from "../../app/context/RefContext";
 import { Place } from "../../types";
-import { useSelector } from "react-redux";
-import { useMapContext } from "../../app/context/MapContext";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/redux/store";
+import { setMap } from "../../app/redux/mapSlice";
 const { kakao } = window;
 
 interface CafeSwiperProps {
@@ -16,14 +17,15 @@ interface CafeSwiperProps {
 
 const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
   const { swiperRef } = useRefContext(); 
-  const { map, setMap } = useMapContext();
+  const dispatch = useDispatch();
+  const map = useSelector((state: RootState) => state.map.map);
 
   const handleSlideChange = (swiper: SwiperType) => {
     const activePlace = places[swiper.activeIndex];
 
-    if (activePlace) {
+    if (activePlace && map) {
       const newCenter = new kakao.maps.LatLng(Number(activePlace.y), Number(activePlace.x));
-      map!.panTo(newCenter);
+      map.panTo(newCenter);
 
       const marker = markers[activePlace.placeIndex!];
       if (marker) {
@@ -39,7 +41,7 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
         centeredSlides={true}
         loop={false}
         onSwiper={(swiper) => {
-          swiperRef.current = swiper; // ✅ Context에서 가져온 swiperRef 사용
+          swiperRef.current = swiper; 
         }}
         onSlideChange={handleSlideChange}
       >

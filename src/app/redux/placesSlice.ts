@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Place } from "../../entity/place/model/Place";
+import { Place } from "../../map/types";
 
 
 const placesSlice = createSlice({

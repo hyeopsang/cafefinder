@@ -26,8 +26,8 @@ export default function PlaceReviewPage() {
   const [selectedReview, setSelectedReview] = useState<Review | null>(null);
   const { id } = useParams(); 
 
-  const places = useSelector((state: { places: Place[] }) => state.places);
-  const auth = useSelector((state: { auth: User }) => state.auth);
+  const places = useSelector((state: { places?: Place[] }) => state.places ?? []);
+  const auth = useSelector((state: { auth?: User }) => state.auth ?? { user: null });
   const userId = auth?.user?.id ?? null;
 
   const place = places.find((p) => p.id === id);
@@ -55,6 +55,10 @@ export default function PlaceReviewPage() {
     setSelectedReview(review);
     setIsModal(true);
   };
+  if (!places || places.length === 0) {
+    return <p>카페 데이터를 불러오는 중입니다...</p>;
+  }
+  
 
   return (
     <div className="h-svh mx-auto flex flex-col min-w-[375px] max-w-[428px] bg-white py-4 text-[#212121]">
