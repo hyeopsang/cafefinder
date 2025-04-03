@@ -6,7 +6,7 @@ export default function Login() {
       <h2 className="text-center text-4xl font-bold text-neutral-900">
         카페 찾기
       </h2>
-      <div className="absolute bottom-[30px]">
+      <div className="absolute bottom-[30px] w-full">
         <a href={KAKAO_AUTH_URL}>
           <img src="./images/kakaologin.png" className="w-[calc(100%-20px)] mx-auto" />
         </a>

@@ -18,7 +18,7 @@ export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
             ))}
           </div>
         ) : (
-          <div className="py-4 border border-neutral-200 shadow-sm rounded-xl flex items-center text-sm text-neutral-900">
+          <div className="w-[calc(100%-20px)] py-4 border border-neutral-200 shadow-sm rounded-xl flex items-center text-sm text-neutral-900">
             <Button
             variant="default"
             className="w-fit mx-auto bg-buttonRed text-white shadow-none drop-shadow-none"

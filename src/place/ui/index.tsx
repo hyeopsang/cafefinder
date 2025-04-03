@@ -63,7 +63,7 @@ export default function PlaceReviewPage() {
   return (
     <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white py-4 text-[#212121]">
       <Link to="/">
-      <div className="w-fit flex justify-center p-2 rounded-full bg-buttonRed">
+      <div className="w-fit flex justify-center ml-[20px] p-2 rounded-full bg-buttonRed">
         <ChevronLeft className="text-white" />
       </div>
       </Link>
