@@ -11,7 +11,7 @@ export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
     return (
         <>
         {reviews.length > 0 ? (
-          <div className="flex w-[calc(100%-20px)] flex-col gap-2 text-center">
+          <div className="flex w-full flex-col gap-2 text-center">
             <h2 className="w-full text-md font-bold">내가 쓴 리뷰</h2>
             {reviews.map((review, id) => (
               <ReviewItem key={id} review={review} onClickModal={() => onClickModal(review)}/>
