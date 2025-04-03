@@ -21,14 +21,13 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": false,
+    "noEmit": false,
     // "noUncheckedSideEffectImports": false,
     "paths": {
       "@/*": ["./src/*"], 
       // "swiper/css": ["node_modules/swiper/swiper.css"] // Swiper CSS 별칭 매핑
     }
   },
-  "include": ["./src/**/*"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }
