@@ -13,7 +13,7 @@ export default function OtherReview ({ reviews }: OtherReviewProps) {
               <ReviewItem key={id} review={review}/>
             ))
           ) : (
-            <div className="w-full flex-col gap-10 rounded-2xl bg-neutral-100 py-4 text-center text-[16px] font-normal shadow-sm text-[#212121]">
+            <div className="w-[calc(100%-20px)] flex justify-center gap-10 rounded-2xl bg-neutral-100 py-4 text-center text-[16px] font-normal shadow-sm text-[#212121]">
               <p className="text-md text-neutral-900">작성된 리뷰가 없어요ㅠ</p>
             </div>
 

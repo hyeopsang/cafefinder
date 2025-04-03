@@ -68,7 +68,7 @@ export default function PlaceReviewPage() {
       </div>
       </Link>
       <PlaceInfo place={place} />
-      <div className="w-[320px] mx-auto grid grid-cols-3 py-8 gap-6 text-sm font-bold text-[#212121]">
+      <div className="w-[300px] mx-auto grid grid-cols-3 py-8 gap-6 text-sm font-bold text-[#212121]">
         {reviewCategories.map((item, index) => (
           <div key={index} className="flex items-center justify-between">
             <p>{item.label}</p>
@@ -76,11 +76,11 @@ export default function PlaceReviewPage() {
           </div>
         ))}
       </div>
-      <div className="flex w-full flex-col gap-8 py-4">
+      <div className="flex w-full flex-col items-center gap-8 py-4">
         {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (
-          <div className="flex flex-col gap-2 items-center py-4 border rounded-xl border-neutral-300">
+          <div className="w-[calc(100%-20px)] flex flex-col gap-2 items-center py-4 border rounded-xl border-neutral-300">
             <p className="text-sm font-medium text-slate-600">리뷰를 작성하려면 로그인이 필요해요!</p>
             <Button asChild className="bg-buttonRed text-white font-normal shadow-none drop-shadow-none">
               <Link to="/login">Login</Link>
