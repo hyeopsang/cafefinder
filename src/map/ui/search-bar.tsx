@@ -41,13 +41,13 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
   <input
     type="text"
     id="keyword"
-    className="flex-1 text-lg bg-white outline-none px-2"
+    className="flex-grow text-lg bg-white outline-none"
     value={searchTxt}
     onChange={onChangeTxt}
     placeholder="검색"
   />
   
-  <div className="w-5 flex justify-center">
+  <div className="w-6 flex justify-end">
     {searchTxt && (
       <button type="button" onClick={handleCancel}>
         <CircleX className="w-5"/>
