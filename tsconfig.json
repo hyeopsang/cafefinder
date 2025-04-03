@@ -18,12 +18,16 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "baseUrl": ".", // 프로젝트 루트 경로
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationMap": true,
     // "noUncheckedSideEffectImports": false,
     "paths": {
       "@/*": ["./src/*"], 
       // "swiper/css": ["node_modules/swiper/swiper.css"] // Swiper CSS 별칭 매핑
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite-env.d.ts"],
-  "exclude": ["node_modules", "dist", "public"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
