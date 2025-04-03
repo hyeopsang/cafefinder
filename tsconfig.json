@@ -21,7 +21,6 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "declaration": true,
-    "noEmit": false,
     // "noUncheckedSideEffectImports": false,
     "paths": {
       "@/*": ["./src/*"], 
