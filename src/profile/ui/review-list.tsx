@@ -77,13 +77,13 @@ export default function ReviewList() {
   }
 
   return (
-    <div className="w-full h-screen px-[20px] pt-4 text-neutral-900">
+    <div className="w-full h-screen p-3 text-neutral-900">
       <Link to={"/"}>
       <div className="w-fit p-2 rounded-full bg-buttonRed">
         <ChevronLeft className="text-white" />
       </div>
       </Link>
-      <div className="flex flex-col gap-4 pt-4">
+      <div className="flex flex-col gap-4 p-3">
         {reviewsList.length > 0 ? (
         reviewsList.map((review, index) => (
           <div key={review.id} ref={index === reviewsList.length - 1 ? setTarget : null}>

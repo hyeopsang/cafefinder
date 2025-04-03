@@ -18,7 +18,7 @@ export default function ReviewItem({ review, onClickModal } : ReviewItemProps) {
 
     return (
         <div
-        className="w-[calc(100%-20px)] mx-auto flex flex-col items-center gap-2 rounded-2xl py-4 border border-neutral-200 shadow-sm text-sm text-neutral-900"
+        className="w-full mx-auto flex flex-col items-center gap-2 rounded-2xl py-4 border border-neutral-200 shadow-sm text-sm text-neutral-900"
         >
             <p className="font-bold text-md">{review.content.placeName}</p>
             <p className="text-neutral-500">{formattedTime(review.createdAt)}</p>

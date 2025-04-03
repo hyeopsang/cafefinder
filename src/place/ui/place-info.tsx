@@ -22,9 +22,9 @@ export default function PlaceInfo({ place } : PlaceInfoProps) {
     
     return (
         <>
-        <h1 className="text-center text-lg text-neutral-900 font-bold p-2 pt-4">{place.place_name}</h1>
-        <p className="text-center text-md text-neutral-900 font-medium p-2">{place.address_name}</p>
-        <div className="mx-auto flex w-fit gap-6 p-4">
+        <h1 className="text-center text-lg text-neutral-900 font-bold">{place.place_name}</h1>
+        <p className="text-center text-neutral-900 font-medium p-2">{place.address_name}</p>
+        <div className="mx-auto flex w-fit gap-6">
             <a href={place.place_url}>
                 <SquareArrowOutUpLeft className="w-6 h-6 text-neutral-900" />
             </a>
