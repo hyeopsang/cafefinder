@@ -77,7 +77,7 @@ export default function ReviewList() {
   }
 
   return (
-    <div className="w-full h-screen px-8 pt-4 text-neutral-900">
+    <div className="w-full h-screen px-[20px] pt-4 text-neutral-900">
       <Link to={"/"}>
       <div className="w-fit p-2 rounded-full bg-buttonRed">
         <ChevronLeft className="text-white" />

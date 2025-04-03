@@ -15,7 +15,7 @@ export default function BoundSearch({ setShowReGps, showReGps }: BoundSearchProp
             onClick={searchCafesInBounds} 
             style={{ opacity: showReGps ? 1 : 0, transition: "opacity 0.3s ease-in-out" }} 
         >
-            <p className="text-sm">현재 위치에서 검색</p>
+            <p className="text-xs">현재 위치에서 검색</p>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import { useSearch } from "../utils/useSearch";
-import { Search, AlignJustify } from "lucide-react";
+import { Search, AlignJustify, CircleX} from "lucide-react";
 interface SearchFormProps {
   setIsOpen: (value: boolean) => void;
   currentLocation: kakao.maps.LatLng;
@@ -28,10 +28,10 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
 
   return (
     <form
-  className="absolute left-1/2 top-5 z-10 flex min-w-[365px] max-w-[418px] -translate-x-1/2 items-center justify-between rounded-[15px] bg-white shadow-md"
-  id="search_form"
-  onSubmit={handleSearch}
->
+      className="absolute left-1/2 top-5 z-10 flex w-[calc(100%-40px)] -translate-x-1/2 items-center justify-between rounded-[15px] bg-white shadow-md"
+      id="search_form"
+      onSubmit={handleSearch}
+    >
   {/* 메뉴 버튼 */}
   <button type="button" className="p-4" onClick={() => setIsOpen(true)}>
     <AlignJustify className="w-6" /> 
@@ -46,13 +46,14 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
     onChange={onChangeTxt}
     placeholder="검색"
   />
-
-  {/* 입력값이 있을 때만 X 버튼 표시 */}
-  {searchTxt && (
-    <button type="button" className="p-2" onClick={handleCancel}>
-      <img className="w-5" src="/images/cancel.png" alt="Cancel" />
-    </button>
-  )}
+  
+  <div className="w-5 flex justify-center">
+    {searchTxt && (
+      <button type="button" onClick={handleCancel}>
+        <CircleX className="w-5"/>
+      </button>
+    )}
+  </div>
 
   {/* 검색 버튼 */}
   <button type="submit" className="p-4">

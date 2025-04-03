@@ -3,6 +3,8 @@
 
 @theme {
   --color-buttonRed: #FF6B6B;
+  --min-width-mobile: 320px;
+  --max-width-mobile: 480px; 
 }
 @custom-variant dark (&:is(.dark *));
 
