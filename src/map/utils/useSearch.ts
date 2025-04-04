@@ -1,61 +1,83 @@
-import { useCallback, useEffect, useState } from "react";
-import { getDistanceFromLatLonInKm } from "../../utils/getDistanceFromLatLonInKm";
-import { useDispatch } from "react-redux";
-import { setPlaces } from "../../app/redux/placesSlice";
-import { useMarkers } from "./useMarkers";
+import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/redux/store";
-export function useSearch(currentLocation: kakao.maps.LatLng) {
-  const [searchTxt, setSearchTxt] = useState("");
-  const map = useSelector((state: RootState) => state.map.map);
-  const search = useSelector((state: RootState) => state.place.search); // 리덕스에서 place 가져오기
+import { setPlaces } from "../../app/redux/placesSlice";
+import { useDispatch } from "react-redux";
+export function useSearch() {
   const dispatch = useDispatch();
-  const { displayCafeMarkers } = useMarkers();
+  const [searchTxt, setSearchTxt] = useState(""); // 검색어 상태 추가
+  const [loading, setLoading] = useState(false);
+  const places = useSelector((state: RootState) => state.places);
+  const map = useSelector((state: RootState) => state.map.map);
+  const performSearch = useCallback(async (searchTxt: string, currentLocation: google.maps.LatLng) => {
+    if (!searchTxt || !currentLocation) {
+      console.warn("검색어 또는 현재 위치가 없습니다.");
+      return;
+    }
 
-  const performSearch = useCallback(async () => {
-    if (!search || !map || !currentLocation) return;
-  
-    const keyword = searchTxt.trim();
-    console.log("Searching with keyword: ", keyword); // 검색 키워드가 제대로 전달되는지 확인
-  
-    search.keywordSearch(keyword, (data, status) => {
-      console.log("API Response:", data, status); // API 응답을 확인
-      if (status === kakao.maps.services.Status.OK) {
-        const cafeData = data.filter(
-          (place) =>
-            place.category_group_code === "CE7" || place.place_name.includes("카페")
-        );
-        console.log("Filtered cafeData:", cafeData); // 필터링된 카페 데이터 확인
-        const placesWithDistance = cafeData.map((place) => {
-          const targetLocation = new kakao.maps.LatLng(Number(place.y), Number(place.x));
-          const distance =
-            getDistanceFromLatLonInKm(
-              currentLocation.getLat(),
-              currentLocation.getLng(),
-              targetLocation.getLat(),
-              targetLocation.getLng()
-            ) * 1000;
-          return { 
-            ...place, 
-            distance, 
-            category_group_code: Array.isArray(place.category_group_code) 
-              ? place.category_group_code.join(",") 
-              : place.category_group_code 
-          };
-        });
-  
-        dispatch(setPlaces(placesWithDistance));
-        displayCafeMarkers(placesWithDistance);
-      } else {
-        console.log("API call failed with status: ", status); // 실패 시 상태 확인
+    setLoading(true);
+    try {
+      // Google Maps 라이브러리 불러오기
+      const placesLib = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+      const markerLib = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+      const coreLib = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
+
+      if (!placesLib || !markerLib || !coreLib) {
+        throw new Error("Google Maps 라이브러리 로드 실패");
       }
-    }, {
-      location: map.getCenter(),
-      sort: kakao.maps.services.SortBy.DISTANCE,
-    });
-  }, [dispatch, search, map, displayCafeMarkers, currentLocation, searchTxt]);
-  
-  console.log("performSearch: ", performSearch);  // performSearch가 제대로 반환되는지 확인
 
-  return { performSearch, setSearchTxt, searchTxt };
+      const { Place } = placesLib;
+      const { AdvancedMarkerElement } = markerLib;
+      const { LatLngBounds } = coreLib;
+
+      const request = {
+        textQuery: searchTxt,
+        fields: ["displayName", "location"],
+        includedType: "cafe",
+        locationBias: currentLocation,
+        isOpenNow: true,
+        language: "ko",
+        maxResultCount: 8,
+        minRating: 3.2,
+        region: "kr",
+      };
+
+      //@ts-ignore
+      const { places } = await Place.searchByText(request);
+      if (places.length) {
+        console.log(places);
+        const mappedPlaces = places.map((place) => ({
+          id: place.id,
+          displayName: place.displayName,
+          location: place.location,
+        }));
+        dispatch(setPlaces(mappedPlaces));
+
+        if (!map) {
+          console.warn("맵이 로드되지 않았습니다.");
+          return;
+        }
+
+        const bounds = new LatLngBounds();
+        places.forEach((place) => {
+          new AdvancedMarkerElement({
+            map,
+            position: place.location,
+            title: place.displayName,
+          });
+          bounds.extend(place.location as google.maps.LatLng);
+        });
+
+        map.fitBounds(bounds);
+      } else {
+        console.log("검색 결과 없음");
+      }
+    } catch (error) {
+      console.error("검색 오류:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [map]);
+
+  return { performSearch, searchTxt, setSearchTxt };
 }

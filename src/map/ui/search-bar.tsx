@@ -1,22 +1,26 @@
+import { useEffect } from "react";
 import { useSearch } from "../utils/useSearch";
-import { Search, AlignJustify, CircleX} from "lucide-react";
+import { Search, AlignJustify, CircleX } from "lucide-react";
+
 interface SearchFormProps {
   setIsOpen: (value: boolean) => void;
-  currentLocation: kakao.maps.LatLng;
+  currentLocation: google.maps.LatLng | null;
 }
 
 const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
-  const { performSearch, setSearchTxt, searchTxt } = useSearch(currentLocation);
+  const { performSearch, setSearchTxt, searchTxt } = useSearch();
+
+  useEffect(() => {
+    if (currentLocation) {
+      setSearchTxt(""); // 위치 변경 시 검색어 초기화
+    }
+  }, [currentLocation]);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Search submitted");  // 이 로그가 보이면 클릭 이벤트는 정상 동작
-    if (searchTxt.trim() === "") return;
-    console.log("Calling performSearch...");  // performSearch가 호출되기 직전
-    await performSearch();
+    if (!searchTxt.trim() || !currentLocation) return;
+    await performSearch(searchTxt, currentLocation);
   };
-  
-  
 
   const onChangeTxt = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTxt(e.target.value);
@@ -32,35 +36,39 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
       id="search_form"
       onSubmit={handleSearch}
     >
-  {/* 메뉴 버튼 */}
-  <button type="button" className="p-4" onClick={() => setIsOpen(true)}>
-    <AlignJustify className="w-6" /> 
-  </button>
-
-  {/* 검색 입력창 */}
-  <input
-    type="text"
-    id="keyword"
-    className="flex-grow text-lg bg-white outline-none"
-    value={searchTxt}
-    onChange={onChangeTxt}
-    placeholder="검색"
-  />
-  
-  <div className="w-6 flex justify-end">
-    {searchTxt && (
-      <button type="button" onClick={handleCancel}>
-        <CircleX className="w-5"/>
+      <button type="button" className="p-4" onClick={() => setIsOpen(true)}>
+        <AlignJustify className="w-6" />
       </button>
-    )}
-  </div>
 
-  {/* 검색 버튼 */}
-  <button type="submit" className="p-4">
-    <Search className="w-6" />
-  </button>
-</form>
+      <input
+        type="text"
+        id="keyword"
+        aria-label="검색어 입력"
+        className="flex-grow text-lg bg-white outline-none"
+        value={searchTxt}
+        onChange={onChangeTxt}
+        placeholder="검색"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const form = document.getElementById("search_form") as HTMLFormElement;
+            form?.requestSubmit();
+          }
+        }}
+      />
 
+      <div className="w-6 flex justify-end">
+        {searchTxt && (
+          <button type="button" onClick={handleCancel} aria-label="검색어 초기화">
+            <CircleX className="w-5" />
+          </button>
+        )}
+      </div>
+
+      <button type="submit" className="p-4" disabled={!searchTxt.trim()} aria-label="검색 실행">
+        <Search className="w-6" />
+      </button>
+    </form>
   );
 };
 

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // PlaceSlice의 초기 상태 정의
 export interface SearchState {
-  search: kakao.maps.services.Places | undefined;
+  search: google.maps.Place | undefined;
 }
 
 const initialState: SearchState = {
@@ -14,7 +14,7 @@ const SearchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearch(state, action: PayloadAction<kakao.maps.services.Places | undefined>) {
+    setSearch(state, action: PayloadAction<google.maps.Place | undefined>) {
       state.search = action.payload;
     },
   },

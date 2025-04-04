@@ -10,7 +10,7 @@ export const useMoveToCurrentLocation = () => {
         (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          const currentPos = new kakao.maps.LatLng(lat, lng);
+          const currentPos = new google.maps.LatLng(lat, lng); // 현재 위치 좌표 생성
           map.panTo(currentPos); // 지도 이동
         },
         () => {

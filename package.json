@@ -34,6 +34,7 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@tailwindcss/vite": "^4.0.14",
+    "@types/google.maps": "^3.58.1",
     "@types/node": "^22.13.11",
     "@types/qs": "^6.9.18",
     "@types/react": "^19.0.10",

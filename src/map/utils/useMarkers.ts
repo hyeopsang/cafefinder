@@ -4,74 +4,49 @@ import { getReview } from "../../api";
 import { Place } from "../types";
 import { RootState } from "../../app/redux/store";
 import { useRefContext } from "../../app/context/RefContext";
-type Position = {
-  La: number;
-  Ma: number;
-}
-// 리뷰 상태에 따른 마커 이미지 설정
-const MARKER_CONFIG = {
-  WITH_REVIEW: {
-    imageSrc: `/images/coffee.png`, 
-    size: { width: 25, height: 25 },
-  },
-  NO_REVIEW: {
-    imageSrc: `/images/coffeeb.png`,
-    size: { width: 25, height: 25 },
-  },
-};
-
 
 export const useMarkers = () => {
-  const markersRef = useRef<kakao.maps.Marker[]>([]);
-  const places = useSelector((state: RootState) => state.places) as Place[];
-const map = useSelector((state: RootState) => state.map.map);
+  const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
+  const placesRaw = useSelector((state: RootState) => state.places);
+  const places = Array.isArray(placesRaw) ? placesRaw : [];
+    const map = useSelector((state: RootState) => state.map.map);
   const { swiperRef } = useRefContext();
 
-  const createMarkerImage = useCallback((hasReview: boolean) => {
-    const config = hasReview
-      ? MARKER_CONFIG.WITH_REVIEW
-      : MARKER_CONFIG.NO_REVIEW;
-
-    return new window.kakao.maps.MarkerImage(
-      config.imageSrc,
-      new window.kakao.maps.Size(config.size.width, config.size.height),
-      {
-        offset: new window.kakao.maps.Point(
-          config.size.width / 2,
-          config.size.height / 2,
-        ),
-      },
-    );
-  }, []);
-
   const clearMarkers = useCallback(() => {
-    markersRef.current.forEach((marker) => marker.setMap(null));
+    markersRef.current.forEach((marker) => marker.map = null);
     markersRef.current = [];
   }, []);
 
   const addMarker = useCallback(
-    async (position: Position, place: any, placeIndex: number) => {
+    async (place: Place, placeIndex: number) => {
       if (!map) return null;
 
       try {
         const reviews = await getReview(place.id);
-
         const hasReview = Array.isArray(reviews) && reviews.length > 0;
 
-        const markerImage = createMarkerImage(hasReview);
-        const markerOptions = {
-          position: new window.kakao.maps.LatLng(position.La, position.Ma),
-          image: markerImage,
-          clickable: true,
-        };
-        const marker = new window.kakao.maps.Marker(markerOptions);
-        marker.setMap(map);
-        marker.placeIndex = placeIndex;
+        const { Place: GPlace } = await google.maps.importLibrary("places") as google.maps.PlacesLibrary;
+        const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
 
-        window.kakao.maps.event.addListener(marker, "click", () => {
-          map.panTo(marker.getPosition());
+        const gPlace = new GPlace({ id: place.id });
+        await gPlace.fetchFields({ fields: ['location', 'displayName', 'svgIconMaskURI', 'iconBackgroundColor'] });
+
+        const pin = new PinElement({
+          background: gPlace.iconBackgroundColor || (hasReview ? '#7B4B94' : '#999'),
+          glyph: new URL(String(gPlace.svgIconMaskURI)),
+        });
+
+        const marker = new AdvancedMarkerElement({
+          map,
+          position: gPlace.location,
+          content: pin.element,
+          title: gPlace.displayName,
+        });
+
+        marker.addListener("gmp-click", () => {
+          map.panTo(marker.position);
           if (swiperRef.current) {
-            swiperRef.current.slideTo(marker.placeIndex);
+            swiperRef.current.slideTo(placeIndex);
           }
         });
 
@@ -82,7 +57,7 @@ const map = useSelector((state: RootState) => state.map.map);
         return null;
       }
     },
-    [map, createMarkerImage, swiperRef],
+    [map, swiperRef],
   );
 
   const updateMarkers = useCallback(async () => {
@@ -90,9 +65,7 @@ const map = useSelector((state: RootState) => state.map.map);
       clearMarkers();
 
       const markerPromises = places.map(async (place, index) => {
-        const latLng = new window.kakao.maps.LatLng(Number(place.y), Number(place.x));
-        const position: Position = { La: latLng.getLat(), Ma: latLng.getLng() };
-        return addMarker(position, place, index);
+        return addMarker(place, index);
       });
 
       await Promise.all(markerPromises);
@@ -102,32 +75,32 @@ const map = useSelector((state: RootState) => state.map.map);
   }, [clearMarkers, addMarker, places]);
 
   useEffect(() => {
-    if (!map) return;  // ✅ map이 없으면 실행하지 않음
+    if (!map) return;
     if (places.length > 0) {
-        updateMarkers();
+      updateMarkers();
     } else {
-        clearMarkers();
+      clearMarkers();
     }
-}, [map, places, updateMarkers, clearMarkers]);
+  }, [map, places, updateMarkers, clearMarkers]);
 
+  const displayCafeMarkers = async (cafeData: Place[]) => {
+    if (!map) return;
 
-   const displayCafeMarkers = async (cafeData: any[]) => {
-      if (!map) return;
-  
-      const bounds = new kakao.maps.LatLngBounds();
-  
-      cafeData.forEach((place, index) => {
-        const position = new kakao.maps.LatLng(place.y, place.x);
-        bounds.extend(position);
-        const positionObj: Position = { La: place.y, Ma: place.x };
-        addMarker(positionObj, place, index);
-      });
-  
-      if (cafeData.length > 2) {
-        map.setBounds(bounds);
+    const { LatLngBounds } = await google.maps.importLibrary("core") as google.maps.CoreLibrary;
+    const bounds = new LatLngBounds();
+
+    cafeData.forEach((place, index) => {
+      if (place.location) {
+        bounds.extend(place.location);
       }
-    };
-  
+      addMarker(place, index);
+    });
+
+    if (cafeData.length > 2) {
+      map.fitBounds(bounds);
+    }
+  };
+
   return {
     markers: markersRef.current,
     clearMarkers,

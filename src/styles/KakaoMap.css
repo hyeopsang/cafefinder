@@ -200,6 +200,10 @@ a:hover {
 }
 .swiper {
   height: fit-content;
+  background-color: transparent;
+}
+.swiper-wrapper {
+  background-color: transparent;
 }
 .infowindow {
   width: 200%;
