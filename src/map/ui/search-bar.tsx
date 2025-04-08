@@ -1,5 +1,5 @@
 import { useSearch } from "../utils/useSearch";
-import { Search, AlignJustify, CircleX} from "lucide-react";
+import { Search, AlignJustify, X} from "lucide-react";
 interface SearchFormProps {
   setIsOpen: (value: boolean) => void;
   currentLocation: kakao.maps.LatLng;
@@ -44,13 +44,13 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
     className="flex-grow text-lg bg-white outline-none"
     value={searchTxt}
     onChange={onChangeTxt}
-    placeholder="검색"
+    placeholder="카페명으로 검색"
   />
   
   <div className="w-6 flex justify-end">
     {searchTxt && (
       <button type="button" onClick={handleCancel}>
-        <CircleX className="w-5"/>
+        <X className="w-5"/>
       </button>
     )}
   </div>

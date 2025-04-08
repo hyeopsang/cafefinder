@@ -6,14 +6,15 @@ import { Review, ReviewContent } from "../types";
 import { RootState } from "../app/redux/store";
 import { RatingOption } from "./rating-option";
 import { ChevronLeft, X } from "lucide-react";
+import { createPortal } from "react-dom";
 
 export default function ReviewModal({
-  setIsModal,
+  onClose,
   placeId,
   placeName,
   data,
 }: {
-  setIsModal: (value: boolean) => void;
+  onClose: () => void;
   placeId?: string;
   placeName?: string;
   data?: Review;
@@ -76,7 +77,7 @@ export default function ReviewModal({
       queryClient.invalidateQueries({ queryKey: ["userReviews", userId] });
       alert(data?.id ? "리뷰가 수정되었습니다." : "리뷰 작성이 완료되었습니다.");
       setSubmitStatus("success");
-      setIsModal(false);
+      onClose();
     },
     onError: (error) => {
       setSubmitStatus("error");
@@ -85,10 +86,10 @@ export default function ReviewModal({
     },
   });
 
-  return (
+  return createPortal(
     <div className="absolute text-md left-1/2 top-8 flex gap-4 w-[320px] -translate-x-1/2 flex-col rounded-[15px] bg-white/90 pb-4 text-center text-neutral-500 shadow-md h-fit">
       <div className="flex w-full justify-end">
-        <button className="p-[15px]" onClick={() => setIsModal(false)}>
+        <button className="p-[15px]" onClick={onClose}>
           <X />
         </button>
       </div>
@@ -120,6 +121,7 @@ export default function ReviewModal({
       <button className="text-md text-white bg-buttonRed mx-auto px-4 py-2 rounded-md" onClick={() => mutation.mutate()}>
         {data?.id ? "수정 완료" : "작성 완료"}
       </button>
-    </div>
+    </div>, 
+    document.getElementById("root")
   );
 }

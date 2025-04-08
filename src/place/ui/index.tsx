@@ -63,9 +63,7 @@ export default function PlaceReviewPage() {
   return (
     <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white text-sm p-3 text-[#212121]">
       <Link to="/">
-      <div className="w-fit flex justify-center p-2 rounded-full bg-buttonRed">
-        <ChevronLeft className="text-white" />
-      </div>
+        <ChevronLeft className="text-neutral-900" />
       </Link>
       <div className="w-full flex flex-col gap-6 p-3">
       <PlaceInfo place={place} />
@@ -77,15 +75,14 @@ export default function PlaceReviewPage() {
           </div>
         ))}
       </div>
-      <div className="flex w-full flex-col items-center gap-4">
+      <div className="flex w-full flex-col items-center gap-4 pt-2">
+        <h2 className="text-xl font-medium">Review</h2>
         {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (
-          <div className="w-full flex flex-col gap-2 py-4 items-center border rounded-xl border-neutral-300">
-            <p className="font-medium text-slate-600 text-xs">리뷰를 작성하려면 로그인이 필요해요!</p>
-            <Button asChild className="bg-buttonRed text-white font-normal shadow-none drop-shadow-none">
-              <Link to="/login">Login</Link>
-            </Button>
+          <div className="w-full flex flex-col gap-2 py-7 items-center border rounded-2xl border-neutral-300">
+            <p className="font-medium text-slate-600 text-xs pb-2">리뷰를 작성하려면 로그인이 필요해요</p>
+            <Link to="/login" className="button-style bg-neutral-900 text-white w-[80%]">로그인 화면으로 이동하기</Link>
           </div>
         )}
         <OtherReview reviews={otherReviews} />
@@ -93,7 +90,7 @@ export default function PlaceReviewPage() {
       </div>
       {isModal && (
         <ReviewModal
-          setIsModal={setIsModal}
+          onClose={() => setIsModal(false)}
           placeId={place.id}
           placeName={place.place_name}
           data={selectedReview}

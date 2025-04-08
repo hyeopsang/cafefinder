@@ -6,6 +6,12 @@
   --min-width-mobile: 320px;
   --max-width-mobile: 480px; 
 }
+
+@layer utilities {
+  .button-style {
+    @apply py-3 text-center rounded-xl text-sm font-medium
+  }
+}
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
@@ -23,7 +29,12 @@ body {
   overflow-y: scroll;
 }
 
-
+#root {
+  max-width: 480px; 
+  min-width: 320px; 
+  overflow: hidden;
+  position: relative;
+}
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

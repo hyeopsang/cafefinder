@@ -26,8 +26,8 @@ export default function initializeMap() {
           });
 
           const markerImage = new kakao.maps.MarkerImage(
-            "/images/user.svg",
-            new kakao.maps.Size(35, 35),
+            "/images/user.png",
+            new kakao.maps.Size(40, 40),
             { offset: new kakao.maps.Point(20, 40) }
           );
 

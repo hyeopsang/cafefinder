@@ -12,11 +12,11 @@ type Position = {
 const MARKER_CONFIG = {
   WITH_REVIEW: {
     imageSrc: `/images/coffee.png`, 
-    size: { width: 25, height: 25 },
+    size: { width: 20, height: 25.5 },
   },
   NO_REVIEW: {
     imageSrc: `/images/coffeeb.png`,
-    size: { width: 25, height: 25 },
+    size: { width: 20, height: 25.5 },
   },
 };
 

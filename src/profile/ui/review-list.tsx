@@ -62,7 +62,7 @@ export default function ReviewList() {
     enabled: !!nextQuery && !loading,
   });
 
-  const onClickModal = (review: Review | null) => {
+  const onOpenModal = (review: Review | null) => {
     setSelectedReview(review);
     setIsModal(true);
   };
@@ -87,7 +87,7 @@ export default function ReviewList() {
         {reviewsList.length > 0 ? (
         reviewsList.map((review, index) => (
           <div key={review.id} ref={index === reviewsList.length - 1 ? setTarget : null}>
-            <ReviewItem review={review} onClickModal={() => onClickModal(review)} />
+            <ReviewItem review={review} onOpen={() => onOpenModal(review)} />
           </div>
         ))
         ) : (
@@ -98,7 +98,7 @@ export default function ReviewList() {
 
       {loading && <div>리뷰를 불러오는 중 ..</div>}
 
-      {isModal && <ReviewModal setIsModal={setIsModal} data={selectedReview} />}
+      {isModal && <ReviewModal onClose={() => setIsModal(false)} data={selectedReview} />}
     </div>
   );
 }

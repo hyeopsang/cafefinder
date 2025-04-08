@@ -7,12 +7,12 @@ import ReviewRepost from "./review-repost";
 
 interface ReviewItemProps {
     review?: Review;
-    onClickModal?: () => void
+    onOpen?: () => void
 }
 interface User {
     [key: string]: any;
 }
-export default function ReviewItem({ review, onClickModal } : ReviewItemProps) {
+export default function ReviewItem({ review, onOpen } : ReviewItemProps) {
     const auth = useSelector((state: { auth: User }) => state.auth);
     const userId = auth?.user?.id ?? null;
 
@@ -26,7 +26,7 @@ export default function ReviewItem({ review, onClickModal } : ReviewItemProps) {
             {
                 userId === review.userId && (
                     <div className="flex justify-center gap-2">
-                    <ReviewRepost onClickModal={onClickModal}/>
+                    <ReviewRepost onClickModal={onOpen}/>
                     <ReviewDelete review={review} />
                     </div>
                 )
