@@ -1,10 +1,11 @@
-import "./menu-modal.css";
+import "./modal-animation.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../app/redux/authSlice";
 import { motion } from "framer-motion";
 import { X, Pencil, LogIn, LogOut, MapPin, Bookmark } from 'lucide-react';
 import { createPortal } from "react-dom";
+import ModalWrapper from "./modal-wrapper";
 interface User {
   [key: string]: any;
 }
@@ -36,9 +37,10 @@ export default function MenuModal({ onClose }: MenuProps) {
     ? userInfo.profile_image.replace("http://", "https://")
     : "/images/profile.svg";
 
-  return createPortal(
+  return(
+    <ModalWrapper>
     <div     
-      className="slide-in-panel absolute top-0 z-50 right-0 left-0 h-full bg-white p-4"
+      className="pointer-events-auto slide-in-panel z-50 max-w-[480px] min-w-[320px] h-full bg-white p-4"
     >
       <div className="w-fit aspect-square flex items-center p-2 text-white rounded-full bg-buttonRed ml-auto">
         <X className="w-[30px] cursor-pointer" onClick={onClose} />
@@ -68,8 +70,8 @@ export default function MenuModal({ onClose }: MenuProps) {
               </a>
         </div>  
       </div>
-    </div>,
-    document.getElementById("root")
+    </div>
+    </ModalWrapper>
   );
 }
 

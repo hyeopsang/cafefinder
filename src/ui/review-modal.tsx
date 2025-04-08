@@ -122,6 +122,6 @@ export default function ReviewModal({
         {data?.id ? "수정 완료" : "작성 완료"}
       </button>
     </div>, 
-    document.getElementById("root")
+    document.getElementById("modal-root")
   );
 }
