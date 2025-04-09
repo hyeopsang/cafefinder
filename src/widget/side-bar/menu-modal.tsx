@@ -39,8 +39,8 @@ export default function MenuModal({ onClose }: MenuProps) {
 
   return(
     <ModalWrapper>
-    <div     
-      className="pointer-events-auto slide-in-panel z-50 max-w-[480px] min-w-[320px] h-full bg-white p-4"
+         <div     
+      className="slide-in-panel z-50 max-w-[480px] min-w-[320px] mx-auto pointer-events-auto  bg-white p-4 w-full h-full"
     >
       <div className="w-fit aspect-square flex items-center p-2 text-white rounded-full bg-buttonRed ml-auto">
         <X className="w-[30px] cursor-pointer" onClick={onClose} />
@@ -71,6 +71,7 @@ export default function MenuModal({ onClose }: MenuProps) {
         </div>  
       </div>
     </div>
+   
     </ModalWrapper>
   );
 }
