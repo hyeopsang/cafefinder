@@ -1,5 +1,4 @@
 import { Review } from "../../types";
-import { Button } from "../../components/ui/button";
 import ReviewItem from "../../ui/review-item";
 interface MyReviewProps {
     reviews: Review[];
@@ -14,18 +13,17 @@ export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
           <div className="flex w-full flex-col gap-2 text-center">
             <h2 className="w-full text-md font-bold">내가 쓴 리뷰</h2>
             {reviews.map((review, id) => (
-              <ReviewItem key={id} review={review} onClickModal={() => onClickModal(review)}/>
+              <ReviewItem key={id} review={review} onOpen={() => onClickModal(review)}/>
             ))}
           </div>
         ) : (
           <div className="w-full py-4 border border-neutral-200 shadow-sm rounded-xl flex items-center text-sm text-neutral-900">
-            <Button
-            variant="default"
-            className="w-fit mx-auto bg-buttonRed text-white shadow-none drop-shadow-none"
+            <button
+            className="mx-auto bg-neutral-900 w-[80%] text-white button-style"
             onClick={() => onClickModal(true)}
             >
-              리뷰 작성
-            </Button>
+              리뷰 작성하기
+            </button>
           </div>
           
         )}

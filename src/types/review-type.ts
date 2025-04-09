@@ -1,10 +1,5 @@
 export interface ReviewContent {
-    taste: number;
-    mood: number;
-    kind: number;
-    comfort: number;
-    wifi: number;
-    parking: number;
+    keywords: string[]
     text: string;
     placeName: string; 
 }

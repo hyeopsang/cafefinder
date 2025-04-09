@@ -4,10 +4,11 @@ import { addReview, updateReview } from "../api";
 import { useSelector } from "react-redux";
 import { Review, ReviewContent } from "../types";
 import { RootState } from "../app/redux/store";
-import { RatingOption } from "./rating-option";
 import { ChevronLeft, X } from "lucide-react";
-import { createPortal } from "react-dom";
-
+import UploadImage from "../utils/upload-image";
+import KeywordSelector from "./keyword-selector";
+import ModalWrapper from "../widget/side-bar/modal-wrapper";
+import "../widget/side-bar/modal-animation.css";
 export default function ReviewModal({
   onClose,
   placeId,
@@ -23,17 +24,11 @@ export default function ReviewModal({
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const auth = useSelector((state: RootState) => state.auth);
   const userId = auth.user?.id;
-
-  const ratingValues = { bad: 2, soso: 3, good: 4 };
+  const [keywords, setKeywords] = useState<string[]>([]);
 
   const initialContent: ReviewContent = data?.content || {
-    taste: 0,
-    mood: 0,
-    kind: 0,
-    comfort: 0,
-    wifi: 0,
-    parking: 0,
     text: "",
+    keywords,
     placeName: placeName || "",
   };
 
@@ -45,22 +40,8 @@ export default function ReviewModal({
     }
   }, [data]);
 
-  // 평가 항목 배열
-  const ratingCategories = [
-    { key: "taste", label: "맛" },
-    { key: "mood", label: "분위기" },
-    { key: "kind", label: "친절도" },
-    { key: "comfort", label: "좌석 편안함" },
-    { key: "wifi", label: "와이파이" },
-    { key: "parking", label: "주차공간" },
-  ];
-
-  const handleRatingChange = (category: string, value: number) => {
-    setReviews((prev) => ({ ...prev, [category]: value }));
-  };
-
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReviews((prev) => ({ ...prev, text: e.target.value }));
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setReviews((prev) => ({ ...prev, text: e.target.value }));
   };
 
   // 리뷰 추가/수정 Mutations
@@ -69,7 +50,7 @@ export default function ReviewModal({
       if (data?.id) {
         await updateReview({ placeId: data.placeId, id: data.id, content: reviews });
       } else {
-        await addReview({ placeId, content: reviews, userId });
+        await addReview({ placeId, content: reviews, userId, images: selectedImages });
       }
     },
     onSuccess: () => {
@@ -85,43 +66,38 @@ export default function ReviewModal({
       console.error("리뷰 저장 오류:", error);
     },
   });
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  return createPortal(
-    <div className="absolute text-md left-1/2 top-8 flex gap-4 w-[320px] -translate-x-1/2 flex-col rounded-[15px] bg-white/90 pb-4 text-center text-neutral-500 shadow-md h-fit">
+  const handleImagesChange = (files: File[]) => {
+    setSelectedImages(files);
+  };
+  return (
+    <ModalWrapper>
+    <div className="slide-in-panel pointer-events-auto text-md mx-auto max-w-[480px] min-w-[320px] flex gap-4 flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-500 shadow-md h-fit">
       <div className="flex w-full justify-end">
         <button className="p-[15px]" onClick={onClose}>
           <X />
         </button>
       </div>
 
-      <div className="flex flex-col gap-[10px] px-[15px]">
-        {ratingCategories.map(({ key, label }) => (
-          <RatingOption
-            key={key}
-            category={key}
-            label={label}
-            value={reviews[key]}
-            onChange={handleRatingChange}
-            ratingValues={ratingValues}
-          />
-        ))}
-
+      <div className="flex flex-col gap-[10px]">
+        <KeywordSelector selected={keywords} onChange={setKeywords} />
+        <UploadImage onChange={handleImagesChange}/>
         <h5>한줄 리뷰</h5>
-        <input
-          type="text"
+        <textarea
           value={reviews.text}
           onChange={handleTextChange}
           minLength={3}
-          maxLength={25}
-          placeholder="한줄 리뷰"
-          className="border px-2 py-1 text-neutral-900 rounded-md"
+          maxLength={100}
+          placeholder="100자 미만"
+          className="w-[80%] h-[135px] mx-auto border px-2 py-1 text-neutral-900 rounded-md"
         />
       </div>
 
-      <button className="text-md text-white bg-buttonRed mx-auto px-4 py-2 rounded-md" onClick={() => mutation.mutate()}>
-        {data?.id ? "수정 완료" : "작성 완료"}
+      <button className="text-md text-white bg-neutral-900 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
+        {data?.id ? "수정 완료하기" : "작성 완료하기"}
       </button>
-    </div>, 
-    document.getElementById("modal-root")
+    </div>
+    </ModalWrapper>
   );
 }

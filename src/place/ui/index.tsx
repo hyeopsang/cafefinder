@@ -41,15 +41,7 @@ export default function PlaceReviewPage() {
   const userReviews = reviews.filter((review) => review.userId === userId);
   const otherReviews = reviews.filter((review) => review.userId !== userId);
   const reviewColor = useReviewColor(reviews);
-  console.log(reviewColor);
-  const reviewCategories = [
-    { label: "맛", color: reviewColor.taste },
-    { label: "분위기", color: reviewColor.mood },
-    { label: "친절도", color: reviewColor.kind },
-    { label: "편안함", color: reviewColor.comfort },
-    { label: "와이파이", color: reviewColor.wifi },
-    { label: "주차공간", color: reviewColor.parking },
-  ];
+  console.log(reviewColor)
 
   const onClickModal = (review: Review | null) => {
     setSelectedReview(review);
@@ -67,14 +59,6 @@ export default function PlaceReviewPage() {
       </Link>
       <div className="w-full flex flex-col gap-6 p-3">
       <PlaceInfo place={place} />
-      <div className="w-full mx-auto grid grid-cols-3 gap-4 text-xs font-bold text-[#212121]">
-        {reviewCategories.map((item, index) => (
-          <div key={index} className="flex items-center justify-between">
-            <p>{item.label}</p>
-            <span className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color }}></span>
-          </div>
-        ))}
-      </div>
       <div className="flex w-full flex-col items-center gap-4 pt-2">
         <h2 className="text-xl font-medium">Review</h2>
         {userId ? (

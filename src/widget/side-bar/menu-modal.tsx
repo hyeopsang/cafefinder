@@ -40,11 +40,9 @@ export default function MenuModal({ onClose }: MenuProps) {
   return(
     <ModalWrapper>
          <div     
-      className="slide-in-panel z-50 max-w-[480px] min-w-[320px] mx-auto pointer-events-auto  bg-white p-4 w-full h-full"
+      className="slide-in-panel z-50 max-w-[480px] min-w-[320px] mx-auto pointer-events-auto  bg-white p-4 h-full"
     >
-      <div className="w-fit aspect-square flex items-center p-2 text-white rounded-full bg-buttonRed ml-auto">
-        <X className="w-[30px] cursor-pointer" onClick={onClose} />
-      </div>
+        <X className="w-[30px] cursor-pointer ml-auto" onClick={onClose} />
       <div className="mx-auto flex h-full w-full flex-col items-center justify-center ">
             <div className="aspect-square w-[130px] overflow-hidden rounded-full bg-white">
               <img src={profileImageUrl} alt="Profile" />

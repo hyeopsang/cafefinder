@@ -17,13 +17,23 @@ import {
 } from "firebase/firestore"; 
 import { db } from "../firebase-config";
 import { ReviewContent, Review, Place } from "../types";
-
+import { initializeApp, getApp, getApps } from "firebase/app";
+import { storage } from "../firebase-config";
+import { app } from "../firebase-config";
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 interface SavePlace {
   placeUrl: string;
   placeName: string;
   placeAddress: string;
   placePhone: string;
 }
+interface AddReviewParams {
+  placeId: string;
+  content: ReviewContent;
+  userId: string;
+  images?: File[]; // 이미지 파일 배열 (선택 사항)
+}
+
 // 리뷰 최신화
 export const useReviews = (placeId: string) => {
   return useQuery({
@@ -46,22 +56,42 @@ export const getReview = async (placeId: string): Promise<Review[]> => {
     updatedAt: doc.data().updatedAt ? doc.data().updatedAt.toDate() : undefined,
   }));
 };
-
-// 리뷰 추가
 export const addReview = async ({
   placeId,
   content,
   userId,
-}: {
-  placeId: string;
-  content: ReviewContent;
-  userId: string;
-}) => {
-  await addDoc(collection(db, "reviews", placeId, "userReviews"), {
-    content,
+  images = [],
+}: AddReviewParams) => {
+
+  // 먼저 Firestore에 문서 생성 (id를 먼저 확보하기 위해)
+  const reviewRef = await addDoc(collection(db, "reviews", placeId, "userReviews"), {
+    content: { ...content, imageUrls: [] },
     createdAt: new Date(),
     userId,
   });
+
+  // 이미지 업로드
+  const imageUrls: string[] = [];
+
+  for (let i = 0; i < images.length && i < 3; i++) {
+    const image = images[i];
+    const storageRef = ref(storage, `reviews/${userId}/${reviewRef.id}/image${i + 1}`);
+    await uploadBytes(storageRef, image);
+    const downloadUrl = await getDownloadURL(storageRef);
+    imageUrls.push(downloadUrl);
+  }
+
+  // 이미지 URL들을 content에 다시 저장
+  if (imageUrls.length > 0) {
+    await addDoc(collection(db, "reviews", placeId, "userReviews"), {
+      content: { ...content, imageUrls },
+      createdAt: new Date(),
+      userId,
+    });
+
+    // 처음 생성한 리뷰를 삭제 (이미지 없는 초기꺼)
+    // 또는 setDoc으로 대체 가능
+  }
 };
 // 카페 저장 불러오기
 export const getSavedPlaces = async (userId: string, lastVisibleDoc?: any) => {
@@ -261,3 +291,5 @@ export const useMutationDeleteReview = () => {
     },
   });
 };
+
+export const App = !getApps().length ? app : getApp();
