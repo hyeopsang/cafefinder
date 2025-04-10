@@ -37,6 +37,7 @@ body {
   width: 100%;
   overflow: hidden;
   position: relative;
+  overflow-y: scroll;
 }
 #modal-root {
   position: fixed;
