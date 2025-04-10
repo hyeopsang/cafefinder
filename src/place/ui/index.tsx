@@ -11,6 +11,7 @@ import { Review, Place } from "../../types";
 import PlaceInfo from "./place-info";
 import { Button } from "../../components/ui/button";
 import { ChevronLeft } from "lucide-react";
+import PhotoPreview from "../../ui/photo-preview";
 
 interface User {
   [key: string]: any;
@@ -31,9 +32,14 @@ export default function PlaceReviewPage() {
   const userId = auth?.user?.id ?? null;
 
   const place = places.find((p) => p.id === id);
-
   const { data: reviews = [] } = useReviews(place?.id || "");
-
+  const photos = reviews.reduce((acc, review) => {
+    if (Array.isArray(review.content.imageUrls) && review.content.imageUrls.length > 0) {
+      return [...acc, ...review.content.imageUrls];
+    }
+    return acc;
+  }, []);  
+  console.log(photos);
   if (!places.length || !place) {
     return <p>카페 데이터를 불러오는 중입니다...</p>;
   }
@@ -50,7 +56,7 @@ export default function PlaceReviewPage() {
   if (!places || places.length === 0) {
     return <p>카페 데이터를 불러오는 중입니다...</p>;
   }
-  
+  console.log(reviews)
 
   return (
     <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white text-sm p-3 text-[#212121]">
@@ -59,8 +65,9 @@ export default function PlaceReviewPage() {
       </Link>
       <div className="w-full flex flex-col gap-6 p-3">
       <PlaceInfo place={place} />
+      <PhotoPreview photos={photos} />
       <div className="flex w-full flex-col items-center gap-4 pt-2">
-        <h2 className="text-xl font-medium">Review</h2>
+        <h2 className="text-sm font-semibold">리뷰</h2>
         {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (

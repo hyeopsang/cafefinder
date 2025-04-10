@@ -6,8 +6,8 @@ interface ReviewRepostProps {
 
 export default function ReviewRepost({ onClickModal } : ReviewRepostProps) {
     return (
-        <Button variant="outline" className="w-fit bg-buttonRed hover:bg-[#f06e6e] hover:text-white text-white font-normal shadow-none drop-shadow-none" onClick={onClickModal}>
+        <button className="w-fit button-style-s px-4 bg-neutral-900 text-white font-normal shadow-none" onClick={onClickModal}>
             수정
-        </Button>
+        </button>
     )
 }

@@ -6,6 +6,7 @@ import Auth from "../kakao-login/logging";
 import Login from "../kakao-login/login";
 import ReviewList from "../profile/ui/review-list";
 import BookMark from "../bookmark/book-mark";
+import Photo from "../ui/photo-page";
 const RouterInfo = [
   {
     path: "/",
@@ -44,6 +45,12 @@ const RouterInfo = [
         element: (
           <BookMark />
         ),
+      },
+      {
+        path: "/place/:id/photo",
+        element: (
+          <Photo />
+        )
       }
     ],
   },

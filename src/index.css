@@ -11,6 +11,9 @@
   .button-style {
     @apply py-3 text-center rounded-xl text-sm font-medium
   }
+  .button-style-s {
+    @apply py-2 text-center rounded-lg text-sm font-medium
+  }
 }
 @custom-variant dark (&:is(.dark *));
 
@@ -27,7 +30,6 @@ body {
   min-width: 320px; 
   height: 100svh;
   overflow-x: hidden;
-  overflow-y: scroll;
   position: relative;
 }
 

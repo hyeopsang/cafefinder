@@ -31,12 +31,11 @@ export default function ReviewDelete({ review: { placeId, id, userId } }: Review
   };
 
   return (
-    <Button
-      variant="default"
-      className="w-fit bg-neutral-100 text-neutral-900 hover:bg-neutral-200"
+    <button
+      className="w-fit bg-white border border-neutral-200 text-neutral-900 button-style-s px-4 "
       onClick={handleDelete}
     >
       삭제
-    </Button>
+    </button>
   );
 }

@@ -24,12 +24,12 @@ export default function ReviewModal({
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const auth = useSelector((state: RootState) => state.auth);
   const userId = auth.user?.id;
-  const [keywords, setKeywords] = useState<string[]>([]);
 
   const initialContent: ReviewContent = data?.content || {
     text: "",
-    keywords,
+    keywords: [],
     placeName: placeName || "",
+    imageUrls: []
   };
 
   const [reviews, setReviews] = useState<ReviewContent>(initialContent);
@@ -43,12 +43,13 @@ export default function ReviewModal({
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setReviews((prev) => ({ ...prev, text: e.target.value }));
   };
+  const isSubmitDisabled = reviews.text.trim().length < 3;
 
   // 리뷰 추가/수정 Mutations
   const mutation = useMutation({
     mutationFn: async () => {
       if (data?.id) {
-        await updateReview({ placeId: data.placeId, id: data.id, content: reviews });
+        await updateReview({ placeId: data.placeId, id: data.id, userId, content: reviews, images: selectedImages });
       } else {
         await addReview({ placeId, content: reviews, userId, images: selectedImages });
       }
@@ -73,17 +74,20 @@ export default function ReviewModal({
   };
   return (
     <ModalWrapper>
-    <div className="slide-in-panel pointer-events-auto text-md mx-auto max-w-[480px] min-w-[320px] flex gap-4 flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-500 shadow-md h-fit">
+    <div className="slide-in-panel pointer-events-auto text-md mx-auto max-w-[480px] min-w-[320px] flex gap-2 flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-900 shadow-md h-fit">
       <div className="flex w-full justify-end">
         <button className="p-[15px]" onClick={onClose}>
           <X />
         </button>
       </div>
-
-      <div className="flex flex-col gap-[10px]">
-        <KeywordSelector selected={keywords} onChange={setKeywords} />
+      <KeywordSelector
+        selected={reviews.keywords || []}
+        onChange={(updatedKeywords) =>
+          setReviews((prev) => ({ ...prev, keywords: updatedKeywords }))
+      }
+      />        
         <UploadImage onChange={handleImagesChange}/>
-        <h5>한줄 리뷰</h5>
+        <h2 className="font-semibold text-sm text-neutral-900">한줄 리뷰</h2>
         <textarea
           value={reviews.text}
           onChange={handleTextChange}
@@ -92,9 +96,7 @@ export default function ReviewModal({
           placeholder="100자 미만"
           className="w-[80%] h-[135px] mx-auto border px-2 py-1 text-neutral-900 rounded-md"
         />
-      </div>
-
-      <button className="text-md text-white bg-neutral-900 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
+      <button disabled={isSubmitDisabled} className="text-md text-white bg-neutral-900 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
         {data?.id ? "수정 완료하기" : "작성 완료하기"}
       </button>
     </div>

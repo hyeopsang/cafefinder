@@ -54,6 +54,7 @@ export const getReview = async (placeId: string): Promise<Review[]> => {
     createdAt: doc.data().createdAt.toDate(), // Firestore Timestamp → JS Date 변환
     userId: doc.data().userId,
     updatedAt: doc.data().updatedAt ? doc.data().updatedAt.toDate() : undefined,
+
   }));
 };
 export const addReview = async ({
@@ -62,15 +63,7 @@ export const addReview = async ({
   userId,
   images = [],
 }: AddReviewParams) => {
-
-  // 먼저 Firestore에 문서 생성 (id를 먼저 확보하기 위해)
-  const reviewRef = await addDoc(collection(db, "reviews", placeId, "userReviews"), {
-    content: { ...content, imageUrls: [] },
-    createdAt: new Date(),
-    userId,
-  });
-
-  // 이미지 업로드
+  const reviewRef = doc(collection(db, "reviews", placeId, "userReviews"));
   const imageUrls: string[] = [];
 
   for (let i = 0; i < images.length && i < 3; i++) {
@@ -81,18 +74,13 @@ export const addReview = async ({
     imageUrls.push(downloadUrl);
   }
 
-  // 이미지 URL들을 content에 다시 저장
-  if (imageUrls.length > 0) {
-    await addDoc(collection(db, "reviews", placeId, "userReviews"), {
-      content: { ...content, imageUrls },
-      createdAt: new Date(),
-      userId,
-    });
-
-    // 처음 생성한 리뷰를 삭제 (이미지 없는 초기꺼)
-    // 또는 setDoc으로 대체 가능
-  }
+  await setDoc(reviewRef, {
+    content: { ...content, imageUrls },
+    createdAt: new Date(),
+    userId,
+  });
 };
+
 // 카페 저장 불러오기
 export const getSavedPlaces = async (userId: string, lastVisibleDoc?: any) => {
   try {
@@ -196,16 +184,36 @@ export const updateReview = async ({
   placeId,
   id,
   content,
+  userId,
+  images = [],
 }: {
   placeId: string;
   id: string;
   content: ReviewContent;
+  userId: string;
+  images?: File[];
 }) => {
+  const imageUrls: string[] = [];
+
+  // 이미지 업로드 최대 3개
+  for (let i = 0; i < images.length && i < 3; i++) {
+    const image = images[i];
+    const storageRef = ref(storage, `reviews/${userId}/${id}/image${i + 1}`);
+    await uploadBytes(storageRef, image);
+    const downloadUrl = await getDownloadURL(storageRef);
+    imageUrls.push(downloadUrl);
+  }
+
+  // Firestore 문서 업데이트
   await updateDoc(doc(db, "reviews", placeId, "userReviews", id), {
-    content,
+    content: {
+      ...content,
+      imageUrls,
+    },
     updatedAt: new Date(),
   });
 };
+
 // 사용자 리뷰 불러오기
 export const getUserReviews = async (userId: string, lastVisibleDoc?: any) => {
   try {

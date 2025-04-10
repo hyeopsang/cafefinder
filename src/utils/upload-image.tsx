@@ -22,7 +22,7 @@ export default function UploadImage({ onChange }: UploadImageProps) {
   };
 
   return (
-    <div className="w-[80%] mx-auto">
+    <div className="w-[80%] mx-auto pt-4">
       <input
         type="file"
         accept="image/*"
