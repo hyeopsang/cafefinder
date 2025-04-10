@@ -49,13 +49,13 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
           <SwiperSlide key={place.id}>
             <Link to={`/place/${place.id}`}>
               <div
-                className="mx-auto w-[calc(100%-40px)] rounded-xl bg-white p-5 shadow-md"
+                className="mx-auto w-[90%] rounded-2xl bg-white text-neutral-900 p-4 font-medium text-base shadow-md"
                 style={{ cursor: "default" }}
               >
-                <div className="flex flex-col gap-[10px] text-md font-medium">
-                  <h5 className="text-lg font-bold">{place.place_name}</h5>
-                  <p className="distance">{Number(place.distance).toFixed(2)} m</p>
-                  <p className="address">{place.address_name}</p>
+                <div className="flex flex-col gap-2">
+                  <h5 className="text-lg font-semibold">{place.place_name}</h5>
+                  <p>{Number(place.distance).toFixed(2)} m</p>
+                  <p>{place.address_name}</p>
                 </div>
               </div>
             </Link>

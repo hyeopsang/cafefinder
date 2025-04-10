@@ -6,11 +6,11 @@ export default function PhotoPreview ({ photos }: { photos?: string[] }) {
   return (
     <div className="w-full mx-auto">
       <div className="flex justify-center items-center relative py-4">
-        <h2 className="text-sm font-semibold text-neutral-900">리뷰 사진</h2>
+        <h2 className="text-base font-semibold">리뷰 사진</h2>
         {
           previewPhotos.length > 6 && (
             <Link to="/photos" className="absolute right-0 top-[50%] transform translate-y-[-50%]">
-              <button className="text-neutral-900">
+              <button>
                 더보기
               </button>
             </Link>
@@ -32,7 +32,7 @@ export default function PhotoPreview ({ photos }: { photos?: string[] }) {
           </div>
         )
         : (
-          <p className="text-sm font-medium rounded-2xl bg-neutral-100 py-7 w-full text-center text-neutral-900">
+          <p className="text-sm rounded-2xl bg-neutral-100 py-4 w-full text-center">
             사진이 없어요
           </p>
         )

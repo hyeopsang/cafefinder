@@ -83,7 +83,7 @@ export default function ReviewList() {
         <ChevronLeft className="text-white" />
       </div>
       </Link>
-      <div className="flex flex-col gap-4 p-3">
+      <div className="flex flex-col gap-4 p-2">
         {reviewsList.length > 0 ? (
         reviewsList.map((review, index) => (
           <div key={review.id} ref={index === reviewsList.length - 1 ? setTarget : null}>

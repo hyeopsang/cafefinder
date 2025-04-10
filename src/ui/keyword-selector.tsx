@@ -54,7 +54,7 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
   };
 
   return (
-    <section aria-label="리뷰 키워드 선택" className="w-[80%] mx-auto space-y-4 whitespace-nowrap ">
+    <section aria-label="리뷰 키워드 선택" className="w-[80%] mx-auto space-y-4 whitespace-nowrap">
       {selected.length > 0 && (
         <div>
           <h3 className="font-semibold text-neutral-700 mb-2">선택된 키워드</h3>
@@ -62,7 +62,7 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
             {selected.map((keyword) => (
               <li
                 key={keyword}
-                className="w-fit text-xs px-3 py-2 bg-white text-neutral-900 border border-neutral-200 hover:bg-gray-100 rounded-full"
+                className="w-fit text-xs px-3 py-2 bg-white border border-neutral-200 hover:bg-gray-100 rounded-full"
               >
                 # {keyword}
                 <button

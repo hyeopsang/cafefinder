@@ -32,7 +32,7 @@ export default function ReviewDelete({ review: { placeId, id, userId } }: Review
 
   return (
     <button
-      className="w-fit bg-white border border-neutral-200 text-neutral-900 button-style-s px-4 "
+      className="w-fit bg-white border font-medium border-neutral-200 button-style-s px-4"
       onClick={handleDelete}
     >
       삭제

@@ -13,7 +13,7 @@ export default function OtherReview ({ reviews }: OtherReviewProps) {
               <ReviewItem key={id} review={review}/>
             ))
           ) : (
-              <p className="text-sm font-medium rounded-2xl bg-neutral-100 py-7 w-full text-center text-neutral-900">작성된 리뷰가 없어요</p>
+              <p className="text-sm rounded-2xl bg-neutral-100 py-4 w-full text-center">작성된 리뷰가 없어요</p>
 
           )}
         </>

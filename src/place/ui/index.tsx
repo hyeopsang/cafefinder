@@ -59,20 +59,20 @@ export default function PlaceReviewPage() {
   console.log(reviews)
 
   return (
-    <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white text-sm p-3 text-[#212121]">
+    <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white font-medium text-base p-3 text-neutral-900">
       <Link to="/">
-        <ChevronLeft className="text-neutral-900" />
+        <ChevronLeft className="w-10" />
       </Link>
-      <div className="w-full flex flex-col gap-6 p-3">
+      <div className="w-full flex flex-col gap-2 p-2">
       <PlaceInfo place={place} />
       <PhotoPreview photos={photos} />
-      <div className="flex w-full flex-col items-center gap-4 pt-2">
-        <h2 className="text-sm font-semibold">리뷰</h2>
+      <div className="flex w-full flex-col items-center gap-2 pt-2">
+        <h2 className="font-semibold">리뷰</h2>
         {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (
-          <div className="w-full flex flex-col gap-2 py-7 items-center border rounded-2xl border-neutral-300">
-            <p className="font-medium text-slate-600 text-xs pb-2">리뷰를 작성하려면 로그인이 필요해요</p>
+          <div className="w-full flex flex-col gap-2 py-4 items-center border rounded-2xl border-neutral-300">
+            <p className="text-slate-600 text-xs pb-2">리뷰를 작성하려면 로그인이 필요해요</p>
             <Link to="/login" className="button-style bg-neutral-900 text-white w-[80%]">로그인 화면으로 이동하기</Link>
           </div>
         )}

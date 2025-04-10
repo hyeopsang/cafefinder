@@ -5,11 +5,11 @@ export default function LocationButton() {
 
   return (
     <div
-      className="absolute right-[30px] bg-white rounded-full top-30 z-30 aspect-square shadow-md"
+      className="absolute right-[5%] bg-white rounded-full top-25 z-30 aspect-square shadow-md w-9 flex justify-center items-center"
       id="centerOnMyLocation"
       onClick={moveToLocation} // 이벤트 핸들러에 함수 전달
     >
-      <LocateFixed className="w-[40px] h-[40px] p-2" />
+      <LocateFixed className="w-5" />
     </div>
   );
 }

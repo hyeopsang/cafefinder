@@ -28,26 +28,26 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
 
   return (
     <form
-      className="absolute left-1/2 top-5 z-10 flex w-[calc(100%-40px)] -translate-x-1/2 items-center justify-between rounded-[15px] bg-white shadow-md"
+      className="absolute left-1/2 top-5 z-10 flex w-[90%] -translate-x-1/2 items-center justify-between rounded-2xl px-2 bg-white shadow-md"
       id="search_form"
       onSubmit={handleSearch}
     >
   {/* 메뉴 버튼 */}
-  <button type="button" className="p-4" onClick={() => setIsOpen(true)}>
-    <AlignJustify className="w-6" /> 
+  <button type="button" className="p-2" onClick={() => setIsOpen(true)}>
+    <AlignJustify className="w-5" /> 
   </button>
 
   {/* 검색 입력창 */}
   <input
     type="text"
     id="keyword"
-    className="flex-grow text-lg bg-white outline-none"
+    className="flex-grow text-sm bg-white outline-none"
     value={searchTxt}
     onChange={onChangeTxt}
     placeholder="카페명으로 검색"
   />
   
-  <div className="w-6 flex justify-end">
+  <div className="w-5 flex justify-end">
     {searchTxt && (
       <button type="button" onClick={handleCancel}>
         <X className="w-5"/>
@@ -56,8 +56,8 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
   </div>
 
   {/* 검색 버튼 */}
-  <button type="submit" className="p-4">
-    <Search className="w-6" />
+  <button type="submit" className="p-2">
+    <Search className="w-5" />
   </button>
 </form>
 

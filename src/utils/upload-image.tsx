@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Image } from "lucide-react";
+import { Image, X } from "lucide-react";
 interface UploadImageProps {
   onChange: (files: File[]) => void;
 }
@@ -34,9 +34,9 @@ export default function UploadImage({ onChange }: UploadImageProps) {
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}
-        className="w-full text-white bg-neutral-900 button-style flex justify-center items-center gap-4"
+        className="w-full text-white bg-neutral-900 button-style font-medium text-sm flex justify-center items-center gap-4"
       >
-        <Image/><p>이미지 선택하기 (최대 3장)</p>
+        <Image className="w-5 h-5"/><p>이미지 선택하기 (최대 3장)</p>
       </button>
 
       <div className="flex gap-4 mt-3">
@@ -50,9 +50,9 @@ export default function UploadImage({ onChange }: UploadImageProps) {
             <button
               type="button"
               onClick={() => handleRemoveImage(index)}
-              className="absolute top-0 right-0 bg-black text-white text-xs px-1 rounded"
+              className="absolute top-0 right-0 bg-neutral-900 text-white text-xs p-1 rounded-full"
             >
-              X
+              <X className="w-3 h-3"/>
             </button>
           </div>
         ))}

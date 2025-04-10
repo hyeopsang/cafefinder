@@ -40,28 +40,28 @@ export default function MenuModal({ onClose }: MenuProps) {
   return(
     <ModalWrapper>
          <div     
-      className="slide-in-panel z-50 max-w-[480px] min-w-[320px] mx-auto pointer-events-auto  bg-white p-4 h-full"
+      className="slide-in-panel z-50 max-w-[480px] min-w-[320px] mx-auto pointer-events-auto text-neutral-900 bg-white p-4 h-full"
     >
-        <X className="w-[30px] cursor-pointer ml-auto" onClick={onClose} />
+        <X className="w-5 h-5 cursor-pointer ml-auto" onClick={onClose} />
       <div className="mx-auto flex h-full w-full flex-col items-center justify-center ">
             <div className="aspect-square w-[130px] overflow-hidden rounded-full bg-white">
               <img src={profileImageUrl} alt="Profile" />
             </div>
-        <div className="w-full flex flex-col items-center gap-4 pt-4">
+        <div className="w-full flex flex-col items-center gap-2 pt-4">
                 <Link to={"/my-review"}>
-                  <div className="flex justify-between button-style w-[130px] px-5 text-neutral-900 bg-white">
+                  <div className="flex justify-between button-style w-[130px] px-4 bg-white">
                     <Pencil size={20}/>
                     <p>나의 리뷰</p>
                   </div>
                 </Link>
                 <Link to={"/book-mark"}>
-                  <div className="flex justify-between px-5 w-[130px]  text-neutral-900 bg-white button-style">
+                  <div className="flex justify-between px-4 w-[130px] bg-white button-style">
                     <Bookmark size={20}/>
                     <p>북마크</p>
                   </div>
                 </Link>
                 <a onClick={handleLogout}>
-                <div className="flex justify-between px-5 w-[130px] items-center bg-neutral-900 button-style text-white cursor-pointer">
+                <div className="flex justify-between px-4 w-[130px] items-center bg-neutral-900 button-style-s text-white cursor-pointer">
                   <LogOut size={20}/>
                   <p>로그아웃</p>
                 </div>      

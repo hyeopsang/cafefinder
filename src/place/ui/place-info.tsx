@@ -22,15 +22,15 @@ export default function PlaceInfo({ place } : PlaceInfoProps) {
     
     return (
         <>
-        <h1 className="text-center text-lg text-neutral-900 font-bold">{place.place_name}</h1>
-        <p className="text-center text-neutral-900 font-medium p-2">{place.address_name}</p>
+        <h1 className="text-center text-lg font-semibold">{place.place_name}</h1>
+        <p className="text-center p-2">{place.address_name}</p>
         <div className="mx-auto flex w-fit gap-6">
             <a href={place.place_url}>
-                <SquareArrowOutUpLeft className="w-6 h-6 text-neutral-900" />
+                <SquareArrowOutUpLeft className="w-5 h-5" />
             </a>
         {place.phone.length === 0 ? null : (
             <a href={`tel:${place.phone}`}>
-                <Phone className="w-6 h-6 text-neutral-900" />
+                <Phone className="w-5 h-5" />
             </a>
 
         )}
