@@ -22,9 +22,9 @@ export default function ReviewItem({ review, onOpen } : ReviewItemProps) {
         >
             <p className="font-semibold text-base">{review.content.placeName}</p>
             <p className="text-neutral-500">{formattedTime(review.createdAt)}</p>
-            <ul className="w-full flex flex-wrap items-center justify-left gap-2">
+            <ul className="w-full flex flex-wrap items-center justify-left gap-1">
                 {review.content.keywords.map((keyword, id) =>
-                    <li className="w-fit text-xs px-3 py-2 bg-white text-netural-900 border border-neutral-200 rounded-full">
+                    <li className="w-fit text-xs text-blue-400 hover:text-blue-500 cursor-pointer">
                         # {keyword}
                     </li> 
                 )}
