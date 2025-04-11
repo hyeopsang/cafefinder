@@ -20,7 +20,7 @@ const keywordList = {
     "아늑해요",
     "야외공간이 멋져요",
     "음악이 좋아요",
-    "차분한 분위기에요",
+    "분위기가 좋아요",
   ],
   기타: [
     "친절해요",
@@ -29,7 +29,6 @@ const keywordList = {
     "주차공간이 넓어요",
     "좌석이 편해요",
     "반려동물과 가기 좋아요",
-    "특별한 날 가기 좋아요",
   ],
 };
 
@@ -83,7 +82,7 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
       {Object.entries(keywordList).map(([category, keywords]) => (
         <fieldset key={category} className="border-t border-neutral-200 mx-auto rounded">
           <legend className="font-semibold text-sm px-2">{category}</legend>
-          <ul className="flex flex-wrap justify-items-start gap-2 pt-2">
+          <ul className="flex flex-wrap justify-center gap-2 pt-2">
             {keywords.map((keyword) => {
               const isSelected = selected.includes(keyword);
               const buttonClass = isSelected

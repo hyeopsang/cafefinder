@@ -67,7 +67,8 @@ export default function PlaceReviewPage() {
       <div className="w-full flex flex-col gap-2 px-3">
       <PhotoPreview photos={photos} />
       <div className="flex w-full flex-col items-center gap-1 pt-2">
-        {userId ? (
+      <h2 className="text-base font-semibold pb-1">리뷰</h2>
+      {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (
           <div className="w-full flex flex-col gap-2 py-4 items-center border rounded-2xl border-neutral-300">
