@@ -73,8 +73,8 @@ export default function PlaceSave({ place }: PlaceInfoProps) {
 
   return (
     <Star
-      className={`w-5 h-5 cursor-pointer ${
-        isSaved ? "text-yellow-500 fill-yellow-500" : "text-neutral-900"
+      className={`w-5 h-5 mx-auto cursor-pointer ${
+        isSaved ? "text-yellow-500 fill-yellow-500" : "text-neutral-300 fill-neutral-200"
       }`}
       onClick={onClickSave}
     />

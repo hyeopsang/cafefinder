@@ -11,7 +11,7 @@ export default function BoundSearch({ setShowReGps, showReGps }: BoundSearchProp
 
     return (
         <div 
-            className="absolute left-0 right-0 m-auto top-20 z-30 w-fit h-fit px-4 py-2 rounded-full bg-white shadow-md flex items-center justify-center cursor-pointer" 
+            className="absolute left-0 right-0 m-auto top-22 z-30 w-fit h-fit px-4 py-2 rounded-full bg-white shadow-md flex items-center justify-center cursor-pointer" 
             onClick={searchCafesInBounds} 
             style={{ opacity: showReGps ? 1 : 0, transition: "opacity 0.3s ease-in-out" }} 
         >

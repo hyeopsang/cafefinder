@@ -74,7 +74,7 @@ export default function ReviewModal({
   };
   return (
     <ModalWrapper>
-    <div className="slide-in-panel pointer-events-auto text-md mx-auto max-w-[480px] min-w-[320px] flex gap-2 flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-900 shadow-md h-fit">
+    <div className="slide-in-panel pointer-events-auto text-md mx-auto max-w-[480px] min-w-[320px] flex flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-900 shadow-md h-fit gap-1">
         <button className="p-4 ml-auto" onClick={onClose}>
           <X className="w-5"/>
         </button>
@@ -85,7 +85,7 @@ export default function ReviewModal({
       }
       />        
         <UploadImage onChange={handleImagesChange}/>
-        <h2 className="font-semibold text-base">한줄 리뷰</h2>
+        <h2 className="font-semibold text-base m-0">한줄 리뷰</h2>
         <textarea
           value={reviews.text}
           onChange={handleTextChange}

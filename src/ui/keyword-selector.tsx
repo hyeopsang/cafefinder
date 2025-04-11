@@ -55,9 +55,11 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
 
   return (
     <section aria-label="리뷰 키워드 선택" className="w-[80%] mx-auto space-y-4 whitespace-nowrap">
+      <h2 className="text-base font-semibold m-0 pb-1">카페에 어울리는 키워드를 선택해주세요!</h2>
+      <p className="text-neutral-400 m-0 pb-2">(최대 8개)</p>
       {selected.length > 0 && (
         <div>
-          <h3 className="font-semibold text-neutral-700 mb-2">선택된 키워드</h3>
+          <h3 className="font-semibold text-neutral-700 mb-1">선택된 키워드</h3>
           <ul className="flex flex-wrap gap-2">
             {selected.map((keyword) => (
               <li
@@ -81,7 +83,7 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
       {Object.entries(keywordList).map(([category, keywords]) => (
         <fieldset key={category} className="border-t border-neutral-200 mx-auto rounded">
           <legend className="font-semibold text-sm px-2">{category}</legend>
-          <ul className="flex flex-wrap justify-items-start gap-2 pt-4">
+          <ul className="flex flex-wrap justify-items-start gap-2 pt-2">
             {keywords.map((keyword) => {
               const isSelected = selected.includes(keyword);
               const buttonClass = isSelected

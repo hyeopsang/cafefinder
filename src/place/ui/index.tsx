@@ -59,15 +59,14 @@ export default function PlaceReviewPage() {
   console.log(reviews)
 
   return (
-    <div className="h-svh mx-auto flex flex-col min-w-mobile max-w-mobile bg-white font-medium text-base p-3 text-neutral-900">
+    <div className="h-svh overflow-y-scroll mx-auto flex flex-col min-w-mobile max-w-mobile bg-white font-medium text-base py-3 text-neutral-900">
       <Link to="/">
         <ChevronLeft className="w-10" />
       </Link>
-      <div className="w-full flex flex-col gap-2 p-2">
       <PlaceInfo place={place} />
+      <div className="w-full flex flex-col gap-2 px-3">
       <PhotoPreview photos={photos} />
-      <div className="flex w-full flex-col items-center gap-2 pt-2">
-        <h2 className="font-semibold">리뷰</h2>
+      <div className="flex w-full flex-col items-center gap-1 pt-2">
         {userId ? (
           <MyReview reviews={userReviews} onClickModal={onClickModal} />
         ) : (

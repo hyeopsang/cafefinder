@@ -22,7 +22,7 @@ export default function UploadImage({ onChange }: UploadImageProps) {
   };
 
   return (
-    <div className="w-[80%] mx-auto pt-4">
+    <div className="w-[80%] mx-auto pt-3">
       <input
         type="file"
         accept="image/*"
@@ -39,7 +39,7 @@ export default function UploadImage({ onChange }: UploadImageProps) {
         <Image className="w-5 h-5"/><p>이미지 선택하기 (최대 3장)</p>
       </button>
 
-      <div className="flex gap-4 mt-3">
+      <div className="flex gap-2 mt-3">
         {images.map((file, index) => (
           <div key={index} className="relative w-24 h-24">
             <img

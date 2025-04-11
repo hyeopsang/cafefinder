@@ -5,7 +5,7 @@ export default function LocationButton() {
 
   return (
     <div
-      className="absolute right-[5%] bg-white rounded-full top-20 z-30 aspect-square shadow-md w-9 flex justify-center items-center"
+      className="absolute right-[5%] bg-white rounded-full top-22 z-30 aspect-square shadow-md w-9 flex justify-center items-center"
       id="centerOnMyLocation"
       onClick={moveToLocation} // 이벤트 핸들러에 함수 전달
     >

@@ -28,7 +28,7 @@ const SearchForm = ({ currentLocation, setIsOpen }: SearchFormProps) => {
 
   return (
     <form
-      className="absolute left-1/2 top-5 z-10 flex w-[90%] -translate-x-1/2 items-center justify-between rounded-2xl px-2 bg-white shadow-md"
+      className="absolute left-1/2 top-5 z-10 flex w-[90%] -translate-x-1/2 items-center justify-between rounded-2xl px-2 py-1 bg-white shadow-md"
       id="search_form"
       onSubmit={handleSearch}
     >
