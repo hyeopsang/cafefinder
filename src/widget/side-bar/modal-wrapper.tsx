@@ -8,7 +8,7 @@ interface ModalWrapperProps {
 
 export default function ModalWrapper({ children }: ModalWrapperProps) {
   return createPortal(
-    <div className="w-full h-full z-50 backdrop-blur-xl overflow-y-scroll">
+    <div className="w-full h-full z-50 backdrop-blur-xl overflow-auto">
       {children}
     </div>,
     document.getElementById("modal-root")!
