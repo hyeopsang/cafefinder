@@ -85,7 +85,7 @@ export default function ReviewModal({
       }
       />        
         <UploadImage onChange={handleImagesChange}/>
-        <h2 className="font-semibold text-base m-0">한줄 리뷰</h2>
+        <h2 className="font-semibold text-base m-0">리뷰</h2>
         <textarea
           value={reviews.text}
           onChange={handleTextChange}
