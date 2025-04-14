@@ -4,7 +4,7 @@ interface UploadImageProps {
   onChange: (files: File[]) => void;
 }
 
-export default function UploadImage({ onChange }: UploadImageProps) {
+export default function ReviewPhoto({ onChange }: UploadImageProps) {
   const [images, setImages] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

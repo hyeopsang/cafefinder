@@ -13,7 +13,8 @@ import {
   startAfter,
   limit,
   getDoc,
-  setDoc
+  setDoc,
+  QuerySnapshot
 } from "firebase/firestore"; 
 import { db } from "../firebase-config";
 import { ReviewContent, Review, Place } from "../types";
@@ -57,6 +58,7 @@ export const getReview = async (placeId: string): Promise<Review[]> => {
 
   }));
 };
+
 export const addReview = async ({
   placeId,
   content,
@@ -213,7 +215,50 @@ export const updateReview = async ({
     updatedAt: new Date(),
   });
 };
+export const getReviewPhoto = async (placeId: string, lastVisibleDoc?: any) => {
+  try {
+    // 🔍 reviews/{placeId}/userReviews 컬렉션 쿼리
+    let reviewsQuery = query(
+      collection(db, "reviews", placeId, "userReviews"),
+      orderBy("createdAt", "desc"),
+      limit(10)
+    );
 
+    if (lastVisibleDoc) {
+      reviewsQuery = query(reviewsQuery, startAfter(lastVisibleDoc));
+    }
+
+    const querySnapshot = await getDocs(reviewsQuery);
+
+    // 🔄 모든 리뷰에서 imageUrls를 꺼내서 하나의 배열로 병합
+    const photos: string[] = querySnapshot.docs.flatMap((doc) => {
+      const imageUrls = doc.data().content?.imageUrls;
+
+      if (Array.isArray(imageUrls)) {
+        return imageUrls.filter((url) => typeof url === "string" && url.trim() !== "");
+      } else if (typeof imageUrls === "string" && imageUrls.trim() !== "") {
+        return [imageUrls];
+      }
+
+      return [];
+    });
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    return { photos, nextQuery: lastVisible || null };
+  } catch (error) {
+    console.error("🚨 Error fetching review Photo: ", error);
+    return { photos: [], nextQuery: null };
+  }
+};
+
+export const useReviewPhoto = (placeId: string) => {
+  return useQuery({
+    queryKey: ["reviews", placeId],
+    queryFn: () => getReviewPhoto(placeId),
+    enabled: !!placeId,
+  });
+};
 // 사용자 리뷰 불러오기
 export const getUserReviews = async (userId: string, lastVisibleDoc?: any) => {
   try {

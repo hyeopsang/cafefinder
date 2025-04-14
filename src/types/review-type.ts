@@ -1,8 +1,8 @@
 export interface ReviewContent {
-    keywords: string[]
+    keywords?: string[]
     text: string;
     placeName: string; 
-    imageUrls: string[];
+    imageUrls?: string[];
 }
 export interface Review {
     id: string

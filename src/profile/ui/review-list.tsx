@@ -7,7 +7,7 @@ import { Review } from "../../types";
 import { getUserReviews, useUserReviews } from "../../api"; // getUserReviews를 사용하는 훅
 import { useInfiniteScroll } from "../utils/useInfiniteScroll";// 커스텀 훅 import
 import { ChevronLeft } from "lucide-react";
-
+import { useLocation } from "react-router-dom";
 interface User {
   [key: string]: any;
 }
@@ -28,7 +28,8 @@ export default function ReviewList() {
   const [reviewsList, setReviewsList] = useState<Review[]>([]); // 리뷰 리스트 상태
   const [nextQuery, setNextQuery] = useState<any>(null); // 다음 쿼리 저장
   const [loading, setLoading] = useState(false); // 로딩 상태 관리
-
+  const id = useLocation();
+  console.log(id)
   const auth: AuthState = useSelector((state: StateType) => state.auth);
   const userId = auth.user?.id;
 
@@ -79,10 +80,9 @@ export default function ReviewList() {
   return (
     <div className="w-full h-screen p-3 text-neutral-900">
       <Link to={"/"}>
-      <div className="w-fit p-2 rounded-full bg-buttonRed">
-        <ChevronLeft className="text-white" />
-      </div>
+        <ChevronLeft className="text-neutral-900" />
       </Link>
+      <h2 className="text-center font-semibold text-base">내 리뷰 모아보기</h2>
       <div className="flex flex-col gap-4 p-2">
         {reviewsList.length > 0 ? (
         reviewsList.map((review, index) => (

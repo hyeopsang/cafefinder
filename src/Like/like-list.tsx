@@ -4,7 +4,8 @@ import { useInfiniteScroll } from "../profile/utils/useInfiniteScroll";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getSavedPlaces, useUserSavedPlace } from "../api";
-import { Place } from "../types";
+import { Like, Place } from "../types";
+import LikeItem from "./like-item";
 interface User {
     [key: string]: any;
   }
@@ -19,15 +20,9 @@ interface User {
     user: User | null;
   }
 
-  interface SavePlace {
-    id: string,
-    placeId: string,
-    content: Place
-    createdAt: Date
-  }
 
-export default function BookMark () {
-  const [savePlaceList, setSavePlaceList] = useState<SavePlace[]>([]); // 리뷰 리스트 상태
+export default function LikeList () {
+  const [savePlaceList, setSavePlaceList] = useState<Like[]>([]); // 리뷰 리스트 상태
   const [nextQuery, setNextQuery] = useState<any>(null); // 다음 쿼리 저장
   const [loading, setLoading] = useState(false); // 로딩 상태 관리
 
@@ -75,22 +70,21 @@ console.log(userId)
 
   console.log(savePlaceList)
     return (
-        <div className="w-full h-screen px-8 pt-4 text-neutral-900">
+      <div className="w-full h-screen px-8 pt-4 text-neutral-900">
       <Link to={"/"}>
-      <div className="w-fit p-2 rounded-full bg-buttonRed">
-        <ChevronLeft className="text-white" />
-      </div>
+        <ChevronLeft className="text-neutral-900" />
       </Link>
+      <h2 className="text-center font-semibold text-base">즐겨찾기</h2>
       <div className="flex flex-col gap-4 pt-4">
         {savePlaceList.length > 0 ? (
-                savePlaceList.map((place, index) => (
-                  <div key={place.id} ref={index === savePlaceList.length - 1 ? setTarget : null}>
-                    {place.placeId}
-              </div>
-                ))
-                ) : (
-                  <div>작성된 리뷰가 없어요ㅠ</div>
-                )}
+          savePlaceList.map((place, index) => (
+          <div key={place.id} ref={index === savePlaceList.length - 1 ? setTarget : null}>
+            <LikeItem place={place}/> 
+          </div>
+          ))
+        ) : (
+          <div>작성된 리뷰가 없어요ㅠ</div>
+        )}
       </div>
       {loading && <div>북마크를 불러오는 중 ..</div>}
 

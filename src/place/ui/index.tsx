@@ -65,7 +65,7 @@ export default function PlaceReviewPage() {
       </Link>
       <PlaceInfo place={place} />
       <div className="w-full flex flex-col gap-2 px-3">
-      <PhotoPreview photos={photos} />
+      <PhotoPreview photos={photos} id={place.id} />
       <div className="flex w-full flex-col items-center gap-1 pt-2">
       <h2 className="text-base font-semibold pb-1">리뷰</h2>
       {userId ? (

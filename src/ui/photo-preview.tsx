@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Ban } from "lucide-react";
 
-export default function PhotoPreview ({ photos }: { photos?: string[] }) {
+export default function PhotoPreview ({ photos, id }: { photos?: string[], id: string }) {
   const previewPhotos = Array.isArray(photos) ? photos.slice(0, 6) : [];
 
   return (
@@ -10,7 +10,7 @@ export default function PhotoPreview ({ photos }: { photos?: string[] }) {
         <h2 className="text-base font-semibold pb-1">사진</h2>
         {
           previewPhotos.length > 6 && (
-            <Link to="/photos" className="absolute right-0 top-[50%] transform translate-y-[-50%]">
+            <Link to={`/place/${id}/photo`} className="absolute right-0 top-[50%] transform translate-y-[-50%]">
               <button>
                 더보기
               </button>
@@ -21,7 +21,7 @@ export default function PhotoPreview ({ photos }: { photos?: string[] }) {
       {
         previewPhotos.length > 0 
         ? (
-          <div className="grid grid-cols-3 border rounded-2xl border-neutral-300 p-2 shadow-inner divide-x divide-y divide-neutral-900">
+          <div className="grid grid-cols-3 border rounded-2xl overflow-hidden shadow-inner divide-x divide-y divide-white">
             {previewPhotos.map((url, id) => (
               <img
                 key={id}
