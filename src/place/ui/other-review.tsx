@@ -2,7 +2,6 @@ import { Review } from "../../types";
 import { useState } from "react";
 import ReviewItem from "../../ui/review-item";
 import { Ban } from "lucide-react";
-import { fileURLToPath } from "url";
 interface OtherReviewProps {
     reviews: Review[];
   }

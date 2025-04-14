@@ -7,7 +7,6 @@ import { useRefContext } from "../../app/context/RefContext";
 import { Place } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/redux/store";
-import { setMap } from "../../app/redux/mapSlice";
 const { kakao } = window;
 
 interface CafeSwiperProps {

@@ -1,19 +1,6 @@
-import { Link } from "react-router"
 import { Place } from "../../types"
-import MyReview from "./my-review"
-import OtherReview from "./other-review"
-
-import { Star, Phone, SquareArrowOutUpLeft } from "lucide-react"
+import { Phone, SquareArrowOutUpLeft } from "lucide-react"
 import PlaceSave from "./place-save"
-interface ReviewColor {
-    taste: string;
-    mood: string;
-    kind: string;
-    comfort: string;
-    wifi: string;
-    parking: string;
-}
-
 interface PlaceInfoProps {
     place: Place;
 }

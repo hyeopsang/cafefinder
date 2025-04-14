@@ -1,5 +1,5 @@
 import { Phone, SquareArrowOutUpLeft } from "lucide-react";
-import { Like, Place } from "../types";
+import { Like } from "../types";
 
 interface LikeProps {
     place: Like

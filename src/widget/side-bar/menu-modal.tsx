@@ -2,9 +2,7 @@ import "./modal-animation.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../app/redux/authSlice";
-import { motion } from "framer-motion";
-import { X, Pencil, LogIn, LogOut, MapPin, Bookmark } from 'lucide-react';
-import { createPortal } from "react-dom";
+import { X, Pencil, LogOut, Bookmark } from 'lucide-react';
 import ModalWrapper from "./modal-wrapper";
 interface User {
   [key: string]: any;

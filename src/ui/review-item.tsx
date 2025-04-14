@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Review } from "../types";
-import { Button } from "../components/ui/button";
 import { formattedTime } from "../utils/fomattedTime";
 import ReviewDelete from "./review-delete";
 import ReviewRepost from "./review-repost";

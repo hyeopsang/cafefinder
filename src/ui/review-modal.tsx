@@ -4,12 +4,9 @@ import { addReview, updateReview } from "../api";
 import { useSelector } from "react-redux";
 import { Review, ReviewContent } from "../types";
 import { RootState } from "../app/redux/store";
-import { ChevronLeft, X } from "lucide-react";
-import ReviewPhoto from "./review-photo";
-import KeywordSelector from "./keyword-selector";
+import { X } from "lucide-react";
 import ModalWrapper from "../widget/side-bar/modal-wrapper";
 import "../widget/side-bar/modal-animation.css";
-import ReviewText from "./review-text";
 import ReviewKeywords from "./review-keywords";
 import ReviewForm from "./review-form";
 export default function ReviewModal({

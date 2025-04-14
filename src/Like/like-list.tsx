@@ -4,7 +4,7 @@ import { useInfiniteScroll } from "../profile/utils/useInfiniteScroll";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getSavedPlaces, useUserSavedPlace } from "../api";
-import { Like, Place } from "../types";
+import { Like } from "../types";
 import LikeItem from "./like-item";
 interface User {
     [key: string]: any;
