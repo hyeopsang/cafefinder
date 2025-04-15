@@ -80,7 +80,7 @@ export default function ReviewModal({
   }
   return (
     <ModalWrapper>
-    <div className="slide-in-panel pointer-events-auto overflow-auto text-md mx-auto max-w-[480px] min-w-[320px] flex flex-col bg-white pb-4 text-center text-neutral-900 shadow-md h-fit gap-1">
+    <div className="slide-in-panel pointer-events-auto overflow-auto text-md mx-auto max-w-[480px] min-w-[320px] rounded-lg flex flex-col bg-white pb-4 text-center text-neutral-900 shadow-md h-fit gap-1">
       <button className="p-4 ml-auto" onClick={onClose}>
         <X className="w-5"/>
       </button>

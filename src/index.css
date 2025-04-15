@@ -31,7 +31,7 @@ body {
   height: 100svh;
   overflow-x: hidden;
   position: relative;
-  background
+  background-color: #121212;
 }
 
 #root{

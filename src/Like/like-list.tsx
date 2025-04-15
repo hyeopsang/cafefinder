@@ -70,7 +70,7 @@ console.log(userId)
 
   console.log(savePlaceList)
     return (
-      <div className="w-full h-screen px-8 pt-4 text-neutral-900">
+      <div className="w-full h-screen px-8 pt-4 bg-white text-neutral-900">
       <Link to={"/"}>
         <ChevronLeft className="text-neutral-900" />
       </Link>
