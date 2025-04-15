@@ -50,7 +50,7 @@ export function useSearch(currentLocation: kakao.maps.LatLng) {
         console.log("API call failed with status: ", status); // 실패 시 상태 확인
       }
     }, {
-      location: map.getCenter(),
+      location: currentLocation,
       sort: kakao.maps.services.SortBy.DISTANCE,
     });
   }, [dispatch, search, map, displayCafeMarkers, currentLocation, searchTxt]);

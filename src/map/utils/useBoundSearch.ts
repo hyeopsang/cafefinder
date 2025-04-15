@@ -46,7 +46,7 @@ export function useBoundSearch(
             const placePosition = new kakao.maps.LatLng(Number(place.y), Number(place.x));
             return bounds.contain(placePosition);
           });
-
+    
           const placesWithDistance = await Promise.all(
             cafeData.map(async (place) => {
               const targetLocation = new kakao.maps.LatLng(Number(place.y), Number(place.x));
@@ -57,18 +57,27 @@ export function useBoundSearch(
                   targetLocation.getLat(),
                   targetLocation.getLng()
                 ) * 1000;
-              return { ...place, distance, category_group_code: Array.isArray(place.category_group_code) ? place.category_group_code.join(",") : place.category_group_code };
+              return {
+                ...place,
+                distance,
+                category_group_code: Array.isArray(place.category_group_code)
+                  ? place.category_group_code.join(",")
+                  : place.category_group_code,
+              };
             })
           );
-
+    
           dispatch(setPlaces(placesWithDistance));
           displayCafeMarkers(placesWithDistance);
         }
       },
       {
-        bounds: new kakao.maps.LatLngBounds(swLatLng, neLatLng),
+        location: map.getCenter(),
+        sort: kakao.maps.services.SortBy.DISTANCE, 
+        radius: 5000
       }
     );
+    
   };
 
   return { searchCafesInBounds };
