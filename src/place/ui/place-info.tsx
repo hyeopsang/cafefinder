@@ -20,7 +20,7 @@ export default function PlaceInfo({ place } : PlaceInfoProps) {
         )}
             <a href={place.place_url} className="flex justify-center items-center gap-2">
                 <SquareArrowOutUpLeft className="w-4 h-4" />
-                <p>카페 상세 보기</p>
+                <p>카카오 맵으로 이동하기</p>
             </a>
         </div>
     )

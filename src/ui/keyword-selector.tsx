@@ -52,7 +52,7 @@ export default function KeywordSelector({ selected, onChange }: KeywordSelectorP
   };
 
   return (
-    <section aria-label="리뷰 키워드 선택" className="w-[80%] mx-auto space-y-4 whitespace-nowrap">
+    <section aria-label="리뷰 키워드 선택" className="w-[80%] mx-auto space-y-4 my-4 whitespace-nowrap">
       <h2 className="text-base font-semibold m-0 pb-1">카페에 어울리는 키워드를 선택해주세요!</h2>
       <p className="text-neutral-400 m-0 pb-2">(최대 8개)</p>
       {selected.length > 0 && (

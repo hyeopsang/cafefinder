@@ -80,7 +80,7 @@ export default function ReviewModal({
   }
   return (
     <ModalWrapper>
-    <div className="slide-in-panel pointer-events-auto overflow-auto text-md mx-auto max-w-[480px] min-w-[320px] flex flex-col rounded-[15px] bg-white pb-4 text-center text-neutral-900 shadow-md h-fit gap-1">
+    <div className="slide-in-panel pointer-events-auto overflow-auto text-md mx-auto max-w-[480px] min-w-[320px] flex flex-col bg-white pb-4 text-center text-neutral-900 shadow-md h-fit gap-1">
       <button className="p-4 ml-auto" onClick={onClose}>
         <X className="w-5"/>
       </button>
@@ -90,7 +90,7 @@ export default function ReviewModal({
       {currentPage === 2 && (
         <>
         <ReviewForm handleTextChange={handleTextChange} handleImagesChange={handleImagesChange} text={reviews.text} onPrev={goToPrev} />
-        <button disabled={isSubmitDisabled} className="text-sm text-white bg-neutral-900 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
+        <button disabled={isSubmitDisabled} className="text-sm text-white bg-blue-500 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
                 {data?.id ? "수정 완료하기" : "작성 완료하기"}
             </button>
         </>

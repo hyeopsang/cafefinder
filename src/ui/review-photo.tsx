@@ -34,7 +34,7 @@ export default function ReviewPhoto({ onChange }: UploadImageProps) {
       <button
         type="button"
         onClick={() => fileInputRef.current?.click()}
-        className="w-full text-white bg-neutral-900 button-style font-medium text-sm flex justify-center items-center gap-4"
+        className="w-full text-white bg-blue-500 button-style font-medium text-sm flex justify-center items-center gap-4"
       >
         <Image className="w-5 h-5"/><p>이미지 선택하기 (최대 3장)</p>
       </button>

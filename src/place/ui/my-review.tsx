@@ -1,12 +1,17 @@
 import { Review } from "../../types";
 import ReviewItem from "../../ui/review-item";
+import { useParams } from "react-router";
+import { useSelector } from "react-redux";
+import { Place } from "../../types";
 interface MyReviewProps {
     reviews: Review[];
     onClickModal: (boolean) => void;
   }
 
 export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
-
+  const { id } = useParams();
+  const places = useSelector((state: { places?: Place[] }) => state.places ?? []);
+  const place = places.find((p) => p.id === id);
     return (
         <>
         {reviews.length > 0 ? (
@@ -16,12 +21,17 @@ export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
             ))}
           </div>
         ) : (
-          <div className="w-full py-4 border border-neutral-100 rounded-xl flex items-center text-sm">
+          <div className="w-full p-4 flex flex-col items-left gap-2 text-base font-semibold bg-white">
+            <div className="w-full h-[100px] flex justify-center gap-4 items-center overflow-hidden">
+              <p><span className="text-blue-500 w-1/2">{place.place_name}</span>에서<br/> 경험을 나눠주세요!</p>
+              <img className="w-1/2" src="/images/review.png"/>
+            </div>
+            
             <button
-            className="mx-auto w-[80%] text-white bg-neutral-900 button-style"
+            className="mx-auto w-full text-blue-500 text-sm font-normal bg-blue-100 button-style"
             onClick={() => onClickModal(true)}
             >
-              리뷰 작성하기
+              리뷰 쓰기
             </button>
           </div>
           

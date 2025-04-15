@@ -35,14 +35,7 @@ interface AddReviewParams {
   images?: File[]; // 이미지 파일 배열 (선택 사항)
 }
 
-// 리뷰 최신화
-export const useReviews = (placeId: string) => {
-  return useQuery({
-    queryKey: ["reviews", placeId],
-    queryFn: () => getReview(placeId),
-    enabled: !!placeId,
-  });
-};
+
 // 리뷰 불러오기
 export const getReview = async (placeId: string): Promise<Review[]> => {
   const querySnapshot = await getDocs(
@@ -58,7 +51,14 @@ export const getReview = async (placeId: string): Promise<Review[]> => {
 
   }));
 };
-
+// 리뷰 최신화
+export const useReviews = (placeId: string) => {
+  return useQuery({
+    queryKey: ["reviews", placeId, 'review-tab'],
+    queryFn: () => getReview(placeId),
+    enabled: !!placeId,
+  });
+};
 export const addReview = async ({
   placeId,
   content,
@@ -254,7 +254,7 @@ export const getReviewPhoto = async (placeId: string, lastVisibleDoc?: any) => {
 
 export const useReviewPhoto = (placeId: string) => {
   return useQuery({
-    queryKey: ["reviews", placeId],
+    queryKey: ["photos", placeId, 'photo-tab'],
     queryFn: () => getReviewPhoto(placeId),
     enabled: !!placeId,
   });

@@ -1,29 +1,33 @@
+// router/index.tsx 또는 AppRouter.tsx
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import KakaoMap from "../map";
-import PlaceReviewPage from "../place/ui";
+import PhotoTab from "../place/ui/photo-tab";
+import ReviewTab from "../place/ui/review-tab";
+import PlaceLayoutPage from "../place/ui";
 import Auth from "../kakao-login/logging";
 import Login from "../kakao-login/login";
 import ReviewList from "../profile/ui/review-list";
 import LikeList from "../Like/like-list";
-import Photo from "../ui/photo-page";
+
 const RouterInfo = [
   {
     path: "/",
     children: [
       {
-        path: "/",
         index: true,
-        element: (
-            <KakaoMap />
-        ),
+        element: <KakaoMap />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/my-review",
+        path: "auth/kakao/callback",
+        element: <Auth />,
+      },
+      {
+        path: "my-review",
         element: (
           <ProtectedRoute>
             <ReviewList />
@@ -31,27 +35,27 @@ const RouterInfo = [
         ),
       },
       {
-        path: "/auth/kakao/callback",
-        element: <Auth />,
+        path: "book-mark",
+        element: <LikeList />,
       },
       {
-        path: "/place/:id",
-        element: (
-          <PlaceReviewPage />
-        ),
+        path: "place/:id",
+        element: <PlaceLayoutPage />, // 탭과 함께 공통 레이아웃 제공
+        children: [
+          {
+            index: true,
+            element: <ReviewTab />, // 기본 탭은 리뷰로 설정
+          },
+          {
+            path: "review",
+            element: <ReviewTab />,
+          },
+          {
+            path: "photo",
+            element: <PhotoTab />,
+          },
+        ],
       },
-      {
-        path: "/book-mark",
-        element: (
-          <LikeList />
-        ),
-      },
-      {
-        path: "/place/:id/photo",
-        element: (
-          <Photo />
-        )
-      }
     ],
   },
 ];

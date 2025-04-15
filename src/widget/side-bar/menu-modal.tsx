@@ -59,7 +59,7 @@ export default function MenuModal({ onClose }: MenuProps) {
                   </div>
                 </Link>
                 <a onClick={handleLogout}>
-                <div className="flex justify-between px-4 w-[130px] items-center bg-neutral-900 button-style-s text-white cursor-pointer">
+                <div className="flex justify-between px-4 w-[130px] items-center bg-blue-500 button-style-s text-white cursor-pointer">
                   <LogOut size={20}/>
                   <p>로그아웃</p>
                 </div>      
