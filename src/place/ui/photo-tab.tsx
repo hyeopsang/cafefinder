@@ -47,14 +47,14 @@ export default function PhotoTab() {
     <div className="bg-neutral-300">
       {Array.isArray(photoList) && photoList.length > 0 
         ? 
-        <div className="grid grid-cols-3 gap-1 p-1 bg-white">  
+        <div className="grid grid-cols-3 gap-1 p-1">  
             {photoList.map((url, idx) => (
             <img
               key={idx}
               ref={idx === photoList.length - 1 ? setTarget : null}
               src={url}
               alt={`photo-${idx}`}
-              className="w-full h-32 object-cover rounded shadow-inner"
+              className="w-full h-32 object-cover rounded shadow-inner bg-white"
             />))}
         </div>
        : (
