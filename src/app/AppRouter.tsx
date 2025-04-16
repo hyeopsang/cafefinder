@@ -44,11 +44,8 @@ const RouterInfo = [
         children: [
           {
             index: true,
-            element: <ReviewTab />, // 기본 탭은 리뷰로 설정
-          },
-          {
             path: "review",
-            element: <ReviewTab />,
+            element: <ReviewTab />, // 기본 탭은 리뷰로 설정
           },
           {
             path: "photo",

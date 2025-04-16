@@ -187,7 +187,7 @@ export const updateReview = async ({
   id,
   content,
   userId,
-  images = [],
+  images,
 }: {
   placeId: string;
   id: string;

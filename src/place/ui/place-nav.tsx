@@ -1,5 +1,5 @@
 // components/place/place-tab-nav.tsx
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 export default function PlaceNav({ id }: { id: string }) {
   const location = useLocation();
 
@@ -9,7 +9,7 @@ export default function PlaceNav({ id }: { id: string }) {
       <Link
         to={`/place/${id}/review`}
         className={`w-1/2 text-center py-2 px-4 text-sm font-semibold ${
-          isActive("review")
+          isActive(`/place/${id}/review`)
             ? "border-b-2 border-neutral-900 text-neutral-900"
             : "text-neutral-500"
         }`}

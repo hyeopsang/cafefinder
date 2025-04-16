@@ -70,7 +70,7 @@ export default function ReviewModal({
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const handleImagesChange = (files: File[]) => {
-    setSelectedImages(files);
+    setSelectedImages((prev) => ({...prev, images:files}));
   };
   const [currentPage, setCurrentPage] = useState(1);
   const goToNext = () => setCurrentPage((prev) => prev + 1);
@@ -89,10 +89,14 @@ export default function ReviewModal({
       )}
       {currentPage === 2 && (
         <>
-        <ReviewForm handleTextChange={handleTextChange} handleImagesChange={handleImagesChange} text={reviews.text} onPrev={goToPrev} />
-        <button disabled={isSubmitDisabled} className="text-sm text-white bg-blue-500 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
-                {data?.id ? "수정 완료하기" : "작성 완료하기"}
+        <ReviewForm handleTextChange={handleTextChange} handleImagesChange={handleImagesChange} text={reviews.text} images={reviews.imageUrls} onPrev={goToPrev} />
+        
+        {
+          mutation.isPending ? <button className="w-[80%] button-style text-sm bg-neutral-200 text-neutral-400 mx-auto">작성중</button> 
+          : <button disabled={isSubmitDisabled} className="text-sm text-white bg-blue-500 mx-auto button-style w-[80%]" onClick={() => mutation.mutate()}>
+              {data?.id ? "수정 완료하기" : "작성 완료하기"}
             </button>
+        }
         </>
         
       )}

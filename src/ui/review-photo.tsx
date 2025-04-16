@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Image, X } from "lucide-react";
 interface UploadImageProps {
+  exitImages: string[],
   onChange: (files: File[]) => void;
 }
 
-export default function ReviewPhoto({ onChange }: UploadImageProps) {
+export default function ReviewPhoto({ onChange, exitImages }: UploadImageProps) {
   const [images, setImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>(exitImages);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,6 +19,7 @@ export default function ReviewPhoto({ onChange }: UploadImageProps) {
 
   const handleRemoveImage = (index: number) => {
     const newImages = images.filter((_, i) => i !== index);
+    const newExitImages = existingImages.filter((_, i) => i !== index);
     setImages(newImages);
     onChange(newImages);
   };

@@ -46,7 +46,7 @@ const CafeSwiper: React.FC<CafeSwiperProps> = ({ places, markers }) => {
       >
         {places.map((place) => (
           <SwiperSlide key={place.id}>
-            <Link to={`/place/${place.id}`}>
+            <Link to={`/place/${place.id}/review`}>
               <div
                 className="mx-auto w-[90%] rounded-2xl bg-white text-neutral-900 px-4 py-3 font-medium text-sm shadow-md"
                 style={{ cursor: "default" }}
