@@ -22,7 +22,7 @@ export default function MyReview ({reviews, onClickModal} : MyReviewProps) {
           </div>
         ) : (
           <div className="w-full p-4 flex flex-col items-left gap-2 text-base font-semibold bg-white">
-            <div className="w-full h-[100px] px-4 flex justify-between gap-4 items-center overflow-hidden">
+            <div className="w-full h-[100px] px-2 flex justify-between gap-4 items-center overflow-hidden">
               <p><span className="text-blue-500 w-1/2">{place.place_name}</span>에서<br/> 경험을 나눠주세요!</p>
               <img className="h-full object-cover" src="/images/review.png"/>
             </div>
