@@ -44,17 +44,17 @@ export default function PhotoTab() {
   if (error) return <div className="p-4 text-red-500">에러가 발생했습니다.</div>;
 
   return (
-    <div className="p-4">
+    <div className="bg-neutral-300">
       {Array.isArray(photoList) && photoList.length > 0 
         ? 
-        <div className="grid grid-cols-3 gap-2">  
+        <div className="grid grid-cols-3 gap-1 p-1">  
             {photoList.map((url, idx) => (
             <img
               key={idx}
               ref={idx === photoList.length - 1 ? setTarget : null}
               src={url}
               alt={`photo-${idx}`}
-              className="w-full h-32 object-cover rounded-md"
+              className="w-full h-32 object-cover rounded shadow-inner"
             />))}
         </div>
        : (

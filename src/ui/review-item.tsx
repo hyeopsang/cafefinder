@@ -33,7 +33,7 @@ export default function ReviewItem({ review, onOpen }: ReviewItemProps) {
             <p>{review.content.text}</p>                
             <ul className="w-full flex items-center justify-center gap-2">
                 {review.content.imageUrls.map((url, index) => 
-                    <li className="w-1/3 aspect-square" key={url}> {/* Assuming `url` is unique */}
+                    <li className="w-1/3 aspect-square rounded overflow-hidden" key={url}> 
                         <img className="w-full h-full object-cover" src={url} alt="" />
                     </li>
                 )}

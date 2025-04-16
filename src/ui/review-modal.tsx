@@ -45,7 +45,6 @@ export default function ReviewModal({
   };
   const isSubmitDisabled = reviews.text.trim().length < 3;
 
-  // 리뷰 추가/수정 Mutations
   const mutation = useMutation({
     mutationFn: async () => {
       if (data?.id) {
@@ -70,7 +69,7 @@ export default function ReviewModal({
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const handleImagesChange = (files: File[]) => {
-    setSelectedImages((prev) => ({...prev, images:files}));
+    setSelectedImages(files);
   };
   const [currentPage, setCurrentPage] = useState(1);
   const goToNext = () => setCurrentPage((prev) => prev + 1);
@@ -89,7 +88,7 @@ export default function ReviewModal({
       )}
       {currentPage === 2 && (
         <>
-        <ReviewForm handleTextChange={handleTextChange} handleImagesChange={handleImagesChange} text={reviews.text} images={reviews.imageUrls} onPrev={goToPrev} />
+        <ReviewForm handleTextChange={handleTextChange} handleImagesChange={handleImagesChange} text={reviews.text} imageUrls={reviews.imageUrls} newImages={selectedImages} onPrev={goToPrev} />
         
         {
           mutation.isPending ? <button className="w-[80%] button-style text-sm bg-neutral-200 text-neutral-400 mx-auto">작성중</button> 
