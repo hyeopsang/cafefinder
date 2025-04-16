@@ -47,7 +47,7 @@ export default function PhotoTab() {
     <div className="bg-neutral-300">
       {Array.isArray(photoList) && photoList.length > 0 
         ? 
-        <div className="grid grid-cols-3 gap-1 p-1">  
+        <div className="grid grid-cols-3 gap-1 p-1 bg-white">  
             {photoList.map((url, idx) => (
             <img
               key={idx}
