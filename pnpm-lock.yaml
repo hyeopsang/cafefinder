@@ -63,7 +63,7 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0(react@19.2.0)(redux@5.0.1)
       swiper:
-        specifier: ^11.2.5
+        specifier: ^11.2.10
         version: 11.2.10
       tailwind-merge:
         specifier: ^3.0.2

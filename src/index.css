@@ -150,6 +150,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+.swiper-pagination-bullet-active {
+  background: white !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
