@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/redux/store";
+import {useSelector} from 'react-redux';
+import {RootState} from '../../app/redux/store';
 export const useMoveToCurrentLocation = () => {
   const map = useSelector((state: RootState) => state.map.map);
 
@@ -11,14 +11,14 @@ export const useMoveToCurrentLocation = () => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           const currentPos = new kakao.maps.LatLng(lat, lng);
-          map.panTo(currentPos); // 지도 이동
+          map.panTo(currentPos);
         },
         () => {
-          console.error("현재 위치를 가져오는 데 실패했습니다.");
+          console.error('현재 위치를 가져오는 데 실패했습니다.');
         }
       );
     } else {
-      console.error("이 브라우저에서는 Geolocation이 지원되지 않습니다.");
+      console.error('이 브라우저에서는 Geolocation이 지원되지 않습니다.');
     }
   };
 

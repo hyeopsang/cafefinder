@@ -1,40 +1,30 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @theme {
-  --color-buttonRed: #FF6B6B;
+  --color-buttonRed: #ff6b6b;
   --min-width-mobile: 320px;
-  --max-width-mobile: 480px; 
+  --max-width-mobile: 480px;
 }
 
 @layer utilities {
   .button-style {
-    @apply py-2 text-center rounded-lg text-sm font-medium
+    @apply rounded-lg py-2 text-center text-sm font-medium;
   }
   .button-style-s {
-    @apply py-2 text-center rounded-lg text-sm font-medium
+    @apply rounded-lg py-2 text-center text-sm font-medium;
   }
 }
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: "pretendard";
-  src: url("/fonts/pretendard/pretendard-regular.woff2") format("woff2");
+  font-family: 'pretendard';
+  src: url('/fonts/pretendard/pretendard-regular.woff2') format('woff2');
   font-weight: regular;
   font-style: normal;
 }
-body {
-  margin: 0 auto;
-  padding: 0;
-  max-width: 480px; 
-  min-width: 320px; 
-  height: 100svh;
-  overflow-x: hidden;
-  position: relative;
-  background-color: #121212;
-}
 
-#root{
+#root {
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -52,7 +42,6 @@ body {
   justify-content: center;
   overflow: auto;
 }
-
 
 :root {
   --radius: 0.625rem;
