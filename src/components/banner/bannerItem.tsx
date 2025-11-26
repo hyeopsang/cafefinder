@@ -7,9 +7,9 @@ type BannerItemProps = {
 
 export default function BannerItem({ bannerImg: BannerImg, bannerText }: BannerItemProps) {
   return (
-    <div className="flex aspect-2/1 w-full items-center overflow-hidden">
+    <div className="flex aspect-square w-full items-center overflow-hidden">
       <BannerImg className="w-full" />
-      <p className="absolute bottom-10 left-8 w-2/3 text-3xl font-semibold whitespace-pre-wrap text-white text-shadow-lg">
+      <p className="absolute bottom-10 left-8 w-2/3 text-2xl font-semibold whitespace-pre-wrap text-white text-shadow-lg sm:text-3xl">
         {bannerText}
       </p>
     </div>

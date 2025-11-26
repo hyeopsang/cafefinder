@@ -2,10 +2,11 @@
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "types": ["vite/client", "kakao.maps.d.ts"],
+    "types": ["vite/client", "kakao.maps.d.ts", "google.maps"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "erasableSyntaxOnly": false
   }
 }

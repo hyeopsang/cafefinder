@@ -19,8 +19,8 @@ export default function BannerSlide() {
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
       pagination={{ clickable: true }}
-      autoplay={{ delay: 5000 }}
-      speed={3000}
+      autoplay={{ delay: 4000 }}
+      speed={2500}
       loop={true}
       spaceBetween={0}
       slidesPerView={1}

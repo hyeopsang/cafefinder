@@ -10,15 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.2",
+    "@react-google-maps/api": "^2.20.7",
     "@reduxjs/toolkit": "^2.6.0",
     "@tanstack/react-query": "^5.69.0",
+    "@vis.gl/react-google-maps": "^1.7.1",
     "axios": "^1.8.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "firebase": "^11.4.0",
-    "firebase-tools": "^14.1.0",
-    "lucide-react": "^0.483.0",
+    "fs": "0.0.1-security",
     "motion": "^12.23.24",
     "qs": "^6.14.0",
     "react": "^19.0.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@tailwindcss/vite": "^4.0.14",
+    "@types/google.maps": "^3.58.1",
     "@types/node": "^22.13.11",
     "@types/qs": "^6.9.18",
     "@types/react": "^19.0.10",

@@ -2,15 +2,15 @@ import { Link, useLocation } from 'react-router';
 import type { ComponentType, SVGProps } from 'react';
 import { cn } from '@/lib/utils';
 
-type NavButtonProps = {
+interface NavButtonProps {
   path: string;
   label: string;
   icon: ComponentType<SVGProps<SVGSVGElement>>;
-};
+}
 
 export default function NavButton({ path, label, icon: Icon }: NavButtonProps) {
   const location = useLocation();
-  const isActive = location.pathname.startsWith(path);
+  const isActive = location.pathname === path;
   return (
     <Link
       to={path}
