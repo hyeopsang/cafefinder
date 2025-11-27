@@ -42,8 +42,8 @@ const recommendCafeList = [
 
 export default function RecommendList() {
   return (
-    <div className="px-4 pt-8">
-      <p className="mb-3 text-base font-semibold">요즘 핫한 카페</p>
+    <div className="pt-8">
+      <p className="mb-3 w-full px-3 text-base font-semibold">요즘 핫한 카페</p>
 
       <Swiper
         modules={[FreeMode]}

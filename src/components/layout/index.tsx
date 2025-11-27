@@ -3,8 +3,8 @@ import NavBar from '../nav-bar';
 
 export default function Layout() {
   return (
-    <div className="mx-auto h-dvh w-full max-w-3xl overflow-hidden bg-white">
-      <main className="h-dvh w-full overflow-y-scroll">
+    <div className="relative mx-auto flex h-dvh w-full max-w-3xl flex-col overflow-x-hidden bg-white">
+      <main className="flex-1 overflow-y-scroll">
         <Outlet />
       </main>
       <NavBar />

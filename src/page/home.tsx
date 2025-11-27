@@ -4,7 +4,7 @@ import RecommendList from '@/components/recommend-list';
 
 export default function Home() {
   return (
-    <section className="h-[calc(100%+150px)]">
+    <section className="h-dvh">
       <Header />
       <BannerSlide />
       <RecommendList />

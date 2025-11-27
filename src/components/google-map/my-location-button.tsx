@@ -17,7 +17,7 @@ export default function MyLocationButton({
   return (
     <button
       onClick={moveToCurrentLocation}
-      className="absolute right-4 bottom-20 z-50 rounded-full bg-white p-2 shadow-md"
+      className="absolute right-4 bottom-4 z-50 rounded-full bg-white p-2 shadow-md"
     >
       <Location className="h-6 w-6 text-purple-600" />
     </button>
