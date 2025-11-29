@@ -1,15 +1,15 @@
 import { motion } from 'motion/react';
 import Search from '@/assets/search.svg?react';
+import Coffee from '@/assets/coffee.svg?react';
 import { useMap } from '@vis.gl/react-google-maps';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { fetchPlaceDetails } from '@/api/placeApi';
+import Spinner from '../spinner';
 
 interface PlaceResult {
   id: string;
-  displayName: { text: string };
-  location: google.maps.LatLng;
-  businessStatus: string;
+  displayName: string;
+  formattedAddress: string;
 }
 
 interface SearchModalProps {
@@ -18,17 +18,38 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
+const DEBOUNCE_DELAY = 600;
+const RECENT_KEY = 'recent_searches';
+
+const getRecentSearches = (): string[] => {
+  const stored = localStorage.getItem(RECENT_KEY);
+  return stored ? JSON.parse(stored) : [];
+};
+
+const addRecentSearch = (keyword: string) => {
+  const existing = getRecentSearches().filter((k) => k !== keyword);
+  const updated = [keyword, ...existing].slice(0, 10);
+  localStorage.setItem(RECENT_KEY, JSON.stringify(updated));
+};
+
+const clearRecentSearches = () => {
+  localStorage.removeItem(RECENT_KEY);
+};
+
 export default function SearchModal({ value, onChange, onClose }: SearchModalProps) {
   const map = useMap();
   const [results, setResults] = useState<PlaceResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [recent, setRecent] = useState<string[]>(getRecentSearches());
 
   const handleSearch = async () => {
-    if (!value || !map) return;
+    if (!value || value.trim().length < 2 || !map) return;
+    setLoading(true);
 
-    const currentBounds = map.getBounds();
-
-    if (!currentBounds) {
+    const bounds = map.getBounds();
+    if (!bounds) {
       console.error('맵 경계 정보를 가져올 수 없습니다.');
+      setLoading(false);
       return;
     }
 
@@ -36,33 +57,58 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
 
     const request = {
       textQuery: value,
-      fields: ['id', 'displayName', 'location', 'businessStatus'],
+      fields: ['id', 'displayName', 'formattedAddress', 'location'],
       includedType: 'cafe',
       useStrictTypeFiltering: true,
-      locationRestriction: currentBounds,
-      isOpenNow: false,
+      locationRestriction: bounds,
       language: 'ko',
-      maxResultCount: 8,
       region: 'kr',
+      maxResultCount: 8,
     };
 
     try {
       const { places } = await Place.searchByText(request);
-
       setResults(places || []);
     } catch (err) {
       console.error('검색 에러:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSelect = (place: PlaceResult) => {
-    if (map && place.location) {
-      map.setCenter(place.location);
-      map.setZoom(16);
+  useEffect(() => {
+    if (!value || value.trim().length < 2) {
+      setResults([]);
+      return;
     }
 
+    const timer = setTimeout(() => {
+      handleSearch();
+    }, DEBOUNCE_DELAY);
+
+    return () => clearTimeout(timer);
+  }, [value]);
+
+  const handleSelect = (place: PlaceResult) => {
+    addRecentSearch(place.displayName);
+    setRecent(getRecentSearches());
+
+    if (map && (place as any).location) {
+      map.setCenter((place as any).location);
+      map.setZoom(16);
+    }
     fetchPlaceDetails(place.id);
     onClose();
+  };
+
+  const clickRecent = (keyword: string) => {
+    onChange(keyword);
+    setRecent(getRecentSearches());
+  };
+
+  const resetRecent = () => {
+    clearRecentSearches();
+    setRecent([]);
   };
 
   return (
@@ -79,40 +125,81 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
         animate={{ y: 0 }}
         exit={{ y: 100 }}
         transition={{ duration: 0.15, ease: 'easeInOut' }}
-        className="relative inset-x-0 top-0 h-[calc(100%-100px)] w-full rounded-t-2xl bg-white p-5 shadow-xl"
+        className="relative inset-x-0 top-0 h-[calc(100%-100px)] w-full overflow-hidden rounded-t-xl bg-white pt-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* 입력 영역 */}
-        <div className="flex items-center gap-3 rounded-lg bg-white p-3 shadow-sm">
+        <div className="flex items-center gap-3 border-b-4 p-5">
           <input
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="상호명을 입력해주세요"
             className="flex-1 outline-none placeholder:text-sm"
             autoFocus
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           />
           <button onClick={handleSearch}>
             <Search className="h-6 w-6 text-purple-600" />
           </button>
         </div>
 
-        <ul className="mt-4 max-h-[70%] space-y-2 overflow-y-auto">
-          {results.length > 0 ? (
+        {!loading && results.length === 0 && !value && (
+          <div className="border-b p-3">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="text-base font-semibold">최근 검색어</p>
+              {recent.length > 0 && (
+                <button
+                  className="rounded-full border px-2 py-1 text-xs text-gray-600"
+                  onClick={resetRecent}
+                >
+                  전체삭제
+                </button>
+              )}
+            </div>
+
+            <ul className="flex flex-wrap justify-center gap-2">
+              {recent.length === 0 ? (
+                <p className="text-sm text-gray-400">기록이 없습니다.</p>
+              ) : (
+                recent.map((item) => (
+                  <li
+                    key={item}
+                    className="cursor-pointer rounded-full border border-gray-300 px-3 py-1 text-xs hover:bg-gray-100"
+                    onClick={() => clickRecent(item)}
+                  >
+                    {item}
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+        )}
+
+        {/* 검색 결과 */}
+        <ul className="mt-4 max-h-[70%] space-y-3 overflow-y-auto">
+          {loading ? (
+            <div className="flex justify-center py-8">
+              <Spinner />
+            </div>
+          ) : results.length > 0 ? (
             results.map((place) => (
               <li
                 key={place.id}
-                className="cursor-pointer rounded-md border p-3 hover:bg-gray-100"
+                className="flex cursor-pointer items-center gap-3 px-3 hover:bg-gray-100"
                 onClick={() => handleSelect(place)}
               >
-                <p className="font-medium">{place.displayName.text}</p>
-                <p className="text-xs text-gray-500">{place.businessStatus}</p>
+                <Coffee className="h-5 w-5" />
+                <div className="flex-1">
+                  <p className="text-base font-medium">{place.displayName}</p>
+                  <p className="text-xs text-gray-500">{place.formattedAddress}</p>
+                </div>
               </li>
             ))
           ) : (
-            <li className="p-3 text-center text-gray-500">
-              {value ? '검색 결과가 없습니다.' : '검색어를 입력해주세요.'}
-            </li>
+            value &&
+            value.length >= 2 && (
+              <li className="p-3 text-center text-sm font-bold text-purple-300">
+                검색 결과가 없습니다.
+              </li>
+            )
           )}
         </ul>
       </motion.div>

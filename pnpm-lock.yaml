@@ -11,6 +11,9 @@ importers:
       '@googlemaps/react-wrapper':
         specifier: ^1.2.0
         version: 1.2.0(react@19.2.0)
+      '@lottiefiles/react-lottie-player':
+        specifier: ^3.6.0
+        version: 3.6.0(react@19.2.0)
       '@radix-ui/react-slot':
         specifier: ^1.1.2
         version: 1.2.4(@types/react@19.2.7)(react@19.2.0)
@@ -639,6 +642,11 @@ packages:
   '@koa/router@12.0.2':
     resolution: {integrity: sha512-sYcHglGKTxGF+hQ6x67xDfkE9o+NhVlRHBqq6gLywaMc6CojK/5vFZByphdonKinYlMLkEkacm+HEse9HzwgTA==}
     engines: {node: '>= 12'}
+
+  '@lottiefiles/react-lottie-player@3.6.0':
+    resolution: {integrity: sha512-WK5TriLJT93VF3w4IjSVyveiedraZCnDhKzCPhpbeLgQeMi6zufxa3dXNc4HmAFRXq+LULPAy+Idv1rAfkReMA==}
+    peerDependencies:
+      react: 16 - 19
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2691,6 +2699,9 @@ packages:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
 
+  lottie-web@5.13.0:
+    resolution: {integrity: sha512-+gfBXl6sxXMPe8tKQm7qzLnUy5DUPJPKIyRHwtpCpyUEYjHYRJC/5gjUvdkuO2c3JllrPtHXH5UJJK8LRYl5yQ==}
+
   lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
 
@@ -4032,6 +4043,11 @@ snapshots:
       path-to-regexp: 6.3.0
     transitivePeerDependencies:
       - supports-color
+
+  '@lottiefiles/react-lottie-player@3.6.0(react@19.2.0)':
+    dependencies:
+      lottie-web: 5.13.0
+      react: 19.2.0
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -6772,6 +6788,8 @@ snapshots:
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
+
+  lottie-web@5.13.0: {}
 
   lower-case@2.0.2:
     dependencies:
