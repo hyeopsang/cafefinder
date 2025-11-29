@@ -10,6 +10,7 @@ export function useCenterCache() {
 
     const listener = map.addListener('idle', () => {
       const c = map.getCenter();
+      if (!c) return;
       lastCenterRef.current = { lat: c.lat(), lng: c.lng() };
     });
 

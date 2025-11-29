@@ -17,6 +17,7 @@ export default function SearchTrigger({ text, onOpen }: Props) {
       "
         className="pointer-events-none flex-1 text-left text-gray-500"
         value={text}
+        readOnly
       ></input>
     </button>
   );
