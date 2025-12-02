@@ -5,11 +5,13 @@ import { useMap } from '@vis.gl/react-google-maps';
 import { useState, useEffect, useRef } from 'react';
 import { fetchPlaceDetails } from '@/api/placeApi';
 import Spinner from '../spinner';
+import { useMarkerStore } from '@/app/zustand/useMarkerStore';
 
 interface PlaceResult {
   id: string;
   displayName: string;
   formattedAddress: string;
+  location: { lat: number; lng: number };
 }
 
 interface SearchModalProps {
@@ -37,6 +39,7 @@ const clearRecentSearches = () => {
 };
 
 export default function SearchModal({ value, onChange, onClose }: SearchModalProps) {
+  const addMarker = useMarkerStore((state) => state.addMarker);
   const map = useMap();
   const [results, setResults] = useState<PlaceResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -69,6 +72,7 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
     try {
       const { places } = await Place.searchByText(request);
       setResults(places || []);
+      console.log(places);
     } catch (err) {
       console.error('검색 에러:', err);
     } finally {
@@ -90,14 +94,28 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
   }, [value]);
 
   const handleSelect = (place: PlaceResult) => {
+    // 1. 최근 검색어 추가 및 상태 업데이트
     addRecentSearch(place.displayName);
     setRecent(getRecentSearches());
 
-    if (map && (place as any).location) {
-      map.setCenter((place as any).location);
+    // 2. Zustand 스토어에 마커 추가
+    // addMarker 함수는 { id, name, lat, lng } 형태를 필요로 합니다.
+    addMarker({
+      id: place.id,
+      name: place.displayName,
+      location: place.location,
+    });
+
+    // 3. 지도 시점 이동 (선택한 카페의 위치로 이동 및 줌 레벨 설정)
+    if (map && place.location) {
+      map.setCenter(place.location);
       map.setZoom(16);
     }
+
+    // 4. 추가적인 상세 정보 API 호출 (현재 구현되어 있는 부분)
     fetchPlaceDetails(place.id);
+
+    // 5. 모달 닫기
     onClose();
   };
 
@@ -176,7 +194,6 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
           </div>
         )}
 
-        {/* 검색 결과 */}
         <ul className="mt-4 max-h-[70%] space-y-3 overflow-y-auto">
           {loading ? (
             <div className="flex justify-center py-8">

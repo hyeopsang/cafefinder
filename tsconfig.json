@@ -2,7 +2,7 @@
   "files": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "types": ["vite/client", "google.maps"],
+    "types": ["vite/client", "google.maps", "vite-plugin-svgr/client"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
