@@ -33,10 +33,8 @@ export default function MapPage() {
         initialSnap={1}
         snapPoints={[0, 0.2, 0.6, 1]}
         drag="y"
-        detent="content"
         disableDismiss
         prefersReducedMotion={true}
-        modalEffectThreshold={0.6}
       >
         <PlaceModal onClose={() => setIsOpen(false)} />
       </Sheet>
