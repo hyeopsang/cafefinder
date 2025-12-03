@@ -35,6 +35,7 @@ export default function MapPage() {
         drag="y"
         disableDismiss
         prefersReducedMotion={true}
+        detent="full"
       >
         <PlaceModal onClose={() => setIsOpen(false)} />
       </Sheet>
