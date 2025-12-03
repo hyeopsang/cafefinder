@@ -36,6 +36,7 @@ export default function MapPage() {
         detent="content"
         disableDismiss
         prefersReducedMotion={true}
+        modalEffectThreshold={0.6}
       >
         <PlaceModal onClose={() => setIsOpen(false)} />
       </Sheet>
