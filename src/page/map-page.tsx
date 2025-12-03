@@ -27,12 +27,10 @@ export default function MapPage() {
       <Sheet
         unstyled
         disableDrag={false}
-        className="mx-auto w-full max-w-3xl"
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         initialSnap={1}
         snapPoints={[0, 0.2, 0.6, 1]}
-        drag="y"
         disableDismiss
         prefersReducedMotion={true}
         detent="full"

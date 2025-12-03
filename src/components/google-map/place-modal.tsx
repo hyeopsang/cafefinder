@@ -7,7 +7,7 @@ interface PlaceModalProps {
 export default function PlaceModal({ onClose }: PlaceModalProps) {
   return (
     <>
-      <Sheet.Container className="w-full rounded-t-xl bg-white shadow-xl">
+      <Sheet.Container className="mx-auto w-full max-w-3xl rounded-t-xl bg-white shadow-xl">
         {/* Handle */}
         <Sheet.Header className="flex w-full justify-center py-2">
           <div className="h-1.5 w-12 rounded-full bg-gray-300" />
