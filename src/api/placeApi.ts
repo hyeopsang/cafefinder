@@ -25,7 +25,7 @@ interface FetchResponse {
 }
 
 
-export async function fetchPlaceDetails(placeId: string): Promise<FetchedPlace | null> {
+export async function fetchPlaceDetails(placeId: string | string[]): Promise<FetchedPlace | FetchedPlace[] | null> {
     
     if (!placeId) {
         console.error("placeId가 필요합니다.");

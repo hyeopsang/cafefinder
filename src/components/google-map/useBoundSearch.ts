@@ -15,7 +15,7 @@ export function useBoundSearch() {
         setMarker([])
         const request = {
             textQuery: "카페",
-            fields: ['id', 'displayName', 'formattedAddress', 'location'],
+            fields: ['id', 'location'],
             includedType: 'cafe',
             useStrictTypeFiltering: true,
             locationRestriction: bounds,
@@ -28,7 +28,6 @@ export function useBoundSearch() {
             places.forEach((place: any) => {
             addMarker({
                 id: place.id,
-                name: place.displayName,
                 location: place.location,
             });
             });

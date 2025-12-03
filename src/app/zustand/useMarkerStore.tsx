@@ -4,7 +4,6 @@ import { immer } from 'zustand/middleware/immer';
 interface MarkerLocation {
   id: string;
   location: { lat: number; lng: number };
-  name: string;
 }
 
 interface MarkerStoreType {

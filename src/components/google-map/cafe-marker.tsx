@@ -5,8 +5,6 @@ import { cn } from '@/lib/utils';
 interface MarkerLocation {
   id: string;
   location: { lat: number; lng: number };
-
-  name: string;
 }
 
 interface MapMarkerProps {
@@ -26,7 +24,6 @@ export default function CafeMarker({ locations }: MapMarkerProps) {
           <AdvancedMarker
             key={marker.id}
             position={marker.location}
-            title={marker.name}
             onClick={() => setSelectedMarkerId(marker.id)}
             zIndex={isSelected ? 100 : 1}
           >
