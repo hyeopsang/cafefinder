@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { Sheet } from 'react-modal-sheet';
 
 interface PlaceModalProps {
   onClose: () => void;
@@ -6,22 +6,25 @@ interface PlaceModalProps {
 
 export default function PlaceModal({ onClose }: PlaceModalProps) {
   return (
-    <motion.div
-      className="absolute inset-0 z-60 mx-auto flex w-full max-w-3xl items-end justify-center overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <div className="absolute inset-0" onClick={onClose} />
+    <>
+      <Sheet.Container className="w-full rounded-t-xl bg-white shadow-xl">
+        {/* Handle */}
+        <Sheet.Header className="flex w-full justify-center py-2">
+          <div className="h-1.5 w-12 rounded-full bg-gray-300" />
+        </Sheet.Header>
 
-      <motion.div
-        initial={{ y: 100 }}
-        animate={{ y: 0 }}
-        exit={{ y: 100 }}
-        transition={{ duration: 0.15, ease: 'easeInOut' }}
-        className="relative inset-x-0 top-0 h-[calc(100%-100px)] w-full overflow-hidden rounded-t-xl bg-white pt-5 shadow-xl"
-        onClick={(e) => e.stopPropagation()}
-      ></motion.div>
-    </motion.div>
+        {/* Content */}
+        <Sheet.Content className="h-full overflow-y-auto p-4">
+          <h2 className="text-lg font-bold">카페명</h2>
+          {[...Array(20)].map((_, i) => (
+            <p key={i} className="py-1 text-sm text-gray-600">
+              내용 {i + 1}
+            </p>
+          ))}
+        </Sheet.Content>
+      </Sheet.Container>
+
+      <Sheet.Backdrop onTap={onClose} />
+    </>
   );
 }

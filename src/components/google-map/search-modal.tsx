@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import Search from '@/assets/search.svg?react';
 import Coffee from '@/assets/coffee.svg?react';
 import { useMap } from '@vis.gl/react-google-maps';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchPlaceDetails } from '@/api/placeApi';
 import Spinner from '../spinner';
 import { useMarkerStore } from '@/app/zustand/useMarkerStore';
@@ -46,7 +46,6 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
   const [results, setResults] = useState<PlaceResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [recent, setRecent] = useState<string[]>(getRecentSearches());
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const handleSearch = async () => {
     if (!value || value.trim().length < 2 || !map) return;
     setLoading(true);
@@ -135,19 +134,15 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
       <div className="absolute inset-0 bg-black/20" onClick={onClose} />
 
       <motion.div
-        initial={{ y: 100 }}
+        initial={{ y: '100%' }}
         animate={{ y: 0 }}
-        exit={{ y: 100 }}
-        onAnimationComplete={() => {
-          inputRef.current?.focus();
-        }}
-        transition={{ duration: 0.15, ease: 'easeInOut' }}
+        exit={{ y: '100%' }}
+        transition={{ duration: 0.2, ease: 'easeInOut' }}
         className="relative inset-x-0 top-0 h-[calc(100%-100px)] w-full overflow-hidden rounded-t-xl bg-white pt-5 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-3 border-b-4 p-5">
           <input
-            ref={inputRef}
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="상호명을 입력해주세요"
