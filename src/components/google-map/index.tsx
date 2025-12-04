@@ -39,7 +39,7 @@ export default function GoogleMap() {
       restriction={
         ulsanBounds && {
           latLngBounds: ulsanBounds,
-          strictBounds: false,
+          strictBounds: true,
         }
       }
       clickableIcons={false}

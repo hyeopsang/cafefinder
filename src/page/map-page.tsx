@@ -15,7 +15,7 @@ export default function MapPage() {
     <div className="relative h-full w-full overflow-hidden">
       <GoogleMap />
       <SearchTrigger text={searchText} onOpen={() => setIsOpen(true)} />
-      {/* <AnimatePresence>
+      <AnimatePresence>
         {isOpen && (
           <SearchModal
             value={searchText}
@@ -23,8 +23,8 @@ export default function MapPage() {
             onClose={() => setIsOpen(false)}
           />
         )}
-      </AnimatePresence> */}
-      <Sheet
+      </AnimatePresence>
+      {/* <Sheet
         unstyled
         disableDrag={false}
         isOpen={isOpen}
@@ -36,7 +36,7 @@ export default function MapPage() {
         detent="full"
       >
         <PlaceModal onClose={() => setIsOpen(false)} />
-      </Sheet>
+      </Sheet> */}
     </div>
   );
 }
