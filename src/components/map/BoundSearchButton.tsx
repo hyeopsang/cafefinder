@@ -4,19 +4,29 @@ import { useBoundSearch } from './useBoundSearch';
 import { cn } from '@/lib/utils';
 import { fetchPlaceDetails } from '@/api/placeApi';
 import { useMarkerStore } from '@/app/zustand/useMarkerStore';
+import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 export default function BoundSearchButton() {
-  const marker = useMarkerStore((state) => state.markers);
+  const { setPlaces, openListModal, places } = usePlaceStore((state) => state);
   const { searchInBounds } = useBoundSearch();
   const [mapCenter, setMapCenter] = useState(false);
   const map = useMap();
   const handleSearchBounds = async () => {
-    await searchInBounds();
+    const filteredPlaces = await searchInBounds();
+    if (!filteredPlaces || filteredPlaces.length === 0) {
+      setPlaces([]);
+      openListModal();
+      return;
+    }
 
-    const markerIds = marker.map((m) => m.id);
+    const markerIds = filteredPlaces.map((place: any) => place.id);
 
     if (markerIds.length > 0) {
-      await fetchPlaceDetails(markerIds);
+      const Place = await fetchPlaceDetails(markerIds);
+      setPlaces(Place);
+      console.log(places);
+      console.log(Place);
     }
+    openListModal();
   };
 
   useEffect(() => {

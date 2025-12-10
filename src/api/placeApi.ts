@@ -1,3 +1,5 @@
+import type { Place } from "@/app/zustand/usePlaceStore";
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -7,25 +9,17 @@ if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
 
 const SUPABASE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/fetchPlace`;
 
-interface FetchedPlace {
-    place_id: string;
-    name: string;
-    address: string;
-    lat: number;
-    lng: number;
-    rating: number;
-    photo_url: string | null;
-}
+
 
 interface FetchResponse {
     fromCache: boolean;
-    place: FetchedPlace;
+    place: Place[];
     error?: string;
     receivedPayload?: any;
 }
 
 
-export async function fetchPlaceDetails(placeId: string | string[]): Promise<FetchedPlace | FetchedPlace[] | null> {
+export async function fetchPlaceDetails(placeId: string | string[]): Promise<Place[] | null> {
     
     if (!placeId) {
         console.error("placeId가 필요합니다.");

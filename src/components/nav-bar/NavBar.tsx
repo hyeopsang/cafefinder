@@ -1,4 +1,4 @@
-import NavButton from './nav-button';
+import NavButton from './NavButton';
 import Home from '@/assets/home.svg?react';
 import Map from '@/assets/map.svg?react';
 import Events from '@/assets/events.svg?react';

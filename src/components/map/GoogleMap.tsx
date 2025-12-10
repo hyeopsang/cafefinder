@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Map, AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
 import { useUserLocation } from './useUserLocation';
 import UlsanMask from './UlsanMask';
-import MyLocationButton from './my-location-button';
+import MyLocationButton from './MyLocationButton';
 import { useUlsanBounds } from './useUlsanBounds';
-import CafeMarker from './cafe-marker';
+import CafeMarker from './CafeMarker';
 import { useMarkerStore } from '@/app/zustand/useMarkerStore';
-import BoundSearchButton from './bound-search-button';
-import MapWithCluster from './mapWithCluster';
+import BoundSearchButton from './BoundSearchButton';
+import MapWithCluster from './MapWithCluster';
 
 export default function GoogleMap() {
   const markers = useMarkerStore((state) => state.markers);

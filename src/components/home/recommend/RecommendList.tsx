@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
-import RecommendItem from './recommend-item';
+import RecommendItem from './RecommendItem';
 
 const recommendCafeList = [
   { name: '몬드제과', image: './images/cafe1.jpg', location: '울산 남구 왕생로144번길 11 1층' },

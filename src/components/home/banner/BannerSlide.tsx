@@ -7,7 +7,7 @@ import Banner2 from '@/assets/banner2.svg?react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import BannerItem from './bannerItem';
+import BannerItem from './BannerItem';
 
 const BannerList = [
   { img: Banner, text: 'ROUGHT ROASTERS에서 새롭게 리뉴얼 된 RR1 시즈널 블렌드를 즐겨보세요!' },

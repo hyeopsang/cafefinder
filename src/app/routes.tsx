@@ -1,8 +1,7 @@
-// router/index.tsx 또는 AppRouter.tsx
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '@/components/layout';
-import Home from '@/page/home';
-import MapPage from '@/page/map-page';
+import Layout from '@/components/Layout';
+import Home from '@/page/Home';
+import Map from '@/page/Map';
 
 const RouterInfo = [
   {
@@ -15,7 +14,7 @@ const RouterInfo = [
       },
       {
         path: 'map',
-        element: <MapPage />,
+        element: <Map />,
       },
     ],
   },

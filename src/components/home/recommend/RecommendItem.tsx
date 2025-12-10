@@ -1,7 +1,7 @@
 interface RecommendItemProps {
-  placeImage: string; // 이미지 URL
-  placeName: string; // 카페 이름
-  placeLocation: string; // 위치/주소
+  placeImage: string;
+  placeName: string;
+  placeLocation: string;
 }
 export default function RecommendItem({
   placeImage,

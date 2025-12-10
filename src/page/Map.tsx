@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import GoogleMap from '@/components/google-map';
-import SearchTrigger from '@/components/google-map/search-trigger';
-import SearchModal from '@/components/google-map/search-modal';
+import GoogleMap from '@/components/map/GoogleMap';
+import SearchTrigger from '@/components/map/SearchTrigger';
+import SearchModal from '@/components/map/SearchModal';
 
 import { AnimatePresence } from 'motion/react';
-import PlaceModal from '@/components/google-map/place-modal';
+import PlaceModal from '@/components/map/PlaceModal';
 import { Sheet } from 'react-modal-sheet';
+import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 
-export default function MapPage() {
+export default function Map() {
   const [searchText, setSearchText] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
+  const { places, isListModalOpen, closeListModal } = usePlaceStore((state) => state);
   return (
     <div className="relative h-full w-full overflow-hidden">
       <GoogleMap />
@@ -24,19 +25,19 @@ export default function MapPage() {
           />
         )}
       </AnimatePresence>
-      {/* <Sheet
+      <Sheet
         unstyled
         disableDrag={false}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={isListModalOpen}
+        onClose={closeListModal}
         initialSnap={1}
         snapPoints={[0, 0.2, 0.6, 1]}
         disableDismiss
         prefersReducedMotion={true}
         detent="full"
       >
-        <PlaceModal onClose={() => setIsOpen(false)} />
-      </Sheet> */}
+        <PlaceModal onClose={closeListModal} places={places} />
+      </Sheet>
     </div>
   );
 }

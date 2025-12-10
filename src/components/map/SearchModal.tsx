@@ -4,9 +4,10 @@ import Coffee from '@/assets/coffee.svg?react';
 import { useMap } from '@vis.gl/react-google-maps';
 import { useState, useEffect } from 'react';
 import { fetchPlaceDetails } from '@/api/placeApi';
-import Spinner from '../spinner';
 import { useMarkerStore } from '@/app/zustand/useMarkerStore';
 import { useUlsanBounds } from './useUlsanBounds';
+import Spinner from '../Spinner';
+import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 
 interface PlaceResult {
   id: string;
@@ -41,6 +42,7 @@ const clearRecentSearches = () => {
 
 export default function SearchModal({ value, onChange, onClose }: SearchModalProps) {
   const addMarker = useMarkerStore((state) => state.addMarker);
+  const { setPlaces, openListModal } = usePlaceStore((state) => state);
   const bounds = useUlsanBounds();
   const map = useMap();
   const [results, setResults] = useState<PlaceResult[]>([]);
@@ -95,10 +97,10 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
     return () => clearTimeout(timer);
   }, [value]);
 
-  const handleSelect = (place: PlaceResult) => {
+  const handleSelect = async (place: PlaceResult) => {
     addRecentSearch(place.displayName);
     setRecent(getRecentSearches());
-
+    setPlaces([]);
     addMarker({
       id: place.id,
       location: place.location,
@@ -109,8 +111,9 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
       map.setZoom(16);
     }
 
-    fetchPlaceDetails(place.id);
-
+    const selectedPlace = await fetchPlaceDetails(place.id);
+    setPlaces(selectedPlace);
+    openListModal();
     onClose();
   };
 
@@ -187,8 +190,9 @@ export default function SearchModal({ value, onChange, onClose }: SearchModalPro
 
         <ul className="mt-4 max-h-[70%] space-y-3 overflow-y-auto">
           {loading ? (
-            <div className="flex justify-center py-8">
+            <div className="flex gap-2">
               <Spinner />
+              <p className="text-sm">검색 중...</p>
             </div>
           ) : results.length > 0 ? (
             results.map((place) => (
