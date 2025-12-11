@@ -1,11 +1,11 @@
 import NavButton from './NavButton';
-import Home from '@/assets/home.svg?react';
+import HomeIcon from '@/assets/homeicon.svg?react';
 import Map from '@/assets/map.svg?react';
 import Events from '@/assets/events.svg?react';
 import Profile from '@/assets/profile.svg?react';
 
 const NavList = [
-  { path: '/', icon: Home, label: '홈' },
+  { path: '/', icon: HomeIcon, label: '홈' },
   { path: '/map', icon: Map, label: '지도' },
   { path: '/events', icon: Events, label: '행사' },
   { path: '/mypage', icon: Profile, label: '마이페이지' },
