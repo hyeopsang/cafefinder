@@ -1,5 +1,5 @@
 import { RouterProvider } from 'react-router';
-import { routes } from '@/app/Routes';
+import { routes } from './app/routes';
 import { UlsanPolygonProvider } from './app/context/UlsanPolygonContext';
 import { APIProvider } from '@vis.gl/react-google-maps';
 
