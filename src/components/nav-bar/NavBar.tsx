@@ -13,7 +13,7 @@ const NavList = [
 
 export default function NavBar() {
   return (
-    <nav className="z-80 w-full max-w-3xl bg-white py-2.5 shadow-[0_-2px_20px] shadow-gray-900/10">
+    <nav className="z-30 w-full max-w-3xl bg-white py-2.5 shadow-[0_-2px_20px] shadow-gray-900/10">
       <ul className="grid w-full grid-cols-4">
         {NavList.map((nav, id) => (
           <NavButton key={id} path={nav.path} icon={nav.icon} label={nav.label} />

@@ -11,7 +11,7 @@ import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 export default function Map() {
   const [searchText, setSearchText] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const { places, isListModalOpen, closeListModal } = usePlaceStore((state) => state);
+  const { isListModalOpen, closeListModal } = usePlaceStore((state) => state);
   return (
     <div className="relative h-full w-full overflow-hidden">
       <GoogleMap />
@@ -31,12 +31,13 @@ export default function Map() {
         isOpen={isListModalOpen}
         onClose={closeListModal}
         initialSnap={1}
-        snapPoints={[0, 0.2, 0.6, 1]}
+        snapPoints={[0, 0.09, 0.35, 1]}
         disableDismiss
         prefersReducedMotion={true}
-        detent="full"
+        detent="content"
+        className="z-20! overflow-hidden overflow-x-hidden"
       >
-        <PlaceModal onClose={closeListModal} places={places} />
+        <PlaceModal />
       </Sheet>
     </div>
   );

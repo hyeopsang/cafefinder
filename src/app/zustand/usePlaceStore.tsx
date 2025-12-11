@@ -1,13 +1,5 @@
-//------------------------------------------------------------
-// 1) Supabase auto-generated 타입 가져오기
-//------------------------------------------------------------
 import type { Tables } from '@/database.types';
 
-//------------------------------------------------------------
-// 2) 너가 사용하려고 만든 타입 정의
-//------------------------------------------------------------
-
-// Opening Hours 타입
 type WeekDay = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 interface OpeningTime {
@@ -16,7 +8,7 @@ interface OpeningTime {
   minute: number;
 }
 
-interface Period {
+export interface Period {
   open: OpeningTime;
   close: OpeningTime;
 }
@@ -28,13 +20,11 @@ export interface OpeningHours {
   weekdayDescriptions: string[];
 }
 
-// Parking Options 타입
 interface ParkingOptions {
   freeParkingLot: boolean;
   freeStreetParrking?: boolean;
 }
 
-// Reviews 타입
 interface ReviewText {
   text: string;
   languageCode: string;
@@ -58,30 +48,27 @@ export interface PlaceReview {
   relativePublishTimeDescription: string;
 }
 
-//------------------------------------------------------------
-// 3) Supabase places Row 기반 Place 타입 확장
-//------------------------------------------------------------
-
-// Supabase에서 자동 생성된 Row 타입
 type PlaceRow = Tables<'places'>;
 
-// 앱에서 쓰는 최종 Place 타입 (Json 필드는 파싱된 타입으로 재정의)
 export interface Place
   extends Omit<
     PlaceRow,
     'opening_hours' | 'parking_options' | 'reviews' | 'created_at' | 'updated_at'
   > {
-  opening_hours: OpeningHours | null;
+  id: string;
+  allow_dogs: boolean;
+  lat: number;
+  lng: number;
+  phone_number: string;
+  opening_hours?: OpeningHours;
   parking_options: ParkingOptions | null;
   reviews: PlaceReview[] | null;
-
-  created_at: Date | null;
-  updated_at: Date | null;
+  photo_urls: string[];
+  created_at: string;
+  updated_at: string;
+  place_id: string;
 }
 
-//------------------------------------------------------------
-// 4) Zustand Store 타입 정의
-//------------------------------------------------------------
 interface PlaceStoreType {
   places: Place[] | null;
 
@@ -95,44 +82,35 @@ interface PlaceStoreType {
   closeListModal: () => void;
 }
 
-//------------------------------------------------------------
-// 5) Zustand Store 구현
-//------------------------------------------------------------
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
 
 export const usePlaceStore = create<PlaceStoreType>()(
   persist(
-    immer((set, get) => ({
+    (set, get) => ({
       places: [],
       isListModalOpen: false,
 
-      setPlaces: (newPlaces) => {
-        set((state) => {
-          state.places = newPlaces;
-        });
+      setPlaces: (newPlaces: Place[] | null) => {
+        set({ places: newPlaces });
       },
 
-      clearPlaces: () =>
-        set((state) => {
-          state.places = [];
-        }),
-
-      getPlaceById: (placeId) => {
-        return get().places?.find((p) => p.place_id === placeId);
+      clearPlaces: () => {
+        set({ places: [] });
       },
 
-      openListModal: () =>
-        set((state) => {
-          state.isListModalOpen = true;
-        }),
+      getPlaceById: (placeId: string) => {
+        return get().places?.find((p: Place) => p.place_id === placeId);
+      },
 
-      closeListModal: () =>
-        set((state) => {
-          state.isListModalOpen = false;
-        }),
-    })),
+      openListModal: () => {
+        set({ isListModalOpen: true });
+      },
+
+      closeListModal: () => {
+        set({ isListModalOpen: false });
+      },
+    }),
     {
       name: 'places-storage',
     },

@@ -1,28 +1,24 @@
-import { type Place } from '@/app/zustand/usePlaceStore';
 import { Sheet } from 'react-modal-sheet';
+import PlaceList from './PlaceList';
+import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 
-interface PlaceModalProps {
-  onClose: () => void;
-  places: Place[] | null;
-}
-
-export default function PlaceModal({ onClose, places }: PlaceModalProps) {
+export default function PlaceModal() {
+  const { places } = usePlaceStore((state) => state);
   return (
     <>
-      <Sheet.Container className="mx-auto w-full max-w-3xl rounded-t-xl bg-white shadow-xl">
-        <Sheet.Header className="flex w-full justify-center py-2">
+      <Sheet.Container
+        style={{
+          boxShadow: '0 -16px 32px -36px rgb(0 0 0 / 0.3), 0 16px 32px -36px rgb(0 0 0 / 0.3)',
+        }}
+        className="left-1/2! w-full max-w-3xl -translate-x-1/2 overflow-x-hidden overscroll-contain rounded-t-xl bg-white"
+      >
+        <Sheet.Header className="flex w-full justify-center pt-4 pb-2">
           <div className="h-1.5 w-12 rounded-full bg-gray-300" />
         </Sheet.Header>
-        <Sheet.Content className="h-full overflow-y-auto p-4">
-          {places?.map((place) => (
-            <p key={place.id} className="py-1 text-sm text-gray-600">
-              {place.name}
-            </p>
-          ))}
+        <Sheet.Content disableDrag className="h-full overflow-y-auto p-4">
+          <PlaceList places={places} />
         </Sheet.Content>
       </Sheet.Container>
-
-      <Sheet.Backdrop onTap={onClose} />
     </>
   );
 }

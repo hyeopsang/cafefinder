@@ -3,10 +3,9 @@ import { useMap } from '@vis.gl/react-google-maps';
 import { useBoundSearch } from './useBoundSearch';
 import { cn } from '@/lib/utils';
 import { fetchPlaceDetails } from '@/api/placeApi';
-import { useMarkerStore } from '@/app/zustand/useMarkerStore';
 import { usePlaceStore } from '@/app/zustand/usePlaceStore';
 export default function BoundSearchButton() {
-  const { setPlaces, openListModal, places } = usePlaceStore((state) => state);
+  const { setPlaces, openListModal } = usePlaceStore((state) => state);
   const { searchInBounds } = useBoundSearch();
   const [mapCenter, setMapCenter] = useState(false);
   const map = useMap();
@@ -24,6 +23,7 @@ export default function BoundSearchButton() {
     if (markerIds.length > 0) {
       try {
         const Place = await fetchPlaceDetails(markerIds);
+        setPlaces(Place);
       } catch (error) {
         console.error('API 호출 중 오류 발생:', error);
         setPlaces([]);

@@ -102,19 +102,22 @@ serve(async (req) => {
         continue;
       }
 
-      let photo_url = null;
+      let photo_urls: string[] = [];
+      
       if (detail.photos && detail.photos.length > 0) {
-        const photoName = detail.photos[0].name;
-        photo_url = `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=400&maxWidthPx=400&key=${GOOGLE_API_KEY}`;
+        photo_urls = detail.photos.map((photo: any) => {
+          const photoName = photo.name;
+          return `https://places.googleapis.com/v1/${photoName}/media?maxHeightPx=400&maxWidthPx=400&key=${GOOGLE_API_KEY}`;
+        });
       }
-
       const placeData = {
         place_id: currentPlaceId,
         name: detail.displayName?.text || detail.displayName,
         address: detail.formattedAddress,
         lat: detail.location?.latitude,
-        lng: detail.location?.longitude,
-        photo_url,
+        lng: detail.location?.longitude,        
+        photo_urls: photo_urls.length > 0 ? photo_urls : null, 
+        
         phone_number: detail.nationalPhoneNumber || null,
         opening_hours: detail.regularOpeningHours || null,
         allows_dogs: detail.allowsDogs === true,

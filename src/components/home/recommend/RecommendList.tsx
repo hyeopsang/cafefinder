@@ -1,5 +1,4 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode } from 'swiper/modules';
+import ImageSlider from '@/components/map/ImageSlider';
 import RecommendItem from './RecommendItem';
 
 const recommendCafeList = [
@@ -45,23 +44,16 @@ export default function RecommendList() {
     <div className="pt-8">
       <p className="mb-3 w-full px-3 text-base font-semibold">요즘 핫한 카페</p>
 
-      <Swiper
-        modules={[FreeMode]}
-        freeMode={true}
-        spaceBetween={0}
-        slidesPerView="auto"
-        className="w-full"
-      >
-        {recommendCafeList.map((cafe, id) => (
-          <SwiperSlide key={id} style={{ width: 'auto' }}>
-            <RecommendItem
-              placeName={cafe.name}
-              placeImage={cafe.image}
-              placeLocation={cafe.location}
-            />
-          </SwiperSlide>
+      <ImageSlider>
+        {recommendCafeList.map((cafe) => (
+          <RecommendItem
+            key={cafe.name}
+            placeName={cafe.name}
+            placeImage={cafe.image}
+            placeLocation={cafe.location}
+          />
         ))}
-      </Swiper>
+      </ImageSlider>
     </div>
   );
 }

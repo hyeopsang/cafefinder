@@ -28,7 +28,7 @@ export function useBoundSearch() {
             
             language: 'ko',
             region: 'kr',
-            maxResultCount: 15,
+            maxResultCount: 10,
             };
             
         try {
