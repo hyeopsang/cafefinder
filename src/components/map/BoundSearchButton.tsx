@@ -12,6 +12,7 @@ export default function BoundSearchButton() {
   const map = useMap();
   const handleSearchBounds = async () => {
     const filteredPlaces = await searchInBounds();
+    console.log('A. searchInBounds 결과 (filteredPlaces):', filteredPlaces);
     if (!filteredPlaces || filteredPlaces.length === 0) {
       setPlaces([]);
       openListModal();
@@ -21,10 +22,12 @@ export default function BoundSearchButton() {
     const markerIds = filteredPlaces.map((place: any) => place.id);
 
     if (markerIds.length > 0) {
-      const Place = await fetchPlaceDetails(markerIds);
-      setPlaces(Place);
-      console.log(places);
-      console.log(Place);
+      try {
+        const Place = await fetchPlaceDetails(markerIds);
+      } catch (error) {
+        console.error('API 호출 중 오류 발생:', error);
+        setPlaces([]);
+      }
     }
     openListModal();
   };

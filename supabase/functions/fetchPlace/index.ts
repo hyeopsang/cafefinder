@@ -1,12 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  Deno.env.get('SUPABASE_URL')!,
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
 );
 
-const GOOGLE_API_KEY = Deno.env.get("GOOGLE_MAPS_API_KEY")!;
+const GOOGLE_API_KEY = Deno.env.get('GOOGLE_MAPS_API_KEY')!;
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,9 +24,9 @@ serve(async (req) => {
     }
 
     if (!GOOGLE_API_KEY) {
-      return new Response(JSON.stringify({ error: "API Key not configured" }), {
+      return new Response(JSON.stringify({ error: 'API Key not configured' }), {
         status: 500,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
@@ -38,7 +38,7 @@ serve(async (req) => {
         payload = JSON.parse(bodyText);
       }
     } catch (e) {
-      console.warn("JSON 파싱 실패:", e);
+      console.warn('JSON 파싱 실패:', e);
     }
 
     const rawPlaceId = payload.placeId;
@@ -46,33 +46,36 @@ serve(async (req) => {
 
     if (typeof rawPlaceId === 'string') {
       placeIds = [rawPlaceId];
-    } else if (Array.isArray(rawPlaceId) && rawPlaceId.every(id => typeof id === 'string')) {
+    } else if (Array.isArray(rawPlaceId) && rawPlaceId.every((id) => typeof id === 'string')) {
       placeIds = rawPlaceId as string[];
     }
 
-
     if (!placeIds || placeIds.length === 0) {
-      return new Response(JSON.stringify({ error: "placeId(s) required as a string or an array of strings in the payload" }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders }
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'placeId(s) required as a string or an array of strings in the payload',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json', ...corsHeaders },
+        },
+      );
     }
-
 
     const results: any[] = [];
 
-    const FIELD_MASK = 'id,displayName,formattedAddress,location,photos,nationalPhoneNumber,reviews,regularOpeningHours,allowsDogs,parkingOptions';
+    const FIELD_MASK =
+      'id,displayName,formattedAddress,location,photos,nationalPhoneNumber,reviews,regularOpeningHours,allowsDogs,parkingOptions';
 
     for (const currentPlaceId of placeIds) {
-
       const { data: cached } = await supabase
-        .from("places")
-        .select("*")
-        .eq("place_id", currentPlaceId)
+        .from('places')
+        .select('*')
+        .eq('place_id', currentPlaceId)
         .maybeSingle();
 
       if (cached) {
-        results.push({ fromCache: true, place: cached });
+        results.push(cached);
         continue;
       }
 
@@ -84,7 +87,7 @@ serve(async (req) => {
           'Content-Type': 'application/json',
           'X-Goog-Api-Key': GOOGLE_API_KEY,
           'X-Goog-FieldMask': FIELD_MASK,
-        }
+        },
       });
 
       const detail = await resp.json();
@@ -92,9 +95,9 @@ serve(async (req) => {
       if (!resp.ok) {
         results.push({
           fromCache: false,
-          error: "Google API failed",
+          error: 'Google API failed',
           placeId: currentPlaceId,
-          details: detail
+          details: detail,
         });
         continue;
       }
@@ -114,17 +117,17 @@ serve(async (req) => {
         photo_url,
         phone_number: detail.nationalPhoneNumber || null,
         opening_hours: detail.regularOpeningHours || null,
-        allows_dogs: detail.allowsDogs === true, 
+        allows_dogs: detail.allowsDogs === true,
         parking_options: detail.parkingOptions || null,
-        reviews: detail.reviews || null, 
+        reviews: detail.reviews || null,
         updated_at: new Date().toISOString(),
       };
 
       const { data: inserted, error: dbError } = await supabase
-        .from("places")
+        .from('places')
         .upsert(placeData, {
           onConflict: 'place_id',
-          ignoreDuplicates: false
+          ignoreDuplicates: false,
         })
         .select()
         .single();
@@ -132,33 +135,29 @@ serve(async (req) => {
       if (dbError) {
         results.push({
           fromCache: false,
-          error: "DB insert failed",
+          error: 'DB insert failed',
           placeId: currentPlaceId,
-          details: dbError
+          details: dbError,
         });
         continue;
       }
 
-      results.push({
-        fromCache: false,
-        place: inserted || placeData
-      });
+      results.push(inserted || placeData);
     }
 
-
-    return new Response(JSON.stringify({
-      places: results
-    }), {
-      headers: { 'Content-Type': 'application/json', ...corsHeaders }
+    return new Response(JSON.stringify(results), {
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
     });
-
   } catch (err) {
-    return new Response(JSON.stringify({
-      error: "server error",
-      message: err instanceof Error ? err.message : String(err)
-    }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json', ...corsHeaders }
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'server error',
+        message: err instanceof Error ? err.message : String(err),
+      }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      },
+    );
   }
 });
